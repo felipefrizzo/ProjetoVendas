@@ -17,22 +17,22 @@ public class Cliente {
 	public Cliente(){
 		
 	}
-	
-	public Cliente(int id, String nome, String endereco, int numero, String bairro, String cidade, String estado, String cep, String telefone, String celular){
-		this.id = id;
-		this.nome = nome;
-		this.endereco = endereco;
-		this.numero = numero;
-		this.complemento = complemento;
-		this.bairro = bairro;
-		this.cidade = cidade;
-		this.estado = estado;
-		this.cep = cep;
-		this.telefone = telefone;
-		this.celular = celular;
-	}
-	
-	public int getId() {
+
+    public Cliente(int id, String nome, String endereco, int numero, String complemento, String bairro, String cidade, String estado, String cep, String telefone, String celular) {
+        this.id = id;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cep = cep;
+        this.telefone = telefone;
+        this.celular = celular;
+    }
+
+    public int getId() {
 		return id;
 	}
 
