@@ -8,10 +8,10 @@ public class Venda {
 	private int id;
 	private BigDecimal valorTotal;
 	private Cliente cliente;
-	private ArrayList<Produto> produtos = new ArrayList<>();
+	private ArrayList<Produto> produtos;
 	
 	
-	public Venda(ArrayList<Produto> produtos){
+	public Venda(ArrayList<Produto> prodvenda){
 		id++;
 		this.produtos = produtos;
 	}
