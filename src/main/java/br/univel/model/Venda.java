@@ -1,13 +1,20 @@
 package br.univel.model;
 
+import br.univel.annotation.Column;
+import br.univel.annotation.Table;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+@Table("Venda")
 public class Venda {
-	
+    @Column(pk = true)
 	private int id;
+    @Column(name = "valorTotal")
 	private BigDecimal valorTotal;
+    @Column(name = "cliente")
 	private Cliente cliente;
+    @Column(name = "produto")
 	private ArrayList<Produto> produtos;
 	
 	

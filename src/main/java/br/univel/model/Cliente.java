@@ -1,15 +1,17 @@
 package br.univel.model;
 
+import br.univel.annotation.Column;
+
 public class Cliente {
-	
-	private int id;   
-	private String nome; 
-	private String endereco; 
+	@Column(pk = true)
+	private int id;
+	private String nome;
+	private String endereco;
 	private int numero;
-	private String complemento; 
-	private String bairro; 
-	private String cidade; 
-	private String estado; 
+	private String complemento;
+	private String bairro;
+	private String cidade;
+	private String estado;
 	private String cep;
 	private String telefone;
 	private String celular;
