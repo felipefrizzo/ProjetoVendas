@@ -15,7 +15,7 @@ import java.sql.SQLException;
 /**
  * Created by felipefrizzo on 6/19/16.
  */
-public class ClienteDAOTestUpdate {
+public class DAOTestInsert {
     private Connection connection = null;
     private Execute execute;
     private Cliente cliente;
@@ -27,29 +27,21 @@ public class ClienteDAOTestUpdate {
 
         execute = new Execute();
         cliente = new Cliente();
-
-        try {
-            cliente.setId(1);
-            preparedStatement = execute.getSqlInsert(connection, cliente);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         preparedStatement = null;
     }
 
     @Test
-    public void test_update() {
-        int update = 0;
+    public void test_insert() {
+        int insert = 0;
         try {
-            cliente.setNome("Felipe");
-            preparedStatement = execute.getSqlUpdateById(connection, cliente, cliente.getId());
-            update = preparedStatement.executeUpdate();
+            cliente.setId(1);
+            preparedStatement = execute.getSqlInsert(connection, cliente);
+            insert = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        Assert.assertEquals(1, update);
+        Assert.assertEquals(1, insert);
     }
 
     @After
@@ -60,4 +52,5 @@ public class ClienteDAOTestUpdate {
             e.printStackTrace();
         }
     }
+
 }

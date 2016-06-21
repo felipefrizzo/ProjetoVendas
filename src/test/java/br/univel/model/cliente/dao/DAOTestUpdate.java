@@ -15,7 +15,7 @@ import java.sql.SQLException;
 /**
  * Created by felipefrizzo on 6/19/16.
  */
-public class ClienteDAOTestDelete {
+public class DAOTestUpdate {
     private Connection connection = null;
     private Execute execute;
     private Cliente cliente;
@@ -39,16 +39,17 @@ public class ClienteDAOTestDelete {
     }
 
     @Test
-    public void test_delete() {
-        int delete = 0;
+    public void test_update() {
+        int update = 0;
         try {
-            preparedStatement = execute.getSqlDeleteById(connection, cliente, cliente.getId());
-            delete = preparedStatement.executeUpdate();
+            cliente.setNome("Felipe");
+            preparedStatement = execute.getSqlUpdateById(connection, cliente, cliente.getId());
+            update = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        Assert.assertEquals(1, delete);
+        Assert.assertEquals(1, update);
     }
 
     @After
