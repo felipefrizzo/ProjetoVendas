@@ -1,5 +1,6 @@
 package br.univel.model.cliente.dao;
 
+import br.univel.database.ConnectionDB_dev;
 import br.univel.generics.Execute;
 import br.univel.model.cliente.Cliente;
 import org.junit.After;
@@ -22,7 +23,7 @@ public class DAOTestUpdate {
 
     @Before
     public void setUp() {
-        connection = new ConnectionFake();
+        connection = new ConnectionDB_dev().getInstance().open();
 
         execute = new Execute();
         cliente = new Cliente();
