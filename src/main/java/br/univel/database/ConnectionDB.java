@@ -11,7 +11,7 @@ public class ConnectionDB {
     private Connection con;
     private static ConnectionDB inst;
     private String driver = "org.postgresql.Driver";
-    private String url = "jdbc:postgresql://192.168.99.100:5432/sqlgen";
+    private String url = "jdbc:postgresql://192.168.99.100:5432/vendas";
     private String username = "postgres";
     private String password = "{root}";
 

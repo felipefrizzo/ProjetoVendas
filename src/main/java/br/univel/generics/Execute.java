@@ -62,7 +62,7 @@ public class Execute extends SqlGenerator {
                     if (field.getAnnotation(Column.class).size() > -1) {
                         typeColumn = "VARCHAR(" + field.getAnnotation(Column.class).size() + ")";
                     } else {
-                        typeColumn = "VARCHAR(100)";
+                        typeColumn = "VARCHAR(254)";
                     }
                 } else if (typeParemetros.equals(int.class)){
                     if (field.getAnnotation(Column.class).pk() == true) {
@@ -149,7 +149,7 @@ public class Execute extends SqlGenerator {
     }
 
     @Override
-    protected PreparedStatement getSqlInsert(Connection con, Object obj) {
+    public PreparedStatement getSqlInsert(Connection con, Object obj) {
         Class<?> cl = obj.getClass();
         StringBuilder sb = new StringBuilder();
         String nameTable;
@@ -234,7 +234,7 @@ public class Execute extends SqlGenerator {
     }
 
     @Override
-    protected PreparedStatement getSqlSelectAll(Connection con, Object obj) {
+    public PreparedStatement getSqlSelectAll(Connection con, Object obj) {
         Class<?> cl = obj.getClass();
         StringBuilder sb = new StringBuilder();
         String nameTable;
@@ -259,7 +259,7 @@ public class Execute extends SqlGenerator {
     }
 
     @Override
-    protected PreparedStatement getSqlSelectById(Connection con, Object obj, int id) {
+    public PreparedStatement getSqlSelectById(Connection con, Object obj, int id) {
         Class<?> cl = obj.getClass();
         StringBuilder sb = new StringBuilder();
         String nameTable;
@@ -283,7 +283,7 @@ public class Execute extends SqlGenerator {
     }
 
     @Override
-    protected PreparedStatement getSqlUpdateById(Connection con, Object obj, int id) {
+    public PreparedStatement getSqlUpdateById(Connection con, Object obj, int id) {
         Class<?> cl = obj.getClass();
         StringBuilder sb = new StringBuilder();
         String nameTable;
@@ -357,7 +357,7 @@ public class Execute extends SqlGenerator {
     }
 
     @Override
-    protected PreparedStatement getSqlDeleteById(Connection con, Object obj, int id) {
+    public PreparedStatement getSqlDeleteById(Connection con, Object obj, int id) {
         PreparedStatement ps = null;
         try {
             Class<?> cl = obj.getClass();

@@ -1,20 +1,18 @@
-package br.univel.model;
+package br.univel.model.produto;
 
 import br.univel.annotation.Column;
-import br.univel.annotation.Table;
 
 import java.math.BigDecimal;
 
 /**
- * Created by felipefrizzo on 6/15/16.
+ * Created by felipefrizzo on 6/19/16.
  */
-@Table("Produto")
 public class Produto {
     @Column(pk = true)
     private int id;
-    @Column(name = "nome", size = 255)
+    @Column()
     private String nome;
-    @Column(name = "preco")
+    @Column()
     private BigDecimal preco;
 
     public Produto() {
