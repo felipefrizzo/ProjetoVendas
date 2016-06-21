@@ -2,6 +2,7 @@ package br.univel.model.vendas;
 
 import br.univel.annotation.Column;
 import br.univel.model.cliente.Cliente;
+import br.univel.model.produto.Produto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,7 +16,7 @@ public class Venda {
     @Column()
     private Cliente cliente;
     @Column()
-    private List<ItemVenda> itemVendaList;
+    private List<Produto> produtos;
     @Column()
     private BigDecimal valorTotal;
 }
