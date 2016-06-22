@@ -16,54 +16,54 @@ import br.univel.util.Serializador;
 
 public class ImplSerializador<T> implements Serializador<T>{
 
+	@Override
 	public boolean gravar(T t, File file) throws SerializadorException {
-		boolean retorno = false;
-		Class<?>[] vet = t.getClass().getInterfaces(); // aqui ele armazena em um vetor, todas as classes q extendem de inteface
+		Class<?>[] vet = t.getClass().getInterfaces();
 		
 		boolean achou = false;
+		boolean resultado = false;
 		
-		for(Class<?> class1 : vet){
-			if(class1.equals(Serializable.class)){
+		for(Class<?> c: vet){
+			if(c.equals(Serializable.class)){
 				achou = true;
 				break;
-			}
-		}
-		if(!achou){
-			throw new SerializadorException("Classe nao Implementa serializable !"); 
+			}			
 		}
 		
-		try (FileOutputStream fos = new FileOutputStream(file); // quando utilizo dessa maneira ele
-			ObjectOutputStream oos = new ObjectOutputStream(fos);){// da o close automaticamente
+		if(!achou){
+			throw new SerializadorException("Classe não implementa Serializable.");
+		}
+		
+		try(FileOutputStream fos = new FileOutputStream(file);
+			ObjectOutputStream oos = new ObjectOutputStream(fos)){
 			
 			oos.writeObject(t);
-			retorno = true;
-		} catch (Exception e) {
+			resultado = true;
+		}catch(Exception e){
 			throw new SerializadorException(e);
 		}
-		return retorno;
+		return resultado;
+		
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
 	public T ler(File file) throws SerializadorException {
-		try (FileInputStream fis = new FileInputStream(file);
-			 ObjectInputStream ois = new ObjectInputStream(fis)){
+	
+		try(FileInputStream fis   = new FileInputStream(file);
+			ObjectInputStream ois = new ObjectInputStream(fis)) {
 				
-			List<T> objects = null;
+			Object object = ois.readObject();
+			// nao sei porque nao esta funcionando . entao comentei
+			//Class<?> clGenType = (Class<?>)((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 			
-			while(ois.readObject() != null){
-				objects.add((T) ois.readObject());
-			}
-				
-			Class<?> clGenType = (Class<?>) ((ParameterizedType) getClass()
-			.getGenericSuperclass())
-	    	   .getActualTypeArguments()[0];
-				
-			if(!objects.getClass().equals(clGenType)){
-				throw new SerializadorException("Os tipos sao diferentes !");
-			}
-				
-			return (T) objects;	
+			//if(!object.getClass().equals(clGenType)){
+				//throw new SerializadorException("Os tipos são diferentes!");
+			//}
+			
+			return (T) object;			
 		} catch (Exception e) {
 			throw new SerializadorException(e);
-		}
+		} 	
 	}
 }

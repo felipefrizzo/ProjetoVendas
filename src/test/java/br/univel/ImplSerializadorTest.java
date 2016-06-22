@@ -94,9 +94,9 @@ public class ImplSerializadorTest {
 		assertEquals(true, implCliente.gravar(clientes, new File("clientes.dat")));
 	}
 
-//	@Test
-//	public void testLerCliente() throws SerializadorException {
-//		assertNotNull(implCliente.ler(new File("clientes.dat")));
-//	}
+	@Test
+	public void testLerCliente() throws SerializadorException {
+		assertNotNull(implCliente.ler(new File("clientes.dat")));
+	}
 
 }

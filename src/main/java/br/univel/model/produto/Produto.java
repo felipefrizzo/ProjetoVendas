@@ -1,13 +1,18 @@
 package br.univel.model.produto;
 
 import br.univel.annotation.Column;
+import br.univel.util.Serializador;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by felipefrizzo on 6/19/16.
  */
-public class Produto {
+public class Produto implements Serializable {
+	
+	private static final long serialVersionUID = 3567500841012871230L;
+	
     @Column(pk = true)
     private int id;
     @Column()
