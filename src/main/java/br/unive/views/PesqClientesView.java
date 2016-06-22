@@ -13,10 +13,10 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JScrollPane;
 
-public class ClientesView extends JFrame{
+public class PesqClientesView extends JFrame{
 	private JTextField textField;
 	private JTable table;
-	public ClientesView() {
+	public PesqClientesView() {
 		
 		JLabel lblClientes = new JLabel("Clientes");
 		lblClientes.setHorizontalAlignment(SwingConstants.CENTER);

@@ -33,7 +33,7 @@ public class PrincipalView extends JFrame{
 		JButton btnProdutos = new JButton("Produtos");
 		btnProdutos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProdutosView pv = new ProdutosView();
+				PesqProdutosView pv = new PesqProdutosView();
 				pv.setVisible(true);
 				pv.setBounds(400, 200, 470, 500);
 			}

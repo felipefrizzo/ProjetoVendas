@@ -21,10 +21,10 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JButton;
 import java.awt.Component;
 
-public class ProdutosView extends JFrame{
+public class PesqProdutosView extends JFrame{
 	private JTable table;
 	private JTextField textField;
-	public ProdutosView() {
+	public PesqProdutosView() {
 		
 		JLabel lblProdutos = new JLabel("Produtos");
 		lblProdutos.setHorizontalAlignment(SwingConstants.CENTER);
