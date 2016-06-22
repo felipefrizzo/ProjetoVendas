@@ -15,7 +15,9 @@ import br.univel.exception.SerializadorException;
 import br.univel.generics.ImplSerializador;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.produto.Produto;
+import br.univel.model.produto.ProdutoParser;
 import br.univel.model.vendas.Venda;
+import br.univel.modelo.readerURL.ReaderURL;
 
 
 public class ImplSerializadorTest {
@@ -35,6 +37,10 @@ public class ImplSerializadorTest {
 	
 	@BeforeClass
 	public static void antesCriarClasse() throws Exception {
+		ProdutoParser prodp = new ProdutoParser();
+		ReaderURL reader = new ReaderURL();
+		produtos = prodp.getProduto(reader.lerUrl());
+		
 		c1 = new Cliente();
 
 		c1.setId(1);
@@ -82,7 +88,8 @@ public class ImplSerializadorTest {
 		produtosVenda.add(prodVenda2);
 		
 		v1 = new Venda(produtosVenda);
-		
+		vendas =  new ArrayList<Venda>();
+		vendas.add(v1);
 		
 		implCliente =  new ImplSerializador<List<Cliente>>();
 		implProduto =  new ImplSerializador<List<Produto>>();
@@ -99,4 +106,23 @@ public class ImplSerializadorTest {
 		assertNotNull(implCliente.ler(new File("clientes.dat")));
 	}
 
+	@Test
+	public void testGravarProduto() throws SerializadorException {
+		assertEquals(true, implProduto.gravar(produtos, new File("produtos.dat")));
+	}
+
+	@Test
+	public void testLerProduto() throws SerializadorException {
+		assertNotNull(implProduto.ler(new File("produtos.dat")));
+	}
+	
+	@Test
+	public void testGravarVenda() throws SerializadorException {
+		assertEquals(true, implVenda.gravar(vendas, new File("vendas.dat")));
+	}
+
+	@Test
+	public void testLerVendas() throws SerializadorException {
+		assertNotNull(implVenda.ler(new File("vendas.dat")));
+	}
 }
