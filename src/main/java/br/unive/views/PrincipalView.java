@@ -30,6 +30,12 @@ public class PrincipalView extends JFrame{
 		JSeparator separator = new JSeparator();
 		
 		JButton btnProdutos = new JButton("Produtos");
+		btnProdutos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProdutosView pv = new ProdutosView();
+				pv.setEnabled(true);
+			}
+		});
 		
 		JButton btnClientes = new JButton("Clientes");
 		

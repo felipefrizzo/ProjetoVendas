@@ -1,5 +1,6 @@
 package br.univel;
 
+import br.unive.views.PrincipalView;
 import br.univel.database.ConnectionDB;
 import br.univel.generics.Execute;
 
@@ -8,7 +9,13 @@ import java.sql.SQLException;
 
 public class Principal {
     public Principal() {
-
+    	
+    }
+    
+    public static void main(String[] args) {
+        PrincipalView pv = new PrincipalView();
+        pv.setEnabled(true);
+        pv.setVisible(true);
     }
 
     public void dropTable(Object obj) {
@@ -33,8 +40,6 @@ public class Principal {
         }
     }
 
-    public static void main(String[] args) {
-        Principal principal = new Principal();
-    }
+    
 
 }
