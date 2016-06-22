@@ -4,6 +4,10 @@ package br.univel.model.vendas;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import br.univel.annotation.Column;
 import br.univel.annotation.Table;
@@ -14,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @Table("Venda")
+@XmlRootElement
 public class Venda implements Serializable{
 	
 	private static final long serialVersionUID = 3567500841012871230L;
@@ -25,10 +30,13 @@ public class Venda implements Serializable{
     @Column(name = "cliente")
 	private Cliente cliente;
     @Column(name = "produto")
-	private ArrayList<Produto> produtos;
+	private List<Produto> produtos;
 	
+    public Venda(){
+    	
+    }
 	
-	public Venda(ArrayList<Produto> prodvenda){
+	public Venda(List<Produto> prodvenda){
 		id++;
 		this.produtos = produtos;
 //		for (Produto produto : prodvenda) {
@@ -60,10 +68,12 @@ public class Venda implements Serializable{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public ArrayList<Produto> getProdutos() {
+	
+	@XmlElement(name = "produto")
+	public List<Produto> getProdutos() {
 		return produtos;
 	}
-	public void setProdutos(ArrayList<Produto> produtos) {
+	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
 	
