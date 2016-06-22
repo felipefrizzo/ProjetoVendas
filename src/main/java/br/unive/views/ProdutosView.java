@@ -50,14 +50,14 @@ public class ProdutosView extends JFrame{
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(lblProdutos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(separator, Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addComponent(separator, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGroup(groupLayout.createSequentialGroup()
 								.addContainerGap()
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-									.addComponent(textField, 323, 323, 323)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(textField, 323, 328, 323)
 									.addComponent(lblNewLabel)
-									.addComponent(table, GroupLayout.PREFERRED_SIZE, 328, GroupLayout.PREFERRED_SIZE)))))
+									.addComponent(table, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)))))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -88,7 +88,6 @@ public class ProdutosView extends JFrame{
 					.addGap(65))
 		);
 		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {button, button_1, btnExcluir});
-		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {table, textField});
 		getContentPane().setLayout(groupLayout);
 	}
 }

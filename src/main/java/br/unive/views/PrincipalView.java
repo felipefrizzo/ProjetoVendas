@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 public class PrincipalView extends JFrame{
 	public PrincipalView() {
 		
+		
 		JLabel lblProjetoVendas = new JLabel("Projeto Vendas");
 		lblProjetoVendas.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblProjetoVendas.setHorizontalAlignment(SwingConstants.CENTER);
@@ -33,7 +34,8 @@ public class PrincipalView extends JFrame{
 		btnProdutos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ProdutosView pv = new ProdutosView();
-				pv.setEnabled(true);
+				pv.setVisible(true);
+				pv.setBounds(400, 200, 470, 500);
 			}
 		});
 		
@@ -51,24 +53,23 @@ public class PrincipalView extends JFrame{
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(lblProjetoVendas, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
-				.addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+				.addComponent(lblProjetoVendas, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+				.addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(157)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnXmls, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
+							.addComponent(btnXmls, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+							.addGap(150))
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(btnBackup, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap())
+								.addComponent(btnBackup, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+								.addGap(150))
 							.addGroup(groupLayout.createSequentialGroup()
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addComponent(btnA, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(btnClientes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-										.addComponent(btnProdutos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+									.addComponent(btnA, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+									.addComponent(btnClientes, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+									.addComponent(btnProdutos, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
 								.addGap(150)))))
 		);
 		groupLayout.setVerticalGroup(
@@ -87,7 +88,7 @@ public class PrincipalView extends JFrame{
 					.addComponent(btnBackup)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnXmls)
-					.addContainerGap(18, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 	}

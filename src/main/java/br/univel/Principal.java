@@ -14,8 +14,8 @@ public class Principal {
     
     public static void main(String[] args) {
         PrincipalView pv = new PrincipalView();
-        pv.setEnabled(true);
         pv.setVisible(true);
+        pv.setBounds(400, 200, 500, 250);
     }
 
     public void dropTable(Object obj) {
