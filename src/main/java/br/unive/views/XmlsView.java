@@ -10,6 +10,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class XmlsView extends JFrame{
 	public XmlsView() {
@@ -44,6 +46,15 @@ public class XmlsView extends JFrame{
 		getContentPane().add(btnImportar);
 		getContentPane().add(btnGerar);
 		getContentPane().add(separator);
+		
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnSair.setBounds(215, 67, 89, 23);
+		getContentPane().add(btnSair);
 	}
 
 }

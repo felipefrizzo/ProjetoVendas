@@ -23,7 +23,6 @@ import br.univel.modelo.readerURL.ReaderURL;
 public class ImplSerializadorTest {
 
 	static Cliente c1, c2;
-	static Produto p1, p2;
 	static Venda v1, v2;
 	
 	static ImplSerializador<List<Cliente>> implCliente;

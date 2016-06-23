@@ -83,6 +83,15 @@ public class PesqProdutosView extends JFrame{
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.setBounds(458, 60, 91, 23);
 		getContentPane().add(btnExcluir);
+		
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnSair.setBounds(458, 89, 89, 23);
+		getContentPane().add(btnSair);
 		consulta();
 	}
 	

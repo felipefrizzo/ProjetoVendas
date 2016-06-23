@@ -12,6 +12,10 @@ import javax.swing.SwingConstants;
 
 import br.unive.tabelaModelos.ModeloCliente;
 import br.univel.model.cliente.Cliente;
+import br.univel.model.cliente.ClienteParser;
+import br.univel.model.produto.ProdutoParser;
+import br.univel.modelo.readerURL.ReaderURL;
+import br.univel.readerArquivo.ReaderArquivo;
 
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -20,28 +24,18 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class PesqClientesView extends JFrame{
 	private JTextField textField;
 	private JTable tableClientes;
-	private List<Cliente> listaClientes ;
+	private List<Cliente> listaClientes = new ArrayList<Cliente>();
 	public PesqClientesView() {
-		// para testar depois vou substituir pelos dados do banco
-		Cliente c1 = new Cliente();
-		c1.setId(1);
-		c1.setNome("Matheus Zandoná");
-		c1.setEndereço("|R:  Bento gonçalves");
-		c1.setNumero(736);
-		c1.setBairro("JD União");
-		c1.setCidade("Cascavel");
-		c1.setEstado("Paraná");
-		c1.setCelular("45 9961-9609");
-		c1.setTelefone("45 3333-4444");
-		
-		listaClientes = new ArrayList<>();
-		
-		listaClientes.add(c1);
+		// para testar, depois vou substituir pelos dados do banco
+		ClienteParser clip = new ClienteParser();
+		ReaderArquivo reader = new ReaderArquivo();
+		listaClientes = clip.getCliente(reader.lerArquivo(new File("clientes.csv")));
 		
 		JLabel lblClientes = new JLabel("Clientes");
 		lblClientes.setHorizontalAlignment(SwingConstants.CENTER);
@@ -68,6 +62,13 @@ public class PesqClientesView extends JFrame{
 		JButton button_2 = new JButton("Alterar");
 		
 		JScrollPane scrollPane = new JScrollPane();
+		
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -86,10 +87,11 @@ public class PesqClientesView extends JFrame{
 								.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
 								.addComponent(separator, GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))))
 					.addPreferredGap(ComponentPlacement.RELATED, 10, GroupLayout.PREFERRED_SIZE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(button_1, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+						.addComponent(button_2, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+						.addComponent(button, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+						.addComponent(btnSair, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -115,7 +117,9 @@ public class PesqClientesView extends JFrame{
 							.addContainerGap()
 							.addComponent(lblClientes, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+						.addComponent(btnSair))
 					.addContainerGap())
 		);
 		
@@ -127,8 +131,7 @@ public class PesqClientesView extends JFrame{
 	
 	public void Consultar(){
 		ModeloCliente model = new ModeloCliente(getListaClientes());
-		tableClientes = new JTable(model);
-		
+		tableClientes.setModel(model);		
 	}
 
 	public List<Cliente> getListaClientes() {

@@ -7,6 +7,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ClienteView extends JFrame{
 	private JTextField txtNome;
@@ -51,6 +53,11 @@ public class ClienteView extends JFrame{
 		getContentPane().add(btnNewButton);
 		
 		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		btnSair.setBounds(341, 58, 89, 23);
 		getContentPane().add(btnSair);
 		

@@ -8,6 +8,8 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ProdutoView extends JFrame{
 	private JTextField textField;
@@ -29,6 +31,11 @@ public class ProdutoView extends JFrame{
 		getContentPane().add(separator);
 		
 		JButton btnCancelar = new JButton("Sair");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		btnCancelar.setBounds(345, 68, 89, 23);
 		getContentPane().add(btnCancelar);
 		

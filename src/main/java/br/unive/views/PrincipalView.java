@@ -71,27 +71,29 @@ public class PrincipalView extends JFrame{
 				xv.setSize(323,145);
 			}
 		});
+		
+		JButton btnX = new JButton("X");
+		btnX.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(lblProjetoVendas, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
-				.addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+				.addComponent(lblProjetoVendas, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+				.addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(157)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnXmls, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-							.addGap(150))
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(btnBackup, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-								.addGap(150))
-							.addGroup(groupLayout.createSequentialGroup()
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addComponent(btnA, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
-									.addComponent(btnClientes, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
-									.addComponent(btnProdutos, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
-								.addGap(150)))))
+						.addComponent(btnXmls, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+						.addComponent(btnBackup, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+						.addComponent(btnA, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+						.addComponent(btnClientes, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+						.addComponent(btnProdutos, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
+					.addGap(51)
+					.addComponent(btnX)
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -100,7 +102,9 @@ public class PrincipalView extends JFrame{
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnProdutos)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnProdutos)
+						.addComponent(btnX))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnClientes)
 					.addPreferredGap(ComponentPlacement.RELATED)
