@@ -1,5 +1,6 @@
 package br.unive.tabelaModelos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -8,7 +9,7 @@ import br.univel.model.produto.Produto;
 
 public class ModelProduto extends AbstractTableModel{
 
-	private List<Produto> listaProdutos;  
+	private List<Produto> listaProdutos = new ArrayList<>();  
 
 	public ModelProduto(List<Produto> listaProdutos) {
 		this.listaProdutos = listaProdutos;

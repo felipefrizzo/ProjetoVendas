@@ -5,6 +5,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.SwingConstants;
@@ -24,8 +25,23 @@ import java.awt.event.ActionEvent;
 public class PesqClientesView extends JFrame{
 	private JTextField textField;
 	private JTable tableClientes;
-	private List<Cliente> listaClientes;
+	private List<Cliente> listaClientes ;
 	public PesqClientesView() {
+		// para testar depois vou substituir pelos dados do banco
+		Cliente c1 = new Cliente();
+		c1.setId(1);
+		c1.setNome("Matheus Zandoná");
+		c1.setEndereço("|R:  Bento gonçalves");
+		c1.setNumero(736);
+		c1.setBairro("JD União");
+		c1.setCidade("Cascavel");
+		c1.setEstado("Paraná");
+		c1.setCelular("45 9961-9609");
+		c1.setTelefone("45 3333-4444");
+		
+		listaClientes = new ArrayList<>();
+		
+		listaClientes.add(c1);
 		
 		JLabel lblClientes = new JLabel("Clientes");
 		lblClientes.setHorizontalAlignment(SwingConstants.CENTER);
@@ -54,23 +70,21 @@ public class PesqClientesView extends JFrame{
 		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(10)
 							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 328, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblClientes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+						.addComponent(lblClientes, GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(10)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(separator, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-									.addGap(286)))))
+								.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+								.addComponent(separator, GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))))
 					.addPreferredGap(ComponentPlacement.RELATED, 10, GroupLayout.PREFERRED_SIZE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
@@ -92,7 +106,7 @@ public class PesqClientesView extends JFrame{
 									.addGap(5)
 									.addComponent(button))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(separator)
+									.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(label_1)
 									.addGap(7)
@@ -101,13 +115,14 @@ public class PesqClientesView extends JFrame{
 							.addContainerGap()
 							.addComponent(lblClientes, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
 		tableClientes = new JTable();
 		scrollPane.setViewportView(tableClientes);
 		getContentPane().setLayout(groupLayout);
+		Consultar();
 	}
 	
 	public void Consultar(){

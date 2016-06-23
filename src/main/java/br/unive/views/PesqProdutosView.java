@@ -11,6 +11,8 @@ import javax.swing.SwingConstants;
 
 import br.unive.tabelaModelos.ModelProduto;
 import br.univel.model.produto.Produto;
+import br.univel.model.produto.ProdutoParser;
+import br.univel.modelo.readerURL.ReaderURL;
 
 import javax.swing.JSeparator;
 import javax.swing.JButton;
@@ -23,6 +25,11 @@ public class PesqProdutosView extends JFrame{
 	private JTable tableProdutos;
 	private List<Produto> listaProdutos;
 	public PesqProdutosView() {
+		// para testar depois vou substituir pelos dados do banco
+		ProdutoParser prodp = new ProdutoParser();
+		ReaderURL reader = new ReaderURL();
+		listaProdutos = prodp.getProduto(reader.lerUrl());
+		
 		getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -30,7 +37,7 @@ public class PesqProdutosView extends JFrame{
 		getContentPane().add(scrollPane);
 		
 		tableProdutos = new JTable();
-		scrollPane.setColumnHeaderView(tableProdutos);
+		scrollPane.setViewportView(tableProdutos);
 		
 		txtPesquisa = new JTextField();
 		txtPesquisa.setColumns(10);
@@ -76,6 +83,7 @@ public class PesqProdutosView extends JFrame{
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.setBounds(458, 60, 91, 23);
 		getContentPane().add(btnExcluir);
+		consulta();
 	}
 	
 	public void consulta(){
