@@ -14,16 +14,19 @@ import org.junit.Test;
 import br.univel.exception.SerializadorException;
 import br.univel.generics.ImplSerializador;
 import br.univel.model.cliente.Cliente;
+import br.univel.model.cliente.ClienteParser;
 import br.univel.model.produto.Produto;
 import br.univel.model.produto.ProdutoParser;
 import br.univel.model.vendas.Venda;
 import br.univel.modelo.readerURL.ReaderURL;
+import br.univel.readerArquivo.ReaderArquivo;
 
 
 public class ImplSerializadorTest {
 
-	static Cliente c1, c2;
 	static Venda v1, v2;
+	
+	static Cliente c1, c2;
 	
 	static ImplSerializador<List<Cliente>> implCliente;
 	static ImplSerializador<List<Produto>> implProduto;
@@ -33,12 +36,17 @@ public class ImplSerializadorTest {
 	static List<Produto> produtos;
 	static List<Venda> vendas;
 	static ArrayList produtosVenda;
+
 	
 	@BeforeClass
 	public static void antesCriarClasse() throws Exception {
 		ProdutoParser prodp = new ProdutoParser();
 		ReaderURL reader = new ReaderURL();
 		produtos = prodp.getProduto(reader.lerUrl());
+		
+		ClienteParser cp = new ClienteParser();
+		ReaderArquivo readerArq = new ReaderArquivo();
+		clientes = cp.getCliente(readerArq.lerArquivo(new File("clientes.csv")));
 		
 		c1 = new Cliente();
 
@@ -52,6 +60,7 @@ public class ImplSerializadorTest {
 		c1.setCelular("45 9961-9609");
 		c1.setTelefone("45 3333-4444");
 		
+		
 		c2 = new Cliente();
 		
 		c2.setId(2);
@@ -63,11 +72,6 @@ public class ImplSerializadorTest {
 		c2.setEstado("Paraná");
 		c2.setCelular("45 9988-9969");
 		c2.setTelefone("45 3333-4444");
-		
-		clientes = new ArrayList<Cliente>();
-		clientes.add(c1);
-		clientes.add(c2);
-		
 		
 		Produto prodVenda1 = new Produto();
 		prodVenda1 = new Produto();
@@ -86,7 +90,8 @@ public class ImplSerializadorTest {
 		produtosVenda.add(prodVenda1);
 		produtosVenda.add(prodVenda2);
 		
-		v1 = new Venda(produtosVenda);
+		v1 = new Venda(c1,produtosVenda);
+		v2 = new Venda(c2, produtosVenda);
 		vendas =  new ArrayList<Venda>();
 		vendas.add(v1);
 		

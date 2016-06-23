@@ -15,6 +15,7 @@ import org.postgresql.jdbc2.optional.SimpleDataSource;
 
 import br.univel.generics.EIXml;
 import br.univel.model.cliente.Cliente;
+import br.univel.model.cliente.ClienteParser;
 import br.univel.model.cliente.ClientesLista;
 import br.univel.model.produto.Produto;
 import br.univel.model.produto.ProdutoLista;
@@ -22,6 +23,7 @@ import br.univel.model.produto.ProdutoParser;
 import br.univel.model.vendas.Venda;
 import br.univel.model.vendas.VendasLista;
 import br.univel.modelo.readerURL.ReaderURL;
+import br.univel.readerArquivo.ReaderArquivo;
 
 
 public class EIXmlTest {
@@ -54,6 +56,13 @@ public class EIXmlTest {
 		pl = new ProdutoLista();
 		pl.setProdutos(produtos);
 		
+		ClienteParser cp = new ClienteParser();
+		ReaderArquivo readerArq = new ReaderArquivo();
+		clientes = cp.getCliente(readerArq.lerArquivo(new File("clientes.csv")));
+		
+		cl = new ClientesLista();
+		cl.setClientes(clientes);
+		
 		c1 = new Cliente();
 
 		c1.setId(1);
@@ -79,12 +88,6 @@ public class EIXmlTest {
 		c2.setCelular("45 9988-9969");
 		c2.setTelefone("45 3333-4444");
 		
-		clientes = new ArrayList<>();
-		clientes.add(c1);
-		clientes.add(c2);
-		
-		cl = new ClientesLista();
-		cl.setClientes(clientes);
 		
 		Produto prodVenda1 = new Produto();
 		prodVenda1 = new Produto();
