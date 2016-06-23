@@ -1,9 +1,12 @@
-package br.unive.views;
+package br.univel.views;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import br.univel.model.cliente.Cliente;
+
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
@@ -13,14 +16,18 @@ import java.awt.event.ActionEvent;
 public class ClienteView extends JFrame{
 	private JTextField txtNome;
 	private JTextField txtEndereco;
-	private JTextField textField;
+	private JTextField txtNumero;
 	private JTextField txtBairro;
 	private JTextField txtCidade;
-	private JTextField textField_1;
+	private JTextField txtEstado;
 	private JTextField txtComplemento;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField txtTelefone;
+	private JTextField txtCelular;
+	private JTextField txtCep;
+	private JLabel lbnCodigo;
+	
+	Cliente c ;
+	
 	public ClienteView() {
 		getContentPane().setLayout(null);
 		
@@ -31,7 +38,7 @@ public class ClienteView extends JFrame{
 		getContentPane().add(lblDadosCliente);
 		
 		JLabel lblNome = new JLabel("Nome: ");
-		lblNome.setBounds(14, 39, 34, 14);
+		lblNome.setBounds(14, 39, 116, 14);
 		getContentPane().add(lblNome);
 		
 		txtNome = new JTextField();
@@ -44,11 +51,16 @@ public class ClienteView extends JFrame{
 		separator.setBounds(339, 0, 2, 261);
 		getContentPane().add(separator);
 		
-		JLabel lbnCodigo = new JLabel("Codigo");
-		lbnCodigo.setBounds(342, 9, 40, 14);
+		lbnCodigo = new JLabel("Codigo");
+		lbnCodigo.setBounds(342, 9, 82, 14);
 		getContentPane().add(lbnCodigo);
 		
 		JButton btnNewButton = new JButton("Salvar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnNewButton.setBounds(341, 30, 89, 23);
 		getContentPane().add(btnNewButton);
 		
@@ -62,7 +74,7 @@ public class ClienteView extends JFrame{
 		getContentPane().add(btnSair);
 		
 		JLabel lblEndere = new JLabel("Endereço: ");
-		lblEndere.setBounds(14, 87, 52, 14);
+		lblEndere.setBounds(14, 87, 72, 14);
 		getContentPane().add(lblEndere);
 		
 		txtEndereco = new JTextField();
@@ -71,16 +83,16 @@ public class ClienteView extends JFrame{
 		getContentPane().add(txtEndereco);
 		
 		JLabel lbnNumCasa = new JLabel("Numero: ");
-		lbnNumCasa.setBounds(267, 87, 52, 14);
+		lbnNumCasa.setBounds(267, 87, 62, 14);
 		getContentPane().add(lbnNumCasa);
 		
-		textField = new JTextField();
-		textField.setBounds(267, 107, 62, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		txtNumero = new JTextField();
+		txtNumero.setBounds(267, 107, 62, 20);
+		getContentPane().add(txtNumero);
+		txtNumero.setColumns(10);
 		
 		JLabel lblBairro = new JLabel("Bairro: ");
-		lblBairro.setBounds(14, 135, 52, 14);
+		lblBairro.setBounds(14, 135, 72, 14);
 		getContentPane().add(lblBairro);
 		
 		txtBairro = new JTextField();
@@ -89,7 +101,7 @@ public class ClienteView extends JFrame{
 		getContentPane().add(txtBairro);
 		
 		JLabel lblCidade = new JLabel("Cidade: ");
-		lblCidade.setBounds(156, 135, 52, 14);
+		lblCidade.setBounds(156, 135, 84, 14);
 		getContentPane().add(lblCidade);
 		
 		txtCidade = new JTextField();
@@ -101,13 +113,13 @@ public class ClienteView extends JFrame{
 		lblEstado.setBounds(277, 135, 52, 14);
 		getContentPane().add(lblEstado);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(277, 155, 57, 20);
-		getContentPane().add(textField_1);
+		txtEstado = new JTextField();
+		txtEstado.setColumns(10);
+		txtEstado.setBounds(277, 155, 57, 20);
+		getContentPane().add(txtEstado);
 		
 		JLabel lblComplemento = new JLabel("Complemento: ");
-		lblComplemento.setBounds(14, 186, 72, 14);
+		lblComplemento.setBounds(14, 186, 97, 14);
 		getContentPane().add(lblComplemento);
 		
 		txtComplemento = new JTextField();
@@ -119,27 +131,62 @@ public class ClienteView extends JFrame{
 		lblTelefone.setBounds(151, 186, 72, 14);
 		getContentPane().add(lblTelefone);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(151, 205, 89, 20);
-		getContentPane().add(textField_2);
+		txtTelefone = new JTextField();
+		txtTelefone.setColumns(10);
+		txtTelefone.setBounds(151, 205, 89, 20);
+		getContentPane().add(txtTelefone);
 		
 		JLabel lblCelular = new JLabel("Celular: ");
 		lblCelular.setBounds(247, 186, 72, 14);
 		getContentPane().add(lblCelular);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(247, 205, 89, 20);
-		getContentPane().add(textField_3);
+		txtCelular = new JTextField();
+		txtCelular.setColumns(10);
+		txtCelular.setBounds(247, 205, 89, 20);
+		getContentPane().add(txtCelular);
 		
 		JLabel lblCep = new JLabel("Cep: ");
-		lblCep.setBounds(232, 39, 52, 14);
+		lblCep.setBounds(232, 39, 72, 14);
 		getContentPane().add(lblCep);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(232, 59, 97, 20);
-		getContentPane().add(textField_4);
+		txtCep = new JTextField();
+		txtCep.setColumns(10);
+		txtCep.setBounds(232, 59, 97, 20);
+		getContentPane().add(txtCep);
+		
+		// Alterar
+		if(PesqClientesView.cliAlterar != null){
+			atualizaCampos(PesqClientesView.cliAlterar);
+		}
+	}
+	
+	public void atualizaCampos(Cliente c){
+		lbnCodigo.setText(lbnCodigo.getText() + " " + c.getId());
+		txtNome.setText(c.getNome());
+		txtEndereco.setText(c.getEndereco());
+		txtCep.setText(c.getCep());
+		txtBairro.setText(c.getBairro());
+		txtNumero.setText(Integer.toString(c.getNumero()));
+		txtEstado.setText(c.getEstado());
+		txtCidade.setText(c.getCidade());
+		txtTelefone.setText(c.getTelefone());
+		txtCelular.setText(c.getCelular());
+	}
+	
+	public void limparCampos(){
+		lbnCodigo.setText("Código: ");
+		txtNome.setText("");
+		txtEndereco.setText("");
+		txtCep.setText("");
+		txtBairro.setText("");
+		txtNumero.setText("");
+		txtEstado.setText("");
+		txtCidade.setText("");
+		txtTelefone.setText("");
+		txtCelular.setText("");
 	}
 }
+
+
+
+

@@ -32,7 +32,7 @@ public class ClienteParser {
 
 	private Cliente getCliente(String str) { 
 
-		String[] itens = str.split(",");
+		String[] itens = str.split(";");
 		int id = Integer.parseInt(itens[0]);
 		String descricao = itens[1];
 		String endereco  = itens[2];

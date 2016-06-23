@@ -1,5 +1,6 @@
 package br.unive.tabelaModelos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -9,7 +10,7 @@ import br.univel.model.produto.Produto;
 
 public class ModeloCliente extends AbstractTableModel{
 
-	List<Cliente> clientes;
+	List<Cliente> clientes = new ArrayList<Cliente>();
 	
 	public ModeloCliente(List<Cliente> clientes) {
 		this.clientes = clientes;
@@ -32,10 +33,8 @@ public class ModeloCliente extends AbstractTableModel{
 			return "Código";
 		case 1:
 			return "Nome";
-		case 2:
-			return "Telefone";
 		default:
-			return super.getColumnName(column);
+			return "Telefone";
 		}
 	}
 	
@@ -51,7 +50,21 @@ public class ModeloCliente extends AbstractTableModel{
 		case 2:
 			return c.getEndereco();
 		case 3:
+			return c.getNumero();
+		case 4:
+			return c.getComplemento();
+		case 5:
+			return c.getBairro();
+		case 6:
+			return c.getCidade();
+		case 7:
+			return c.getEstado();
+		case 8:
+			return c.getCep();
+		case 9:
 			return c.getTelefone();
+		case 10:
+			return c.getCelular();
 		default:
 			return "Deu Ruim !";
 		}
