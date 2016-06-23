@@ -1,93 +1,93 @@
 package br.unive.views;
 
 import javax.swing.JFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.List;
+
 import javax.swing.SwingConstants;
+
+import br.unive.tabelaModelos.ModelProduto;
+import br.univel.model.produto.Produto;
+
 import javax.swing.JSeparator;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTextField;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.border.TitledBorder;
-import java.awt.FlowLayout;
-import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
 import javax.swing.JButton;
-import java.awt.Component;
+import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PesqProdutosView extends JFrame{
-	private JTable table;
-	private JTextField textField;
+	private JTextField txtPesquisa;
+	private JTable tableProdutos;
+	private List<Produto> listaProdutos;
 	public PesqProdutosView() {
+		getContentPane().setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 89, 438, 150);
+		getContentPane().add(scrollPane);
+		
+		tableProdutos = new JTable();
+		scrollPane.setColumnHeaderView(tableProdutos);
+		
+		txtPesquisa = new JTextField();
+		txtPesquisa.setColumns(10);
+		txtPesquisa.setBounds(10, 63, 328, 20);
+		getContentPane().add(txtPesquisa);
 		
 		JLabel lblProdutos = new JLabel("Produtos");
 		lblProdutos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProdutos.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblProdutos.setBounds(0, 0, 448, 28);
+		getContentPane().add(lblProdutos);
 		
 		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 32, 438, 4);
+		getContentPane().add(separator);
 		
-		table = new JTable();
+		JLabel label_1 = new JLabel("Pesquisa");
+		label_1.setBounds(10, 42, 42, 14);
+		getContentPane().add(label_1);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		JButton btnInserir = new JButton("Inserir");
+		btnInserir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProdutoView pv = new ProdutoView();
+				pv.setVisible(true);
+				pv.setSize(463,142);
+			}
+		});
+		btnInserir.setBounds(458, 3, 91, 23);
+		getContentPane().add(btnInserir);
 		
-		JLabel lblNewLabel = new JLabel("Pesquisa");
-		
-		JButton button = new JButton("Alterar");
-		
-		JButton button_1 = new JButton("Inserir");
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProdutoView pv = new ProdutoView();
+				pv.setVisible(true);
+				pv.setSize(463,142);
+			}
+		});
+		btnAlterar.setBounds(458, 32, 91, 23);
+		getContentPane().add(btnAlterar);
 		
 		JButton btnExcluir = new JButton("Excluir");
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblProdutos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-							.addComponent(separator, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addComponent(textField, 323, 328, 323)
-									.addComponent(lblNewLabel)
-									.addComponent(table, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)))))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-							.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-							.addComponent(button, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblProdutos, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_1))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblNewLabel)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnExcluir)))
-						.addComponent(button))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
-					.addGap(65))
-		);
-		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {button, button_1, btnExcluir});
-		getContentPane().setLayout(groupLayout);
+		btnExcluir.setBounds(458, 60, 91, 23);
+		getContentPane().add(btnExcluir);
+	}
+	
+	public void consulta(){
+		ModelProduto model = new ModelProduto(getListaProdutos());
+		tableProdutos.setModel(model);
+	}
+
+	public List<Produto> getListaProdutos() {
+		return listaProdutos;
+	}
+
+	public void setListaProdutos(List<Produto> listaProdutos) {
+		this.listaProdutos = listaProdutos;
 	}
 }

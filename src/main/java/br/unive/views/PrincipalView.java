@@ -35,11 +35,18 @@ public class PrincipalView extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				PesqProdutosView pv = new PesqProdutosView();
 				pv.setVisible(true);
-				pv.setBounds(400, 200, 470, 500);
+				pv.setSize(566,285);
 			}
 		});
 		
 		JButton btnClientes = new JButton("Clientes");
+		btnClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PesqClientesView pcv = new PesqClientesView();
+				pcv.setVisible(true);
+				pcv.setSize(574,304);
+			}
+		});
 		
 		JButton btnA = new JButton("Vendas");
 		btnA.addActionListener(new ActionListener() {
@@ -48,8 +55,22 @@ public class PrincipalView extends JFrame{
 		});
 		
 		JButton btnBackup = new JButton("Backup");
+		btnBackup.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BackupView bv = new BackupView();
+				bv.setVisible(true);
+				bv.setSize(309,141);
+			}
+		});
 		
 		JButton btnXmls = new JButton("Xmls");
+		btnXmls.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				XmlsView  xv = new XmlsView();
+				xv.setVisible(true);
+				xv.setSize(323,145);
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)

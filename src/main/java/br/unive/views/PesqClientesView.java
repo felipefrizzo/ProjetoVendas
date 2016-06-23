@@ -5,17 +5,26 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.List;
+
 import javax.swing.SwingConstants;
+
+import br.unive.tabelaModelos.ModeloCliente;
+import br.univel.model.cliente.Cliente;
+
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PesqClientesView extends JFrame{
 	private JTextField textField;
-	private JTable table;
+	private JTable tableClientes;
+	private List<Cliente> listaClientes;
 	public PesqClientesView() {
 		
 		JLabel lblClientes = new JLabel("Clientes");
@@ -32,6 +41,13 @@ public class PesqClientesView extends JFrame{
 		JButton button = new JButton("Excluir");
 		
 		JButton button_1 = new JButton("Inserir");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClienteView cv = new ClienteView();
+				cv.setVisible(true);
+				cv.setSize(450,301);
+			}
+		});
 		
 		JButton button_2 = new JButton("Alterar");
 		
@@ -89,8 +105,22 @@ public class PesqClientesView extends JFrame{
 					.addContainerGap())
 		);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		tableClientes = new JTable();
+		scrollPane.setViewportView(tableClientes);
 		getContentPane().setLayout(groupLayout);
+	}
+	
+	public void Consultar(){
+		ModeloCliente model = new ModeloCliente(getListaClientes());
+		tableClientes = new JTable(model);
+		
+	}
+
+	public List<Cliente> getListaClientes() {
+		return listaClientes;
+	}
+
+	public void setListaClientes(List<Cliente> listaClientes) {
+		this.listaClientes = listaClientes;
 	}
 }
