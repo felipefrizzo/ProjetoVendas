@@ -1,6 +1,7 @@
 package br.univel.generics;
 
 import br.univel.annotation.Column;
+import br.univel.annotation.SerialUID;
 import br.univel.annotation.Table;
 import br.univel.database.SqlGenerator;
 
@@ -41,68 +42,70 @@ public class Execute extends SqlGenerator {
             for (int i = 0; i < attributes.length; i++) {
                 Field field = attributes[i];
 
-                String nameColumn;
+                String nameColumn = "";
                 String typeColumn = null;
 
-                if (field.isAnnotationPresent(Column.class)) {
-                    Column annotationColumn = field.getAnnotation(Column.class);
+                if (!field.isAnnotationPresent(SerialUID.class)) {
+                    if (field.isAnnotationPresent(Column.class)) {
+                        Column annotationColumn = field.getAnnotation(Column.class);
 
-                    if (annotationColumn.name().isEmpty()) {
+                        if (annotationColumn.name().isEmpty()) {
+                            nameColumn = field.getName().toUpperCase();
+                        } else {
+                            nameColumn = annotationColumn.name();
+                        }
+                    } else {
                         nameColumn = field.getName().toUpperCase();
-                    } else {
-                        nameColumn = annotationColumn.name();
                     }
-                } else {
-                    nameColumn = field.getName().toUpperCase();
-                }
 
-                Class<?> typeParemetros = field.getType();
+                    Class<?> typeParemetros = field.getType();
 
-                if (typeParemetros.equals(String.class)) {
-                    if (field.getAnnotation(Column.class).size() > -1) {
-                        typeColumn = "VARCHAR(" + field.getAnnotation(Column.class).size() + ")";
-                    } else {
-                        typeColumn = "VARCHAR(254)";
-                    }
-                } else if (typeParemetros.equals(int.class)){
-                    if (field.getAnnotation(Column.class).pk() == true) {
-                        typeColumn = "INT NOT NULL";
-                    } else {
+                    if (typeParemetros.equals(String.class)) {
+                        if (field.getAnnotation(Column.class).size() > -1) {
+                            typeColumn = "VARCHAR(" + field.getAnnotation(Column.class).size() + ")";
+                        } else {
+                            typeColumn = "VARCHAR(254)";
+                        }
+                    } else if (typeParemetros.equals(int.class)){
+                        if (field.getAnnotation(Column.class).pk()) {
+                            typeColumn = "INT NOT NULL";
+                        } else {
+                            typeColumn = "INT";
+                        }
+                    } else if (typeParemetros.isEnum()) {
                         typeColumn = "INT";
+                    } else if (typeParemetros.equals(BigDecimal.class)) {
+                        typeColumn = "DECIMAL";
                     }
-                } else if (typeParemetros.isEnum()) {
-                    typeColumn = "INT";
-                } else if (typeParemetros.equals(BigDecimal.class)) {
-                    typeColumn = "DECIMAL";
+
+                    if (i > 1) sb.append(",");
+
+                    sb.append("\n\t").append(nameColumn).append(" ").append(typeColumn);
                 }
-
-                if (i > 0) sb.append(",");
-
-                sb.append("\n\t").append(nameColumn).append(" ").append(typeColumn);
-
             }
 
             sb.append(",\n\tPRIMARY KEY(");
             for (int y = 0; y < attributes.length; y++) {
                 int get = 0;
                 Field fields = attributes[y];
+                if (!fields.isAnnotationPresent(SerialUID.class)) {
+                    if (fields.isAnnotationPresent(Column.class)) {
+                        Column annotationColumn = fields.getAnnotation(Column.class);
 
-                if (fields.isAnnotationPresent(Column.class)) {
-                    Column annotationColumn = fields.getAnnotation(Column.class);
+                        if (annotationColumn.pk()) {
+                            if (get > 0) sb.append(", ");
 
-                    if (annotationColumn.pk()) {
-                        if (get > 0) sb.append(", ");
-
-                        if (annotationColumn.name().isEmpty()) {
-                            sb.append(fields.getName().toUpperCase());
-                        } else {
-                            sb.append(annotationColumn.name());
+                            if (annotationColumn.name().isEmpty()) {
+                                sb.append(fields.getName().toUpperCase());
+                            } else {
+                                sb.append(annotationColumn.name());
+                            }
+                            get++;
                         }
-                        get++;
                     }
-                }
-                if (y == attributes.length - 1) {
-                    sb.append(")");
+                    if (y == attributes.length - 1) {
+                        sb.append(")");
+                    }
                 }
             }
             sb.append("\n);");
@@ -168,31 +171,35 @@ public class Execute extends SqlGenerator {
         for (int i = 0; i < attributes.length; i++) {
             Field field = attributes[i];
             String nameColumn;
-
-            if (field.isAnnotationPresent(Column.class)) {
-                Column column = field.getAnnotation(Column.class);
-                if (column.name().isEmpty()) {
-                    nameColumn = field.getName().toUpperCase();
+            if (!field.isAnnotationPresent(SerialUID.class)) {
+                if (field.isAnnotationPresent(Column.class)) {
+                    Column column = field.getAnnotation(Column.class);
+                    if (column.name().isEmpty()) {
+                        nameColumn = field.getName().toUpperCase();
+                    } else {
+                        nameColumn = column.name();
+                    }
                 } else {
-                    nameColumn = column.name();
+                    nameColumn = field.getName().toUpperCase();
                 }
-            } else {
-                nameColumn = field.getName().toUpperCase();
-            }
 
-            if (i > 0) {
-                sb.append(", ");
-            }
+                if (i > 1) {
+                    sb.append(", ");
+                }
 
-            sb.append(nameColumn);
+                sb.append(nameColumn);
+            }
         }
 
         sb.append(") VALUES (");
 
         for (int i = 0; i < attributes.length; i++) {
-            if (i > 0) sb.append(", ");
+            Field field = attributes[i];
+            if (!field.isAnnotationPresent(SerialUID.class)) {
+                if (i > 1) sb.append(", ");
 
-            sb.append("?");
+                sb.append("?");
+            }
         }
         sb.append(")");
         String insert = sb.toString();
@@ -207,16 +214,18 @@ public class Execute extends SqlGenerator {
                 Object type = field.getType();
 
                 field.setAccessible(true);
-                if (type.equals(int.class)) {
-                    ps.setInt(i + 1, field.getInt(obj));
-                } else if (type.equals(String.class)) {
-                    ps.setString(i + 1, String.valueOf(field.get(obj)));
-                } else if (field.getType().isEnum()) {
-                    Object value = field.get(obj);
-                    Method m = value.getClass().getMethod("ordinal");
-                    ps.setInt(i + 1, (Integer) m.invoke(value, null));
-                } else if (type.equals(BigDecimal.class)) {
-                    ps.setBigDecimal(i + 1, BigDecimal.valueOf((Double) field.get(obj)));
+                if (!field.isAnnotationPresent(SerialUID.class)) {
+                    if (type.equals(int.class)) {
+                        ps.setInt(i, field.getInt(obj));
+                    } else if (type.equals(String.class)) {
+                        ps.setString(i, String.valueOf(field.get(obj)));
+                    } else if (field.getType().isEnum()) {
+                        Object value = field.get(obj);
+                        Method m = value.getClass().getMethod("ordinal");
+                        ps.setInt(i, (Integer) m.invoke(value, null));
+                    } else if (type.equals(BigDecimal.class)) {
+                        ps.setBigDecimal(i, BigDecimal.valueOf((Double) field.get(obj)));
+                    }
                 }
             }
 
@@ -301,23 +310,24 @@ public class Execute extends SqlGenerator {
         for (int i = 0; i < attributes.length; i++) {
             Field field = attributes[i];
             String nameColumn;
-
-            if (field.isAnnotationPresent(Column.class)) {
-                Column column = field.getAnnotation(Column.class);
-                if (column.name().isEmpty()) {
-                    nameColumn = field.getName().toUpperCase();
+            if (!field.isAnnotationPresent(SerialUID.class)) {
+                if (field.isAnnotationPresent(Column.class)) {
+                    Column column = field.getAnnotation(Column.class);
+                    if (column.name().isEmpty()) {
+                        nameColumn = field.getName().toUpperCase();
+                    } else {
+                        nameColumn = column.name();
+                    }
                 } else {
-                    nameColumn = column.name();
+                    nameColumn = field.getName().toUpperCase();
                 }
-            } else {
-                nameColumn = field.getName().toUpperCase();
-            }
 
-            if (i > 0) {
-                sb.append(", ");
-            }
+                if (i > 1) {
+                    sb.append(", ");
+                }
 
-            sb.append(nameColumn).append(" = ?");
+                sb.append(nameColumn).append(" = ?");
+            }
         }
         sb.append(" WHERE ID = ").append(id);
         String update = sb.toString();
@@ -332,14 +342,16 @@ public class Execute extends SqlGenerator {
                 Object type = field.getType();
 
                 field.setAccessible(true);
-                if (type.equals(int.class)) {
-                    ps.setInt(i + 1, field.getInt(obj));
-                } else if (type.equals(String.class)) {
-                    ps.setString(i + 1, String.valueOf(field.get(obj)));
-                } else if (field.getType().isEnum()) {
-                    Object value = field.get(obj);
-                    Method m = value.getClass().getMethod("ordinal");
-                    ps.setInt(i + 1, (Integer) m.invoke(value, null));
+                if (!field.isAnnotationPresent(SerialUID.class)) {
+                    if (type.equals(int.class)) {
+                        ps.setInt(i, field.getInt(obj));
+                    } else if (type.equals(String.class)) {
+                        ps.setString(i, String.valueOf(field.get(obj)));
+                    } else if (field.getType().isEnum()) {
+                        Object value = field.get(obj);
+                        Method m = value.getClass().getMethod("ordinal");
+                        ps.setInt(i, (Integer) m.invoke(value, null));
+                    }
                 }
             }
 

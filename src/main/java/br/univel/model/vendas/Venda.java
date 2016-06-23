@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import br.univel.annotation.Column;
+import br.univel.annotation.SerialUID;
 import br.univel.annotation.Table;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.produto.Produto;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 @Table("Venda")
 @XmlRootElement
 public class Venda implements Serializable{
-	
+	@SerialUID
 	private static final long serialVersionUID = 3567500841012871230L;
 	
     @Column(pk = true)
@@ -38,10 +39,6 @@ public class Venda implements Serializable{
 	
 	public Venda(List<Produto> prodvenda){
 		id++;
-		this.produtos = produtos;
-//		for (Produto produto : prodvenda) {
-//			valorTotal = valorTotal + produto.getPreco();
-//		}
 	}
 	
 	public Venda(Cliente cliente, ArrayList<Produto> produtos){

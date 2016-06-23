@@ -1,5 +1,6 @@
 package br.univel.model.cliente.dao;
 
+import br.univel.database.ConnectionDB;
 import br.univel.database.ConnectionDB_dev;
 import br.univel.generics.Execute;
 import br.univel.model.cliente.Cliente;
@@ -27,7 +28,7 @@ public class DAOTestUpdate {
 
         execute = new Execute();
         cliente = new Cliente();
-
+        execute.getCreateTable(connection, cliente);
         try {
             cliente.setId(1);
             preparedStatement = execute.getSqlInsert(connection, cliente);
@@ -55,6 +56,7 @@ public class DAOTestUpdate {
     @After
     public void close() {
         try {
+            execute.getDropTable(connection, cliente);
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();

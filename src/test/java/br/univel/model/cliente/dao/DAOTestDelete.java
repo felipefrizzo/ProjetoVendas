@@ -27,7 +27,7 @@ public class DAOTestDelete {
 
         execute = new Execute();
         cliente = new Cliente();
-
+        execute.getCreateTable(connection, cliente);
         try {
             cliente.setId(1);
             preparedStatement = execute.getSqlInsert(connection, cliente);
@@ -54,6 +54,7 @@ public class DAOTestDelete {
     @After
     public void close() {
         try {
+            execute.getDropTable(connection, cliente);
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();

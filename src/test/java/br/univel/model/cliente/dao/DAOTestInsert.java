@@ -27,6 +27,7 @@ public class DAOTestInsert {
 
         execute = new Execute();
         cliente = new Cliente();
+        execute.getCreateTable(connection, cliente);
         preparedStatement = null;
     }
 
@@ -47,6 +48,7 @@ public class DAOTestInsert {
     @After
     public void close() {
         try {
+            execute.getDropTable(connection, cliente);
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();

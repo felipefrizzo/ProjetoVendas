@@ -7,30 +7,54 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import br.univel.annotation.Column;
+import br.univel.annotation.SerialUID;
 
 @XmlRootElement
 public class Cliente implements Serializable{
-	
+	@SerialUID()
 	private static final long serialVersionUID = 3567500841012871230L;
 	
 	@Column(pk = true)
 	private int id;
+	@Column()
 	private String nome;
+	@Column()
 	private String endereco;
+	@Column()
 	private int numero;
+	@Column()
 	private String complemento;
+	@Column()
 	private String bairro;
+	@Column()
 	private String cidade;
+	@Column()
 	private String estado;
+	@Column()
 	private String cep;
+	@Column()
 	private String telefone;
+	@Column()
 	private String celular;
 	
 	public Cliente(){
 		
 	}
 
-    public Cliente(int id, String nome, String endereco, int numero, String complemento, String bairro, String cidade, String estado, String cep, String telefone, String celular) {
+	public Cliente(String nome, String endereco, int numero, String complemento, String bairro, String cidade, String estado, String cep, String telefone, String celular) {
+		this.nome = nome;
+		this.endereco = endereco;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.cep = cep;
+		this.telefone = telefone;
+		this.celular = celular;
+	}
+
+	public Cliente(int id, String nome, String endereco, int numero, String complemento, String bairro, String cidade, String estado, String cep, String telefone, String celular) {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;

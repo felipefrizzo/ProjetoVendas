@@ -13,7 +13,7 @@ public class ConnectionDB_dev {
     private String driver = "org.postgresql.Driver";
     private String url = "jdbc:postgresql://192.168.99.100:5432/vendas_dev";
     private String username = "postgres";
-    private String password = "{root}";
+    private String password = "root";
 
     public ConnectionDB_dev() {
 
