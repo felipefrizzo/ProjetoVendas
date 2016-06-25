@@ -1,8 +1,10 @@
 package br.univel.database;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Created by felipefrizzo on 4/24/16.
@@ -10,10 +12,13 @@ import java.sql.SQLException;
 public class ConnectionDB {
     private Connection con;
     private static ConnectionDB inst;
+    private String url;
+    private String username;
+    private String password;
     private String driver = "org.postgresql.Driver";
-    private String url = "jdbc:postgresql://192.168.99.100:5432/vendas";
-    private String username = "postgres";
-    private String password = "root";
+//    private String url = "jdbc:postgresql://192.168.99.100:5432/vendas";
+//    private String username = "postgres";
+//    private String password = "root";
 
     public ConnectionDB() {
 
@@ -26,6 +31,23 @@ public class ConnectionDB {
     }
 
     public Connection open() {
+        try {
+
+            File file = new File("config.properties");
+            FileInputStream fileInput = new FileInputStream(file);
+            Properties properties = new Properties();
+            properties.load(fileInput);
+            url = "jdbc:postgresql://" + properties.getProperty("database");
+            username = properties.getProperty("username");
+            password = properties.getProperty("password");
+
+            fileInput.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try {
             Class.forName(driver);
             con = DriverManager.getConnection(url, username, password);
