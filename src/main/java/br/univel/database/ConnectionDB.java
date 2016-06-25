@@ -16,15 +16,9 @@ public class ConnectionDB {
     private String username;
     private String password;
     private String driver = "org.postgresql.Driver";
-<<<<<<< HEAD
-    private String url = "jdbc:postgresql://localhost:5432/vendas";
-    private String username = "postgres";
-    private String password = "123";
-=======
 //    private String url = "jdbc:postgresql://192.168.99.100:5432/vendas";
 //    private String username = "postgres";
 //    private String password = "root";
->>>>>>> origin/master
 
     public ConnectionDB() {
 

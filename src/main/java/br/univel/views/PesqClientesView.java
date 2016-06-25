@@ -142,7 +142,7 @@ public class PesqClientesView extends JFrame{
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(10)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
 								.addComponent(separator, GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))))
 					.addPreferredGap(ComponentPlacement.RELATED, 10, GroupLayout.PREFERRED_SIZE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)

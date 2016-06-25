@@ -37,6 +37,7 @@ public class PesqProdutosView extends JFrame{
 	public static Produto prodAlterar;
 	ProdutoDAO prodDAO = new ProdutoDAO();
 	
+	
 	PesqProdutosView() {
 		// para testar depois vou substituir pelos dados do banco
 //		ProdutoParser prodp = new ProdutoParser();
@@ -80,7 +81,7 @@ public class PesqProdutosView extends JFrame{
 		getContentPane().add(separator);
 		
 		JLabel label_1 = new JLabel("Pesquisa");
-		label_1.setBounds(10, 42, 42, 14);
+		label_1.setBounds(10, 42, 91, 14);
 		getContentPane().add(label_1);
 		
 		JButton btnInserir = new JButton("Inserir");
@@ -119,6 +120,15 @@ public class PesqProdutosView extends JFrame{
 		getContentPane().add(btnAlterar);
 		
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int selecionada = tableProdutos.getSelectedRow();
+				if(selecionada != -1){
+					Produto prodAntigo = ((ModelProduto) tableProdutos.getModel()).getProduto(selecionada);
+					prodDAO.delete(prodAntigo.getId());					
+				}
+			}
+		});
 		btnExcluir.setBounds(458, 60, 91, 23);
 		getContentPane().add(btnExcluir);
 		

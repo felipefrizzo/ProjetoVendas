@@ -51,8 +51,8 @@ public class ClienteView extends JFrame{
 		separator.setBounds(339, 0, 2, 261);
 		getContentPane().add(separator);
 		
-		lbnCodigo = new JLabel("Codigo");
-		lbnCodigo.setBounds(342, 9, 82, 14);
+		lbnCodigo = new JLabel("");
+		lbnCodigo.setBounds(385, 12, 45, 14);
 		getContentPane().add(lbnCodigo);
 		
 		JButton btnNewButton = new JButton("Salvar");
@@ -154,6 +154,10 @@ public class ClienteView extends JFrame{
 		txtCep.setBounds(232, 59, 97, 20);
 		getContentPane().add(txtCep);
 		
+		JLabel lblCdigo = new JLabel("Código: ");
+		lblCdigo.setBounds(343, 12, 40, 14);
+		getContentPane().add(lblCdigo);
+		
 		// Alterar
 		if(PesqClientesView.cliAlterar != null){
 			atualizaCampos(PesqClientesView.cliAlterar);
@@ -161,7 +165,7 @@ public class ClienteView extends JFrame{
 	}
 	
 	public void atualizaCampos(Cliente c){
-		lbnCodigo.setText(lbnCodigo.getText() + " " + c.getId());
+		lbnCodigo.setText(String.valueOf(c.getId()));
 		txtNome.setText(c.getNome());
 		txtEndereco.setText(c.getEndereco());
 		txtCep.setText(c.getCep());
@@ -174,7 +178,7 @@ public class ClienteView extends JFrame{
 	}
 	
 	public void limparCampos(){
-		lbnCodigo.setText("Código: ");
+		lbnCodigo.setText("");
 		txtNome.setText("");
 		txtEndereco.setText("");
 		txtCep.setText("");

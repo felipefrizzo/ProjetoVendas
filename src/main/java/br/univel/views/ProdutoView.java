@@ -39,11 +39,15 @@ public class ProdutoView extends JFrame{
 					p.setNome(txtDescricao.getText());
 					p.setPreco(new BigDecimal(txtPreco.getText()));
 					prodDao.save(p);
+					limpaCampos();
+					dispose();
 				}else{ // alterando
 					PesqProdutosView.prodAlterar.setId(Integer.parseInt(lbnCodigo.getText()));
 					PesqProdutosView.prodAlterar.setNome(txtDescricao.getText());
 					PesqProdutosView.prodAlterar.setPreco(new BigDecimal(txtPreco.getText()));
 					prodDao.update(PesqProdutosView.prodAlterar);
+					limpaCampos();
+					dispose();
 				}
 			}
 		});
