@@ -16,8 +16,9 @@ public class Principal {
     
     public static void main(String[] args) {
         PrincipalView pv = new PrincipalView();
+        pv.setSize(500,300);
+        pv.setLocationRelativeTo(null);
         pv.setVisible(true);
-        pv.setSize(408,250);
         
     }
 

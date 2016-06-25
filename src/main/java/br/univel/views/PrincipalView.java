@@ -27,6 +27,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PrincipalView extends JFrame{
 	ConnectionDB conn ;
@@ -55,8 +60,9 @@ public class PrincipalView extends JFrame{
 		btnProdutos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PesqProdutosView pv = new PesqProdutosView();
-				pv.setVisible(true);
 				pv.setSize(566,285);
+				pv.setLocationRelativeTo(null);
+				pv.setVisible(true);
 			}
 		});
 		
@@ -64,8 +70,9 @@ public class PrincipalView extends JFrame{
 		btnClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PesqClientesView pcv = new PesqClientesView();
-				pcv.setVisible(true);
 				pcv.setSize(574,304);
+				pcv.setLocationRelativeTo(null);
+				pcv.setVisible(true);
 			}
 		});
 		
@@ -79,8 +86,9 @@ public class PrincipalView extends JFrame{
 		btnBackup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BackupView bv = new BackupView();
-				bv.setVisible(true);
 				bv.setSize(309,141);
+				bv.setLocationRelativeTo(null);
+				bv.setVisible(true);
 			}
 		});
 		
@@ -88,8 +96,9 @@ public class PrincipalView extends JFrame{
 		btnXmls.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				XmlsView  xv = new XmlsView();
-				xv.setVisible(true);
 				xv.setSize(323,145);
+				xv.setLocationRelativeTo(null);
+				xv.setVisible(true);
 			}
 		});
 		
@@ -137,5 +146,39 @@ public class PrincipalView extends JFrame{
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnNewMenu = new JMenu("Relatórios");
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem mntmRelatrios = new JMenuItem("Clientes");
+		mntmRelatrios.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+//				String arq = "pessoa_report.jrxml";
+//				
+//				DaoPessoa dao = new DaoPessoa();
+//				PessoaJRDataSource ds = new PessoaJRDataSource(dao.getPessoas());
+//				
+//				JasperPrint jp = JasperFillManager.fillReport(arq, null, ds);
+//
+//				JasperViewer jasperViewer = new JasperViewer(jp);
+//
+//				jasperViewer.setBounds(50, 50, 320, 240);
+//				jasperViewer.setLocationRelativeTo(null);
+//				jasperViewer.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//
+//				jasperViewer.setVisible(true);
+			}
+		});
+		mnNewMenu.add(mntmRelatrios);
+		
+		JMenuItem mntmProdutos = new JMenuItem("Produtos");
+		mnNewMenu.add(mntmProdutos);
+		
+		JMenuItem mntmVendas = new JMenuItem("Vendas");
+		mnNewMenu.add(mntmVendas);
 	}
 }
