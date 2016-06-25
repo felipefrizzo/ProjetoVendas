@@ -29,7 +29,7 @@ public class DAOTestDelete {
         cliente = new Cliente();
         execute.getCreateTable(connection, cliente);
         try {
-            cliente.setId(1);
+            cliente.setNome("Felipe Frizzo");
             preparedStatement = execute.getSqlInsert(connection, cliente);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class DAOTestDelete {
     public void test_delete() {
         int delete = 0;
         try {
-            preparedStatement = execute.getSqlDeleteById(connection, cliente, cliente.getId());
+            preparedStatement = execute.getSqlDeleteById(connection, cliente, 1);
             delete = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

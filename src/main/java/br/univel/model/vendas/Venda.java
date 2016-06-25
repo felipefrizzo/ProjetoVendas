@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @Table("Venda")
 @XmlRootElement
 public class Venda implements Serializable{
-	@SerialUID
+	@SerialUID()
 	private static final long serialVersionUID = 3567500841012871230L;
 	
     @Column(pk = true)
