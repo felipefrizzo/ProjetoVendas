@@ -5,6 +5,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
@@ -32,10 +34,10 @@ import java.awt.event.KeyEvent;
 
 public class PesqProdutosView extends JFrame{
 	private JTextField txtPesquisa;
-	private JTable tableProdutos;
+	public static JTable tableProdutos;
 	private List<Produto> listaProdutos;
 	public static Produto prodAlterar;
-	ProdutoDAO prodDAO = new ProdutoDAO();
+	ProdutoDAO prodDAO ;
 	
 	
 	PesqProdutosView() {
@@ -48,6 +50,7 @@ public class PesqProdutosView extends JFrame{
 //		for(Produto p : listaProdutos){
 //			prodDAO.save(p);
 //		}
+		prodDAO = new ProdutoDAO();
 		listaProdutos = prodDAO.listAll();
 		
 		getContentPane().setLayout(null);
@@ -91,6 +94,7 @@ public class PesqProdutosView extends JFrame{
 				pv.setVisible(true);
 				pv.setSize(463,142);
 				pv.inserindo = true;
+				listaProdutos = prodDAO.listAll();
 			}
 		});
 		btnInserir.setBounds(458, 3, 91, 23);
@@ -107,6 +111,7 @@ public class PesqProdutosView extends JFrame{
 					
 					prodAlterar = new Produto();
 					prodAlterar.setId(Integer.parseInt(tableProdutos.getValueAt(selecionada, 0).toString()));
+					System.out.println(prodAlterar.getId());
 					prodAlterar.setNome(tableProdutos.getValueAt(selecionada, 1).toString());
 					prodAlterar.setPreco(new BigDecimal(tableProdutos.getValueAt(selecionada, 2).toString()));
 				}
@@ -114,6 +119,8 @@ public class PesqProdutosView extends JFrame{
 				ProdutoView pv = new ProdutoView();
 				pv.setVisible(true);
 				pv.setSize(463,142);
+				prodDAO = new ProdutoDAO();
+				listaProdutos = prodDAO.listAll();
 			}
 		});
 		btnAlterar.setBounds(458, 32, 91, 23);
@@ -123,10 +130,17 @@ public class PesqProdutosView extends JFrame{
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int selecionada = tableProdutos.getSelectedRow();
-				if(selecionada != -1){
-					Produto prodAntigo = ((ModelProduto) tableProdutos.getModel()).getProduto(selecionada);
-					prodDAO.delete(prodAntigo.getId());					
-				}
+				
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+	            JOptionPane.showConfirmDialog (null, "Tem Certeza que deseja excluir esse registro ?","CUIDADO", dialogButton);
+	            if(dialogButton == JOptionPane.YES_OPTION) {
+	            	if(selecionada != -1){
+	            		Produto prodAntigo = ((ModelProduto) tableProdutos.getModel()).getProduto(selecionada);
+	            		prodDAO.delete(prodAntigo.getId());
+	            		prodDAO = new ProdutoDAO();
+	            		listaProdutos = prodDAO.listAll();
+	            	}
+	            }
 			}
 		});
 		btnExcluir.setBounds(458, 60, 91, 23);

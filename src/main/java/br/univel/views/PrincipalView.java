@@ -10,7 +10,10 @@ import java.awt.Color;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 
+import br.univel.Principal;
 import br.univel.database.ConnectionDB;
+import br.univel.model.cliente.Cliente;
+import br.univel.model.produto.Produto;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -31,6 +34,10 @@ public class PrincipalView extends JFrame{
 	public PrincipalView() {
 		conn = new ConnectionDB();
 		conn.open();
+//		Principal p = new Principal();
+//		p.createTable(new Produto());
+//		p.createTable(new Cliente());
+//		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

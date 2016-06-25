@@ -18,6 +18,7 @@ import javax.swing.table.TableRowSorter;
 import br.unive.tabelaModelos.ModeloCliente;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.cliente.ClienteParser;
+import br.univel.model.cliente.dao.ClienteDAO;
 import br.univel.model.produto.ProdutoParser;
 import br.univel.modelo.readerURL.ReaderURL;
 import br.univel.readerArquivo.ReaderArquivo;
@@ -44,9 +45,10 @@ public class PesqClientesView extends JFrame{
 	private List<Cliente> listaClientes = new ArrayList<Cliente>();
 	public PesqClientesView() {
 		// para testar, depois vou substituir pelos dados do banco
-		ClienteParser clip = new ClienteParser();
-		ReaderArquivo reader = new ReaderArquivo();
-		listaClientes = clip.getCliente(reader.lerArquivo(new File("clientes.csv")));
+//		ClienteParser clip = new ClienteParser();
+//		ReaderArquivo reader = new ReaderArquivo();
+		ClienteDAO cliDao = new ClienteDAO();
+		listaClientes = cliDao.listAll();
 		
 		JLabel lblClientes = new JLabel("Clientes");
 		lblClientes.setHorizontalAlignment(SwingConstants.CENTER);
@@ -83,6 +85,11 @@ public class PesqClientesView extends JFrame{
 				ClienteView cv = new ClienteView();
 				cv.setVisible(true);
 				cv.setSize(450,301);
+				
+				ClienteView cv = new ClienteView();
+				cv.setVisible(true);
+				cv.setSize(463,142);
+				cv.inserindo = true;
 			}
 		});
 		

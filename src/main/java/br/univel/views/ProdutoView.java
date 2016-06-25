@@ -41,7 +41,7 @@ public class ProdutoView extends JFrame{
 					limpaCampos();
 					dispose();
 				}else{ // alterando
-//					PesqProdutosView.prodAlterar.setId(Integer.parseInt(lbnCodigo.getText()));
+					PesqProdutosView.prodAlterar.setId(Integer.parseInt(lbnCodigo.getText()));
 					PesqProdutosView.prodAlterar.setNome(txtDescricao.getText());
 					PesqProdutosView.prodAlterar.setPreco(new BigDecimal(txtPreco.getText().replaceAll(",", ".")));
 					prodDao.update(PesqProdutosView.prodAlterar);

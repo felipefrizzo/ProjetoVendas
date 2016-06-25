@@ -27,6 +27,7 @@ public class ClienteView extends JFrame{
 	private JLabel lbnCodigo;
 	
 	Cliente c ;
+	protected boolean inserindo = false;
 	
 	public ClienteView() {
 		getContentPane().setLayout(null);

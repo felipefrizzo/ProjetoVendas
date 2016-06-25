@@ -1,6 +1,7 @@
 package br.univel.model.vendas;
 
 import br.univel.annotation.Column;
+import br.univel.annotation.SerialUID;
 import br.univel.annotation.Table;
 import br.univel.model.produto.Produto;
 
@@ -11,6 +12,9 @@ import java.math.BigDecimal;
  */
 @Table("ItemVenda")
 public class ItemVenda {
+	
+	@SerialUID()
+	private static final long serialVersionUID = 3567500841012871230L;
 
     @Column(name="id", pk=true)
     private int id;
