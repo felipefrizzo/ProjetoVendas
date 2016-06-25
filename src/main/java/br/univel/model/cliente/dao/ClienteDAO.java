@@ -18,12 +18,13 @@ import java.util.List;
 public class ClienteDAO implements Dao<Cliente, Integer> {
     private PreparedStatement ps = null;
     private ResultSet rs = null;
-    private Connection con = ConnectionDB.getInstance().open();
+    private Connection con = null;
     private Execute ex = new Execute();
     private List<Cliente> list = null;
 
     @Override
     public void save(Cliente cliente) {
+        con = ConnectionDB.getInstance().open();
         try {
             ps = ex.getSqlInsert(con, cliente);
             ps.executeUpdate();
@@ -41,6 +42,7 @@ public class ClienteDAO implements Dao<Cliente, Integer> {
 
     @Override
     public Cliente search(Integer integer) {
+        con = ConnectionDB.getInstance().open();
         Cliente cliente = new Cliente();
         try {
             ps = ex.getSqlSelectById(con, cliente, integer);
@@ -67,6 +69,7 @@ public class ClienteDAO implements Dao<Cliente, Integer> {
 
     @Override
     public void update(Cliente cliente) {
+        con = ConnectionDB.getInstance().open();
         try {
             ps = ex.getSqlUpdateById(con, cliente, cliente.getId());
             ps.executeUpdate();
@@ -84,6 +87,7 @@ public class ClienteDAO implements Dao<Cliente, Integer> {
 
     @Override
     public void delete(Integer integer) {
+        con = ConnectionDB.getInstance().open();
         try {
             ps = ex.getSqlDeleteById(con, new Cliente(), integer);
             ps.executeUpdate();
@@ -101,6 +105,7 @@ public class ClienteDAO implements Dao<Cliente, Integer> {
 
     @Override
     public List<Cliente> listAll() {
+        con = ConnectionDB.getInstance().open();
         list = null;
 
         try {

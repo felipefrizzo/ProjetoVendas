@@ -18,12 +18,13 @@ import java.util.List;
 public class ProdutoDAO implements Dao<Produto, Integer> {
     private PreparedStatement ps  = null;
     private ResultSet rs = null;
-    private Connection con = ConnectionDB.getInstance().open();
+    private Connection con = null;
     private Execute ex = new Execute();
     private List<Produto> list = null;
 
     @Override
     public void save(Produto produto) {
+        con = ConnectionDB.getInstance().open();
         try {
             ps = ex.getSqlInsert(con, produto);
             ps.executeUpdate();
@@ -41,6 +42,7 @@ public class ProdutoDAO implements Dao<Produto, Integer> {
 
     @Override
     public Produto search(Integer integer) {
+        con = ConnectionDB.getInstance().open();
         Produto produto = new Produto();
         try {
             ps = ex.getSqlSelectById(con, produto, integer);
@@ -64,6 +66,7 @@ public class ProdutoDAO implements Dao<Produto, Integer> {
 
     @Override
     public void update(Produto produto) {
+        con = ConnectionDB.getInstance().open();
         try {
             ps = ex.getSqlUpdateById(con, produto, produto.getId());
             ps.executeUpdate();
@@ -81,6 +84,7 @@ public class ProdutoDAO implements Dao<Produto, Integer> {
 
     @Override
     public void delete(Integer integer) {
+        con = ConnectionDB.getInstance().open();
         try {
             ps = ex.getSqlDeleteById(con, new Produto(), integer);
             ps.executeUpdate();
@@ -98,6 +102,7 @@ public class ProdutoDAO implements Dao<Produto, Integer> {
 
     @Override
     public List<Produto> listAll() {
+        con = ConnectionDB.getInstance().open();
         list = null;
 
         try {
