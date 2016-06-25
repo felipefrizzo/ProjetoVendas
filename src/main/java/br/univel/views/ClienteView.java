@@ -6,11 +6,13 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import br.univel.model.cliente.Cliente;
+import br.univel.model.cliente.dao.ClienteDAO;
 
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.awt.event.ActionEvent;
 
 public class ClienteView extends JFrame{
@@ -26,8 +28,8 @@ public class ClienteView extends JFrame{
 	private JTextField txtCep;
 	private JLabel lbnCodigo;
 	
-	Cliente c ;
 	protected boolean inserindo = false;
+	ClienteDAO cliDao = new ClienteDAO();
 	
 	public ClienteView() {
 		getContentPane().setLayout(null);
@@ -59,7 +61,39 @@ public class ClienteView extends JFrame{
 		JButton btnNewButton = new JButton("Salvar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if(inserindo){
+					Cliente c = new Cliente();
+//					p.setId(Integer.parseInt(lbnCodigo.getText()));
+//					c.setId(id);
+					c.setNome(txtNome.getText());
+					c.setEndereço(txtEndereco.getText());
+					c.setCep(txtCep.getText());
+					c.setBairro(txtBairro.getText());
+					c.setNumero(Integer.parseInt(txtNumero.getText()));
+					c.setEstado(txtEstado.getText());
+					c.setCidade(txtCidade.getText());
+					c.setTelefone(txtTelefone.getText());
+					c.setCelular(txtCelular.getText());
+					
+					cliDao.save(c);
+					limparCampos();
+					dispose();
+				}else{ // alterando
+					PesqClientesView.cliAlterar.setId(Integer.parseInt(lbnCodigo.getText()));
+					PesqClientesView.cliAlterar.setNome(txtNome.getText());
+					PesqClientesView.cliAlterar.setEndereço(txtEndereco.getText());
+					PesqClientesView.cliAlterar.setCep(txtCep.getText());
+					PesqClientesView.cliAlterar.setBairro(txtBairro.getText());
+					PesqClientesView.cliAlterar.setNumero(Integer.parseInt(txtNumero.getText()));
+					PesqClientesView.cliAlterar.setEstado(txtEstado.getText());
+					PesqClientesView.cliAlterar.setCidade(txtCidade.getText());
+					PesqClientesView.cliAlterar.setTelefone(txtTelefone.getText());
+					PesqClientesView.cliAlterar.setCelular(txtCelular.getText());
+					
+					cliDao.update(PesqClientesView.cliAlterar);
+					limparCampos();
+					dispose();
+				}
 			}
 		});
 		btnNewButton.setBounds(341, 30, 89, 23);

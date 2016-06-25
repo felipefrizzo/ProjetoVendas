@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +17,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import br.unive.tabelaModelos.ModelProduto;
 import br.unive.tabelaModelos.ModeloCliente;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.cliente.ClienteParser;
 import br.univel.model.cliente.dao.ClienteDAO;
+import br.univel.model.produto.Produto;
 import br.univel.model.produto.ProdutoParser;
 import br.univel.modelo.readerURL.ReaderURL;
 import br.univel.readerArquivo.ReaderArquivo;
@@ -70,12 +74,17 @@ public class PesqClientesView extends JFrame{
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				Terminar a exclusao
-//				int selecionada = tableClientes.getSelectedRow();
-//				DefaultTableModel dtm = (DefaultTableModel) tableClientes.getModel();
-//				if(selecionada != -1){
-//					dtm.removeRow(selecionada);
-//				}
+				int selecionada = tableClientes.getSelectedRow();
+				
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+	            JOptionPane.showConfirmDialog (null, "Tem Certeza que deseja excluir esse registro ?","CUIDADO", dialogButton);
+	            if(dialogButton == JOptionPane.YES_OPTION) {
+	            	if(selecionada != -1){
+	            		Cliente cliAntigo = ((ModeloCliente) tableClientes.getModel()).getCliente(selecionada);
+	            		cliDao.delete(cliAntigo.getId());
+	            		((ModeloCliente) tableClientes.getModel()).fireTableDataChanged();
+	            	}
+	            }
 			}
 		});
 		
@@ -85,11 +94,8 @@ public class PesqClientesView extends JFrame{
 				ClienteView cv = new ClienteView();
 				cv.setVisible(true);
 				cv.setSize(450,301);
-				
-				ClienteView cv = new ClienteView();
-				cv.setVisible(true);
-				cv.setSize(463,142);
 				cv.inserindo = true;
+				((ModeloCliente) tableClientes.getModel()).fireTableDataChanged();
 			}
 		});
 		
@@ -102,7 +108,6 @@ public class PesqClientesView extends JFrame{
 					
 					Cliente clienteAntigo = ((ModeloCliente) tableClientes.getModel()).getCliente(selecionada);
 					
-					clienteAntigo.setNome("nome novo");
 					
 					cliAlterar = new Cliente();
 					cliAlterar.setId(clienteAntigo.getId());
@@ -116,13 +121,13 @@ public class PesqClientesView extends JFrame{
 					cliAlterar.setCep(clienteAntigo.getCep());
 					cliAlterar.setTelefone(clienteAntigo.getTelefone());
 					cliAlterar.setCelular(clienteAntigo.getCelular());
-					
-					((ModeloCliente) tableClientes.getModel()).fireTableDataChanged();
+					cliDao.update(cliAlterar);
 					
 				}	
 				ClienteView cv = new ClienteView();
 				cv.setVisible(true);
 				cv.setSize(450,301);
+				((ModeloCliente) tableClientes.getModel()).fireTableDataChanged();
 			}
 		});
 		

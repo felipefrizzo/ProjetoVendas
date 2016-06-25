@@ -94,7 +94,7 @@ public class PesqProdutosView extends JFrame{
 				pv.setVisible(true);
 				pv.setSize(463,142);
 				pv.inserindo = true;
-				listaProdutos = prodDAO.listAll();
+				((ModelProduto) tableProdutos.getModel()).fireTableDataChanged();
 			}
 		});
 		btnInserir.setBounds(458, 3, 91, 23);
@@ -110,17 +110,15 @@ public class PesqProdutosView extends JFrame{
 					Produto prodAntigo = ((ModelProduto) tableProdutos.getModel()).getProduto(selecionada); 
 					
 					prodAlterar = new Produto();
-					prodAlterar.setId(Integer.parseInt(tableProdutos.getValueAt(selecionada, 0).toString()));
-					System.out.println(prodAlterar.getId());
-					prodAlterar.setNome(tableProdutos.getValueAt(selecionada, 1).toString());
-					prodAlterar.setPreco(new BigDecimal(tableProdutos.getValueAt(selecionada, 2).toString()));
+					prodAlterar.setId(prodAntigo.getId());
+					prodAlterar.setNome(prodAntigo.getNome());
+					prodAlterar.setPreco(prodAntigo.getPreco());
 				}
 				
 				ProdutoView pv = new ProdutoView();
 				pv.setVisible(true);
 				pv.setSize(463,142);
-				prodDAO = new ProdutoDAO();
-				listaProdutos = prodDAO.listAll();
+				((ModelProduto) tableProdutos.getModel()).fireTableDataChanged();
 			}
 		});
 		btnAlterar.setBounds(458, 32, 91, 23);
@@ -137,8 +135,7 @@ public class PesqProdutosView extends JFrame{
 	            	if(selecionada != -1){
 	            		Produto prodAntigo = ((ModelProduto) tableProdutos.getModel()).getProduto(selecionada);
 	            		prodDAO.delete(prodAntigo.getId());
-	            		prodDAO = new ProdutoDAO();
-	            		listaProdutos = prodDAO.listAll();
+	            		((ModelProduto) tableProdutos.getModel()).fireTableDataChanged();
 	            	}
 	            }
 			}
