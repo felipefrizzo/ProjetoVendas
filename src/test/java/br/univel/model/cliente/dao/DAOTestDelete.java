@@ -1,6 +1,6 @@
 package br.univel.model.cliente.dao;
 
-import br.univel.ConnectionFake;
+import br.univel.database.ConnectionDB_dev;
 import br.univel.generics.Execute;
 import br.univel.model.cliente.Cliente;
 import org.junit.After;
@@ -23,13 +23,13 @@ public class DAOTestDelete {
 
     @Before
     public void setUp() {
-        connection = new ConnectionFake();
+        connection = new ConnectionDB_dev().getInstance().open();
 
         execute = new Execute();
         cliente = new Cliente();
-
+        execute.getCreateTable(connection, cliente);
         try {
-            cliente.setId(1);
+            cliente.setNome("Felipe Frizzo");
             preparedStatement = execute.getSqlInsert(connection, cliente);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class DAOTestDelete {
     public void test_delete() {
         int delete = 0;
         try {
-            preparedStatement = execute.getSqlDeleteById(connection, cliente, cliente.getId());
+            preparedStatement = execute.getSqlDeleteById(connection, cliente, 1);
             delete = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,6 +54,7 @@ public class DAOTestDelete {
     @After
     public void close() {
         try {
+            execute.getDropTable(connection, cliente);
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();

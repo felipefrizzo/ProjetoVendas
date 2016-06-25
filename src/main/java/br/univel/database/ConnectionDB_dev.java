@@ -1,26 +1,26 @@
 package br.univel.database;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Created by felipefrizzo on 4/24/16.
+ * Created by felipefrizzo on 6/21/16.
  */
-public class ConnectionDB {
+public class ConnectionDB_dev {
     private Connection con;
     private static ConnectionDB inst;
+    private String driver = "org.postgresql.Driver";
     private String url;
     private String username;
     private String password;
-    private String driver = "org.postgresql.Driver";
-//    private String url = "jdbc:postgresql://192.168.99.100:5432/vendas";
-//    private String username = "postgres";
-//    private String password = "root";
 
-    public ConnectionDB() {
+    public ConnectionDB_dev() {
 
     }
 
@@ -33,7 +33,7 @@ public class ConnectionDB {
     public Connection open() {
         try {
 
-            File file = new File("config.properties");
+            File file = new File("config_dev.properties");
             FileInputStream fileInput = new FileInputStream(file);
             Properties properties = new Properties();
             properties.load(fileInput);

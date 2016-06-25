@@ -1,0 +1,3 @@
+database=192.168.99.100:5432/vendas
+username=postgres
+password=root

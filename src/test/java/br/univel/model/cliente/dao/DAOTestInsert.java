@@ -1,6 +1,6 @@
 package br.univel.model.cliente.dao;
 
-import br.univel.ConnectionFake;
+import br.univel.database.ConnectionDB_dev;
 import br.univel.generics.Execute;
 import br.univel.model.cliente.Cliente;
 import org.junit.After;
@@ -23,10 +23,11 @@ public class DAOTestInsert {
 
     @Before
     public void setUp() {
-        connection = new ConnectionFake();
+        connection = new ConnectionDB_dev().getInstance().open();
 
         execute = new Execute();
         cliente = new Cliente();
+        execute.getCreateTable(connection, cliente);
         preparedStatement = null;
     }
 
@@ -34,7 +35,7 @@ public class DAOTestInsert {
     public void test_insert() {
         int insert = 0;
         try {
-            cliente.setId(1);
+            cliente.setNome("Felipe Frizzo");
             preparedStatement = execute.getSqlInsert(connection, cliente);
             insert = preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -47,6 +48,7 @@ public class DAOTestInsert {
     @After
     public void close() {
         try {
+            execute.getDropTable(connection, cliente);
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();

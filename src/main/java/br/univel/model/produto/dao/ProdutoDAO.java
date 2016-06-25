@@ -1,9 +1,9 @@
-package br.univel.model.cliente.dao;
+package br.univel.model.produto.dao;
 
 import br.univel.database.ConnectionDB;
 import br.univel.generics.Dao;
 import br.univel.generics.Execute;
-import br.univel.model.cliente.Cliente;
+import br.univel.model.produto.Produto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,18 +15,18 @@ import java.util.List;
 /**
  * Created by felipefrizzo on 6/18/16.
  */
-public class ClienteDAO implements Dao<Cliente, Integer> {
-    private PreparedStatement ps = null;
+public class ProdutoDAO implements Dao<Produto, Integer> {
+    private PreparedStatement ps  = null;
     private ResultSet rs = null;
     private Connection con = null;
     private Execute ex = new Execute();
-    private List<Cliente> list = null;
+    private List<Produto> list = null;
 
     @Override
-    public void save(Cliente cliente) {
+    public void save(Produto produto) {
         con = ConnectionDB.getInstance().open();
         try {
-            ps = ex.getSqlInsert(con, cliente);
+            ps = ex.getSqlInsert(con, produto);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,18 +41,15 @@ public class ClienteDAO implements Dao<Cliente, Integer> {
     }
 
     @Override
-    public Cliente search(Integer integer) {
+    public Produto search(Integer integer) {
         con = ConnectionDB.getInstance().open();
-        Cliente cliente = new Cliente();
+        Produto produto = new Produto();
         try {
-            ps = ex.getSqlSelectById(con, cliente, integer);
+            ps = ex.getSqlSelectById(con, produto, integer);
             rs = ps.executeQuery();
             rs.next();
 
-            cliente = new Cliente(rs.getInt("id"), rs.getString("nome"),
-                    rs.getString("endereco"), rs.getInt("numero"), rs.getString("Complemento"),
-                    rs.getString("bairro"), rs.getString("cidade"), rs.getString("estado"),
-                    rs.getString("cep"), rs.getString("telefone"), rs.getString("celular"));
+            produto = new Produto(rs.getInt("id"), rs.getString("nome"), rs.getBigDecimal("preco"));
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -64,14 +61,14 @@ public class ClienteDAO implements Dao<Cliente, Integer> {
                 e.printStackTrace();
             }
         }
-        return cliente;
+        return produto;
     }
 
     @Override
-    public void update(Cliente cliente) {
+    public void update(Produto produto) {
         con = ConnectionDB.getInstance().open();
         try {
-            ps = ex.getSqlUpdateById(con, cliente, cliente.getId());
+            ps = ex.getSqlUpdateById(con, produto, produto.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,7 +86,7 @@ public class ClienteDAO implements Dao<Cliente, Integer> {
     public void delete(Integer integer) {
         con = ConnectionDB.getInstance().open();
         try {
-            ps = ex.getSqlDeleteById(con, new Cliente(), integer);
+            ps = ex.getSqlDeleteById(con, new Produto(), integer);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,21 +101,18 @@ public class ClienteDAO implements Dao<Cliente, Integer> {
     }
 
     @Override
-    public List<Cliente> listAll() {
+    public List<Produto> listAll() {
         con = ConnectionDB.getInstance().open();
         list = null;
 
         try {
-            Cliente cliente = new Cliente();
-            list = new ArrayList<Cliente>();
-            ps = ex.getSqlSelectAll(con, cliente);
+            Produto produto = new Produto();
+            list = new ArrayList<Produto>();
+            ps = ex.getSqlSelectAll(con, produto);
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                list.add(new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("endereco"),
-                        rs.getInt("numero"), rs.getString("Complemento"), rs.getString("bairro"),
-                        rs.getString("cidade"), rs.getString("estado"), rs.getString("cep"),
-                        rs.getString("telefone"), rs.getString("celular")));
+                list.add(new Produto(rs.getInt("id"), rs.getString("nome"), rs.getBigDecimal("preco")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
