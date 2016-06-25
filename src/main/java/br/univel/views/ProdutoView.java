@@ -11,7 +11,6 @@ import br.univel.model.produto.dao.ProdutoDAO;
 
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.awt.event.ActionEvent;
@@ -37,12 +36,12 @@ public class ProdutoView extends JFrame{
 					Produto p = new Produto();
 //					p.setId(Integer.parseInt(lbnCodigo.getText()));
 					p.setNome(txtDescricao.getText());
-					p.setPreco(new BigDecimal(txtPreco.getText()));
+					p.setPreco(new BigDecimal(txtPreco.getText().replaceAll(",", ".")));
 					prodDao.save(p);
 				}else{ // alterando
-					PesqProdutosView.prodAlterar.setId(Integer.parseInt(lbnCodigo.getText()));
+//					PesqProdutosView.prodAlterar.setId(Integer.parseInt(lbnCodigo.getText()));
 					PesqProdutosView.prodAlterar.setNome(txtDescricao.getText());
-					PesqProdutosView.prodAlterar.setPreco(new BigDecimal(txtPreco.getText()));
+					PesqProdutosView.prodAlterar.setPreco(new BigDecimal(txtPreco.getText().replaceAll(",", ".")));
 					prodDao.update(PesqProdutosView.prodAlterar);
 				}
 			}
