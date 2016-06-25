@@ -31,6 +31,11 @@ public class Produto implements Serializable {
         this.nome = nome;
         this.preco = preco;
     }
+    
+    public Produto(String nome, BigDecimal preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
 
     public int getId() {
         return id;

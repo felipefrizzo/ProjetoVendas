@@ -34,11 +34,11 @@ public class ProdutoView extends JFrame{
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(inserindo){
-//					Produto p = new Produto();
+					Produto p = new Produto();
 //					p.setId(Integer.parseInt(lbnCodigo.getText()));
-//					p.setNome(nome);
-//					p.setPreco(preco);
-					prodDao.save(PesqProdutosView.prodAlterar);
+					p.setNome(txtDescricao.getText());
+					p.setPreco(new BigDecimal(txtPreco.getText()));
+					prodDao.save(p);
 				}else{ // alterando
 					PesqProdutosView.prodAlterar.setId(Integer.parseInt(lbnCodigo.getText()));
 					PesqProdutosView.prodAlterar.setNome(txtDescricao.getText());
