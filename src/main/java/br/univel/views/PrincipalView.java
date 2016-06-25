@@ -9,6 +9,9 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
+
+import br.univel.database.ConnectionDB;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Button;
@@ -19,10 +22,21 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class PrincipalView extends JFrame{
+	ConnectionDB conn ;
+	
 	public PrincipalView() {
-		
+		conn = new ConnectionDB();
+		conn.open();
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				conn.close();
+			}
+		});
 		
 		JLabel lblProjetoVendas = new JLabel("Projeto Vendas");
 		lblProjetoVendas.setFont(new Font("Tahoma", Font.BOLD, 18));

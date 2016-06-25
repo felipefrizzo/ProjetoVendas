@@ -14,28 +14,39 @@ public class Cliente implements Serializable{
 	@SerialUID()
 	private static final long serialVersionUID = 3567500841012871230L;
 	
-	@Column(pk = true)
+	@Column(name = "id",pk = true)
 	private int id;
-	@Column()
+	
+	@Column(name = "nome")
 	private String nome;
-	@Column()
+	
+	@Column(name = "endereco")
 	private String endereco;
-	@Column()
+	
+	@Column(name = "numero")
 	private int numero;
-	@Column()
+	
+	@Column(name = "complemento")
 	private String complemento;
-	@Column()
+	
+	@Column(name = "bairro")
 	private String bairro;
-	@Column()
+	
+	@Column(name = "cidade")
 	private String cidade;
-	@Column()
+	
+	@Column(name = "estado")
 	private String estado;
-	@Column()
+	
+	@Column(name = "cep")
 	private String cep;
-	@Column()
+	
+	@Column(name = "telefone")
 	private String telefone;
-	@Column()
+	
+	@Column(name = "celular")
 	private String celular;
+	
 	
 	public Cliente(){
 		

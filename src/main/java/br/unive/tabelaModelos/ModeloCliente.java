@@ -69,6 +69,10 @@ public class ModeloCliente extends AbstractTableModel{
 			return "Deu Ruim !";
 		}
 	}
+
+	public Cliente getCliente(int selecionada) {
+		return clientes.get(selecionada);
+	}
 	
 	
 

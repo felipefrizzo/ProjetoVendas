@@ -14,9 +14,11 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import br.unive.tabelaModelos.ModelProduto;
+import br.unive.tabelaModelos.ModeloCliente;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.produto.Produto;
 import br.univel.model.produto.ProdutoParser;
+import br.univel.model.produto.dao.ProdutoDAO;
 import br.univel.modelo.readerURL.ReaderURL;
 
 import javax.swing.JSeparator;
@@ -33,11 +35,19 @@ public class PesqProdutosView extends JFrame{
 	private JTable tableProdutos;
 	private List<Produto> listaProdutos;
 	public static Produto prodAlterar;
-	public PesqProdutosView() {
+	ProdutoDAO prodDAO = new ProdutoDAO();
+	
+	PesqProdutosView() {
 		// para testar depois vou substituir pelos dados do banco
-		ProdutoParser prodp = new ProdutoParser();
-		ReaderURL reader = new ReaderURL();
-		listaProdutos = prodp.getProduto(reader.lerUrl());
+//		ProdutoParser prodp = new ProdutoParser();
+//		ReaderURL reader = new ReaderURL();
+//		listaProdutos = prodp.getProduto(reader.lerUrl());
+		
+		
+//		for(Produto p : listaProdutos){
+//			prodDAO.save(p);
+//		}
+		listaProdutos = prodDAO.listAll();
 		
 		getContentPane().setLayout(null);
 		
@@ -79,6 +89,7 @@ public class PesqProdutosView extends JFrame{
 				ProdutoView pv = new ProdutoView();
 				pv.setVisible(true);
 				pv.setSize(463,142);
+				pv.inserindo = true;
 			}
 		});
 		btnInserir.setBounds(458, 3, 91, 23);
@@ -91,6 +102,8 @@ public class PesqProdutosView extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				int selecionada = tableProdutos.getSelectedRow();
 				if(selecionada != -1){
+					Produto prodAntigo = ((ModelProduto) tableProdutos.getModel()).getProduto(selecionada); 
+					
 					prodAlterar = new Produto();
 					prodAlterar.setId(Integer.parseInt(tableProdutos.getValueAt(selecionada, 0).toString()));
 					prodAlterar.setNome(tableProdutos.getValueAt(selecionada, 1).toString());

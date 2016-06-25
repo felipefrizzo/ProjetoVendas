@@ -55,4 +55,8 @@ public class ModelProduto extends AbstractTableModel{
 		}
 	}
 
+	public Produto getProduto(int selecionada) {
+		return listaProdutos.get(selecionada);
+	}
+
 }

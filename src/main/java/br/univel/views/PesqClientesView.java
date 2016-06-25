@@ -92,18 +92,26 @@ public class PesqClientesView extends JFrame{
 				
 				int selecionada = tableClientes.getSelectedRow();
 				if(selecionada != -1){
+					
+					Cliente clienteAntigo = ((ModeloCliente) tableClientes.getModel()).getCliente(selecionada);
+					
+					clienteAntigo.setNome("nome novo");
+					
 					cliAlterar = new Cliente();
-					cliAlterar.setId(Integer.parseInt(tableClientes.getValueAt(selecionada, 0).toString()));
-					cliAlterar.setNome(tableClientes.getValueAt(selecionada, 1).toString());
-					cliAlterar.setEndereço(tableClientes.getValueAt(selecionada, 2).toString());
-					cliAlterar.setNumero(Integer.parseInt(tableClientes.getValueAt(selecionada, 3).toString()));
-					cliAlterar.setComplemento(tableClientes.getValueAt(selecionada, 4).toString());
-					cliAlterar.setBairro(tableClientes.getValueAt(selecionada, 5).toString());
-					cliAlterar.setCidade(tableClientes.getValueAt(selecionada, 6).toString());
-					cliAlterar.setEstado(tableClientes.getValueAt(selecionada, 7).toString());
-					cliAlterar.setCep(tableClientes.getValueAt(selecionada, 8).toString());
-					cliAlterar.setTelefone(tableClientes.getValueAt(selecionada, 9).toString());
-					cliAlterar.setCelular(tableClientes.getValueAt(selecionada, 10).toString());
+					cliAlterar.setId(clienteAntigo.getId());
+					cliAlterar.setNome(clienteAntigo.getNome());
+					cliAlterar.setEndereço(clienteAntigo.getEndereco());
+					cliAlterar.setNumero(clienteAntigo.getNumero());
+					cliAlterar.setComplemento(clienteAntigo.getComplemento());
+					cliAlterar.setBairro(clienteAntigo.getBairro());
+					cliAlterar.setCidade(clienteAntigo.getCidade());
+					cliAlterar.setEstado(clienteAntigo.getEstado());
+					cliAlterar.setCep(clienteAntigo.getCep());
+					cliAlterar.setTelefone(clienteAntigo.getTelefone());
+					cliAlterar.setCelular(clienteAntigo.getCelular());
+					
+					((ModeloCliente) tableClientes.getModel()).fireTableDataChanged();
+					
 				}	
 				ClienteView cv = new ClienteView();
 				cv.setVisible(true);

@@ -16,7 +16,7 @@ import java.util.List;
  * Created by felipefrizzo on 6/18/16.
  */
 public class ProdutoDAO implements Dao<Produto, Integer> {
-    private PreparedStatement ps = null;
+    private PreparedStatement ps  = null;
     private ResultSet rs = null;
     private Connection con = ConnectionDB.getInstance().open();
     private Execute ex = new Execute();

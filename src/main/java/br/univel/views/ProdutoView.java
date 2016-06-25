@@ -7,6 +7,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import br.univel.model.produto.Produto;
+import br.univel.model.produto.dao.ProdutoDAO;
 
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -19,15 +20,33 @@ public class ProdutoView extends JFrame{
 	private JTextField txtDescricao;
 	private JTextField txtPreco;
 	JLabel lbnCodigo;
+	public static boolean inserindo = false;   
+	ProdutoDAO prodDao = new ProdutoDAO();
 	
 	public ProdutoView() {
 		getContentPane().setLayout(null);
 		
-		lbnCodigo = new JLabel("Codigo: ");
-		lbnCodigo.setBounds(345, 11, 89, 14);
+		lbnCodigo = new JLabel("");
+		lbnCodigo.setBounds(393, 11, 54, 14);
 		getContentPane().add(lbnCodigo);
 		
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(inserindo){
+//					Produto p = new Produto();
+//					p.setId(Integer.parseInt(lbnCodigo.getText()));
+//					p.setNome(nome);
+//					p.setPreco(preco);
+					prodDao.save(PesqProdutosView.prodAlterar);
+				}else{ // alterando
+					PesqProdutosView.prodAlterar.setId(Integer.parseInt(lbnCodigo.getText()));
+					PesqProdutosView.prodAlterar.setNome(txtDescricao.getText());
+					PesqProdutosView.prodAlterar.setPreco(new BigDecimal(txtPreco.getText()));
+					prodDao.update(PesqProdutosView.prodAlterar);
+				}
+			}
+		});
 		btnSalvar.setBounds(345, 36, 89, 23);
 		getContentPane().add(btnSalvar);
 		
@@ -69,19 +88,23 @@ public class ProdutoView extends JFrame{
 		getContentPane().add(txtPreco);
 		txtPreco.setColumns(10);
 		
+		JLabel lblCdigo = new JLabel("Código: ");
+		lblCdigo.setBounds(345, 11, 49, 14);
+		getContentPane().add(lblCdigo);
+		
 		if(PesqProdutosView.prodAlterar != null){
 			atualizaCampos(PesqProdutosView.prodAlterar);
 		}
 	}
 	
 	private void atualizaCampos(Produto prodAlterar) {
-		lbnCodigo.setText(lbnCodigo.getText()+ " "+ prodAlterar.getId());
+		lbnCodigo.setText(String.valueOf(prodAlterar.getId()));
 		txtDescricao.setText(prodAlterar.getNome());
 		txtPreco.setText(prodAlterar.getPreco().toString());
 	}
 	
 	private void limpaCampos(){
-		lbnCodigo.setText("Código: ");
+		lbnCodigo.setText("");
 		txtDescricao.setText("");
 		txtPreco.setText("");
 	}
