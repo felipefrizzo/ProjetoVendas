@@ -35,7 +35,7 @@ public class DAOTestInsert {
     public void test_insert() {
         int insert = 0;
         try {
-            cliente.setId(1);
+            cliente.setNome("Felipe Frizzo");
             preparedStatement = execute.getSqlInsert(connection, cliente);
             insert = preparedStatement.executeUpdate();
         } catch (SQLException e) {

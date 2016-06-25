@@ -7,7 +7,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DAOTestInsert.class, DAOTestUpdate.class, DAOTestDelete.class})
+@Suite.SuiteClasses({DAOTestInsert.class, DAOTestUpdate.class, DAOTestDelete.class,
+ClienteParserTest.class, EIXmlTest.class, ImplSerializadorTest.class, ProdutoParserTest.class,
+ReaderURLTest.class})
 public class RunTests {
 
 }

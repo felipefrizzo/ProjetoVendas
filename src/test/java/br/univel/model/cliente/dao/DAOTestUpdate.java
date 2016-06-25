@@ -30,7 +30,7 @@ public class DAOTestUpdate {
         cliente = new Cliente();
         execute.getCreateTable(connection, cliente);
         try {
-            cliente.setId(1);
+            cliente.setNome("Felipe Frizzo");
             preparedStatement = execute.getSqlInsert(connection, cliente);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -43,8 +43,8 @@ public class DAOTestUpdate {
     public void test_update() {
         int update = 0;
         try {
-            cliente.setNome("Felipe");
-            preparedStatement = execute.getSqlUpdateById(connection, cliente, cliente.getId());
+            cliente.setCidade("Cascavel");
+            preparedStatement = execute.getSqlUpdateById(connection, cliente, 1);
             update = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

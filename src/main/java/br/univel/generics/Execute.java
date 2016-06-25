@@ -68,7 +68,7 @@ public class Execute extends SqlGenerator {
                         }
                     } else if (typeParemetros.equals(int.class)){
                         if (field.getAnnotation(Column.class).pk()) {
-                            typeColumn = "INT NOT NULL";
+                            typeColumn = "SERIAL";
                         } else {
                             typeColumn = "INT";
                         }
@@ -171,7 +171,7 @@ public class Execute extends SqlGenerator {
         for (int i = 0; i < attributes.length; i++) {
             Field field = attributes[i];
             String nameColumn;
-            if (!field.isAnnotationPresent(SerialUID.class)) {
+            if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).pk()) {
                 if (field.isAnnotationPresent(Column.class)) {
                     Column column = field.getAnnotation(Column.class);
                     if (column.name().isEmpty()) {
@@ -183,7 +183,7 @@ public class Execute extends SqlGenerator {
                     nameColumn = field.getName().toUpperCase();
                 }
 
-                if (i > 1) {
+                if (i > 2) {
                     sb.append(", ");
                 }
 
@@ -195,8 +195,8 @@ public class Execute extends SqlGenerator {
 
         for (int i = 0; i < attributes.length; i++) {
             Field field = attributes[i];
-            if (!field.isAnnotationPresent(SerialUID.class)) {
-                if (i > 1) sb.append(", ");
+            if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).pk()) {
+                if (i > 2) sb.append(", ");
 
                 sb.append("?");
             }
@@ -214,17 +214,17 @@ public class Execute extends SqlGenerator {
                 Object type = field.getType();
 
                 field.setAccessible(true);
-                if (!field.isAnnotationPresent(SerialUID.class)) {
+                if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).pk()) {
                     if (type.equals(int.class)) {
-                        ps.setInt(i, field.getInt(obj));
+                        ps.setInt(i - 1, field.getInt(obj));
                     } else if (type.equals(String.class)) {
-                        ps.setString(i, String.valueOf(field.get(obj)));
+                        ps.setString(i - 1, String.valueOf(field.get(obj)));
                     } else if (field.getType().isEnum()) {
                         Object value = field.get(obj);
                         Method m = value.getClass().getMethod("ordinal");
-                        ps.setInt(i, (Integer) m.invoke(value, null));
+                        ps.setInt(i - 1, (Integer) m.invoke(value, null));
                     } else if (type.equals(BigDecimal.class)) {
-                        ps.setBigDecimal(i, BigDecimal.valueOf((Double) field.get(obj)));
+                        ps.setBigDecimal(i - 1, BigDecimal.valueOf((Double) field.get(obj)));
                     }
                 }
             }
