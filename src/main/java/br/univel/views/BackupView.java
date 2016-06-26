@@ -19,7 +19,9 @@ import br.univel.model.cliente.dao.ClienteDAO;
 import br.univel.model.produto.Produto;
 import br.univel.model.produto.ProdutoParser;
 import br.univel.model.produto.dao.ProdutoDAO;
+import br.univel.model.vendas.ItemVenda;
 import br.univel.model.vendas.Venda;
+import br.univel.model.vendas.dao.ItemVendaDAO;
 import br.univel.modelo.readerURL.ReaderURL;
 
 import javax.swing.JCheckBox;
@@ -32,16 +34,13 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class BackupView extends JFrame{
-	static Cliente c1, c2;
-	static Venda v1, v2;
-	
 	static ImplSerializador<List<Cliente>> implCliente;
 	static ImplSerializador<List<Produto>> implProduto;
-	static ImplSerializador<List<Venda>>   implVenda;
+	static ImplSerializador<List<ItemVenda>>   implVenda;
 	
 	static List<Cliente> clientes;
 	static List<Produto> produtos;
-	static List<Venda> vendas;
+	static List<ItemVenda> vendas;
 	static ArrayList produtosVenda;
 	
 	public JCheckBox checkboxProdutos;
@@ -132,40 +131,12 @@ public class BackupView extends JFrame{
 	}
 	
 	public void efetuarBackup(){
-		implVenda =  new ImplSerializador<List<Venda>>();
+		implVenda =  new ImplSerializador<List<ItemVenda>>();
 		implProduto =  new ImplSerializador<List<Produto>>();
 		implCliente =  new ImplSerializador<List<Cliente>>();
 		
 		String msg = "";
-		
-		// clientes para venda
-		c1 = new Cliente();
-		c1.setId(1);
-		c1.setNome("Matheus Zandoná");
-		c1.setEndereço("|R:  Bento gonçalves");
-		c1.setNumero(736);
-		c1.setBairro("JD União");
-		c1.setCidade("Cascavel");
-		c1.setEstado("Paraná");
-		c1.setCelular("45 9961-9609");
-		c1.setTelefone("45 3333-4444");
-		
-		c2 = new Cliente();
-		
-		c2.setId(2);
-		c2.setNome("Maria");
-		c2.setEndereço("R:  Carlos Gomes");
-		c2.setNumero(653);
-		c2.setBairro("Maria Luiza");
-		c2.setCidade("Cascavel");
-		c2.setEstado("Paraná");
-		c2.setCelular("45 9988-9969");
-		c2.setTelefone("45 3333-4444");
-		
-		
-		
-		
-		// efetuar backup de produtos
+
 		if(checkboxProdutos.isSelected()){
 			ProdutoDAO prodDao = new ProdutoDAO();
 			produtos = prodDao.listAll();
@@ -174,15 +145,12 @@ public class BackupView extends JFrame{
 				implProduto.gravar(produtos, new File("produtos.dat"));
 				msg += "\n Backup de Produtos efetuado com sucesso !";
 			} catch (SerializadorException e) {
-				JOptionPane.showInternalMessageDialog(null, "Erro ao efetuar backup de bakcup !\n" + e.getMessage());
+				JOptionPane.showMessageDialog(null, "Erro ao efetuar backup de bakcup !\n" + e.getMessage());
 			}
 			
 		}
 		
-		// efetuar backup de clientes
 		if(checkboxClientes.isSelected()){
-//			clientes = new ArrayList<Cliente>();
-
 			ClienteDAO cliDao = new ClienteDAO();
 			clientes = cliDao.listAll();
 			
@@ -190,48 +158,25 @@ public class BackupView extends JFrame{
 				implCliente.gravar(clientes, new File("clientes.dat"));
 				msg += "\n Backup de Clientes efetuado com sucesso !";
 			} catch (SerializadorException e) {
-				JOptionPane.showInternalMessageDialog(null, "Erro ao efetuar backup de clientes !\n" + e.getMessage());
+				JOptionPane.showMessageDialog(null, "Erro ao efetuar backup de clientes !\n" + e.getMessage());
 			}
 		}
-		// para efetua backup de vendas
 		if(checkboxVendas.isSelected()){
-			
-			Produto prodVenda1 = new Produto();
-			prodVenda1 = new Produto();
-			prodVenda1.setId(1);
-			prodVenda1.setNome("Coca Cola");
-			prodVenda1.setPreco(new BigDecimal(8.00));
-			
-			Produto prodVenda2 = new Produto();
-			prodVenda2 = new Produto();
-			prodVenda2.setId(2);
-			prodVenda2.setNome("Achocolatado");
-			prodVenda2.setPreco(new BigDecimal(5.00));
-			
-			produtosVenda = new ArrayList<Produto>();
-			
-			produtosVenda.add(prodVenda1);
-			produtosVenda.add(prodVenda2);
-			
-			vendas =  new ArrayList<Venda>();
-			v1 = new Venda(c1,produtosVenda);
-			v2 = new Venda(c2, produtosVenda);
-			vendas.add(v1);
-			vendas.add(v2);
-			
+			ItemVendaDAO itemVendaDAO = new ItemVendaDAO();
+			vendas = itemVendaDAO.listAll();
 			try {
-				implVenda.gravar(vendas, new File("vendas.dat"));
+				implVenda.gravar(itemVendaDAO.listAll(), new File("vendas.dat"));
 				msg += "\n Backup de Vendas efetuado com sucesso !";
 			} catch (SerializadorException e) {
-				JOptionPane.showInternalMessageDialog(null, "Erro ao efetuar backup de vendas !\n" + e.getMessage());
+				JOptionPane.showMessageDialog(null, "Erro ao efetuar backup de vendas !\n" + e.getMessage());
 			}
 		}
-		JOptionPane.showInternalMessageDialog(null, msg);
+		JOptionPane.showMessageDialog(null, msg);
 	}
 	
 	public void restaurar(){
 		if(checkboxClientes.isSelected()){
-			//implCliente.ler("clientes.dat");
+
 		}
 		
 		if(checkboxProdutos.isSelected()){

@@ -6,6 +6,7 @@ import br.univel.annotation.Table;
 import br.univel.model.produto.Produto;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -13,7 +14,7 @@ import java.math.BigDecimal;
  */
 @Table("ItemVenda")
 @XmlRootElement
-public class ItemVenda {
+public class ItemVenda implements Serializable {
 	
 	@SerialUID()
 	private static final long serialVersionUID = 3567500841012871230L;

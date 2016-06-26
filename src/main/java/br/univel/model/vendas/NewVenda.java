@@ -6,6 +6,7 @@ import br.univel.annotation.Table;
 import br.univel.model.cliente.Cliente;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @Table("Venda")
 @XmlRootElement
-public class NewVenda {
+public class NewVenda implements Serializable {
     @SerialUID()
     private static final long serialVersionUID = 3567500841012871230L;
     @Column(pk = true)
