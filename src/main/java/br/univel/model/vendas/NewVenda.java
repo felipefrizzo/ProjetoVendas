@@ -35,6 +35,11 @@ public class NewVenda {
         this.cliente = cliente;
     }
 
+    public NewVenda(int id, Cliente cliente) {
+        this.id = id;
+        this.cliente = cliente;
+    }
+
     public NewVenda(Cliente cliente) {
         this.cliente = cliente;
     }
