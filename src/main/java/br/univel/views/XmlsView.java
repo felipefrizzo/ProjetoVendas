@@ -19,6 +19,7 @@ import br.univel.model.cliente.ClientesLista;
 import br.univel.model.produto.Produto;
 import br.univel.model.produto.ProdutoLista;
 import br.univel.model.produto.ProdutoParser;
+import br.univel.model.produto.dao.ProdutoDAO;
 import br.univel.model.vendas.Venda;
 import br.univel.model.vendas.VendasLista;
 import br.univel.modelo.readerURL.ReaderURL;
@@ -120,7 +121,7 @@ public class XmlsView extends JFrame{
 			pl.setProdutos(produtos);
 			
 			try {
-				XMLprodutos.gerarXml(pl, new File("produtos.dat"));				
+				XMLprodutos.gerarXml(pl, new File("produtos.xml"));
 				msg += "\n Xml de Produtos gerado com sucesso !"; 
 			} catch (Exception e) {
 				msg = "Erro ao gerar xml Produtos! \n" + e.getMessage();
@@ -138,7 +139,7 @@ public class XmlsView extends JFrame{
 			cl = new ClientesLista();
 			cl.setClientes(clientes);
 			try {
-				XMLclientes.gerarXml(cl, new File("clientes.dat"));
+				XMLclientes.gerarXml(cl, new File("clientes.xml"));
 				msg += "\n Xml de Clientes gerado com sucesso !"; 
 			} catch (Exception e) {
 				msg = "Erro ao gerar xml de Clientes! \n" + e.getMessage();
