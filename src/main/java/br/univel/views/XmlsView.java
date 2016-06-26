@@ -85,6 +85,10 @@ public class XmlsView extends JFrame{
 		btnGerar.setBounds(213, 7, 91, 23);
 		
 		JButton btnImportar = new JButton("Importar");
+		btnImportar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnImportar.setBounds(213, 35, 91, 23);
 		getContentPane().setLayout(null);
 		getContentPane().add(lblXmls);

@@ -11,19 +11,23 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.univel.database.ConnectionDB;
 import br.univel.exception.SerializadorException;
 import br.univel.generics.ImplSerializador;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.cliente.ClienteParser;
+import br.univel.model.cliente.dao.ClienteDAO;
 import br.univel.model.produto.Produto;
 import br.univel.model.produto.ProdutoParser;
+import br.univel.model.produto.dao.ProdutoDAO;
 import br.univel.model.vendas.Venda;
 import br.univel.modelo.readerURL.ReaderURL;
 import br.univel.readerArquivo.ReaderArquivo;
 
 
 public class ImplSerializadorTest {
-
+	static ConnectionDB conn;
+	
 	static Venda v1, v2;
 	
 	static Cliente c1, c2;
@@ -40,14 +44,22 @@ public class ImplSerializadorTest {
 	
 	@BeforeClass
 	public static void antesCriarClasse() throws Exception {
-		ProdutoParser prodp = new ProdutoParser();
-		ReaderURL reader = new ReaderURL();
-		produtos = prodp.getProduto(reader.lerUrl());
+		conn = new ConnectionDB();
+		conn.open();
 		
-		ClienteParser cp = new ClienteParser();
-		ReaderArquivo readerArq = new ReaderArquivo();
-		clientes = cp.getCliente(readerArq.lerArquivo(new File("clientes.csv")));
+//		ProdutoParser prodp = new ProdutoParser();
+//		ReaderURL reader = new ReaderURL();
+//		produtos = prodp.getProduto(reader.lerUrl());
+		ProdutoDAO prodDao = new ProdutoDAO();
+		produtos = prodDao.listAll();
 		
+//		ClienteParser cp = new ClienteParser();
+//		ReaderArquivo readerArq = new ReaderArquivo();
+//		clientes = cp.getCliente(readerArq.lerArquivo(new File("clientes.csv")));
+		ClienteDAO cliDao = new ClienteDAO();
+		clientes = cliDao.listAll();
+		
+		// clientes para venda.
 		c1 = new Cliente();
 
 		c1.setId(1);

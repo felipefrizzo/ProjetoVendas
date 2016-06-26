@@ -15,8 +15,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import br.univel.exception.SerializadorException;
 import br.univel.generics.ImplSerializador;
 import br.univel.model.cliente.Cliente;
+import br.univel.model.cliente.dao.ClienteDAO;
 import br.univel.model.produto.Produto;
 import br.univel.model.produto.ProdutoParser;
+import br.univel.model.produto.dao.ProdutoDAO;
 import br.univel.model.vendas.Venda;
 import br.univel.modelo.readerURL.ReaderURL;
 
@@ -61,6 +63,11 @@ public class BackupView extends JFrame{
 		});
 		
 		JButton btnRestaurar = new JButton("Restaurar");
+		btnRestaurar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		
 		checkboxProdutos = new JCheckBox("Produtos");
 		
@@ -131,6 +138,7 @@ public class BackupView extends JFrame{
 		
 		String msg = "";
 		
+		// clientes para venda
 		c1 = new Cliente();
 		c1.setId(1);
 		c1.setNome("Matheus Zandoná");
@@ -155,11 +163,12 @@ public class BackupView extends JFrame{
 		c2.setTelefone("45 3333-4444");
 		
 		
+		
+		
 		// efetuar backup de produtos
 		if(checkboxProdutos.isSelected()){
-			ProdutoParser prodp = new ProdutoParser();
-			ReaderURL reader = new ReaderURL();
-			produtos = prodp.getProduto(reader.lerUrl());
+			ProdutoDAO prodDao = new ProdutoDAO();
+			produtos = prodDao.listAll();
 			
 			try {
 				implProduto.gravar(produtos, new File("produtos.dat"));
@@ -169,12 +178,13 @@ public class BackupView extends JFrame{
 			}
 			
 		}
-		// efetuar backup de produtos
+		
+		// efetuar backup de clientes
 		if(checkboxClientes.isSelected()){
-			
-			clientes = new ArrayList<Cliente>();
-			clientes.add(c1);
-			clientes.add(c2);
+//			clientes = new ArrayList<Cliente>();
+
+			ClienteDAO cliDao = new ClienteDAO();
+			clientes = cliDao.listAll();
 			
 			try {
 				implCliente.gravar(clientes, new File("clientes.dat"));
@@ -216,7 +226,7 @@ public class BackupView extends JFrame{
 				JOptionPane.showInternalMessageDialog(null, "Erro ao efetuar backup de vendas !\n" + e.getMessage());
 			}
 		}
-		System.out.println(msg);
+		JOptionPane.showInternalMessageDialog(null, msg);
 	}
 	
 	public void restaurar(){
