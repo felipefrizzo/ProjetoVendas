@@ -10,9 +10,12 @@ import java.awt.Color;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 
+import br.univel.Principal;
 import br.univel.database.ConnectionDB;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.produto.Produto;
+import br.univel.model.vendas.ItemVenda;
+import br.univel.model.vendas.NewVenda;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -41,7 +44,9 @@ public class PrincipalView extends JFrame{
 //		Principal p = new Principal();
 //		p.createTable(new Produto());
 //		p.createTable(new Cliente());
-//		
+//		p.createTable(new NewVenda());
+//		p.createTable(new ItemVenda());
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -78,6 +83,10 @@ public class PrincipalView extends JFrame{
 		JButton btnA = new JButton("Vendas");
 		btnA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				VendaView vv = new VendaView();
+				vv.setSize(700,384);
+				vv.setLocationRelativeTo(null);
+				vv.setVisible(true);
 			}
 		});
 		
