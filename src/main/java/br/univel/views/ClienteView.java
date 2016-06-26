@@ -61,10 +61,8 @@ public class ClienteView extends JFrame{
 		JButton btnNewButton = new JButton("Salvar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(inserindo){
+				if(inserindo) {
 					Cliente c = new Cliente();
-//					p.setId(Integer.parseInt(lbnCodigo.getText()));
-//					c.setId(id);
 					c.setNome(txtNome.getText());
 					c.setEndereço(txtEndereco.getText());
 					c.setCep(txtCep.getText());
@@ -78,8 +76,7 @@ public class ClienteView extends JFrame{
 					cliDao.save(c);
 					limparCampos();
 					dispose();
-				}else{ // alterando
-					PesqClientesView.cliAlterar.setId(Integer.parseInt(lbnCodigo.getText()));
+				} else { // alterando
 					PesqClientesView.cliAlterar.setNome(txtNome.getText());
 					PesqClientesView.cliAlterar.setEndereço(txtEndereco.getText());
 					PesqClientesView.cliAlterar.setCep(txtCep.getText());

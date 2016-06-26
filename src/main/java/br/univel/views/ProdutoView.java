@@ -32,16 +32,14 @@ public class ProdutoView extends JFrame{
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(inserindo){
+				if(inserindo) {
 					Produto p = new Produto();
-//					p.setId(Integer.parseInt(lbnCodigo.getText()));
 					p.setNome(txtDescricao.getText());
 					p.setPreco(new BigDecimal(txtPreco.getText().replaceAll(",", ".")));
 					prodDao.save(p);
 					limpaCampos();
 					dispose();
-				}else{ // alterando
-					PesqProdutosView.prodAlterar.setId(Integer.parseInt(lbnCodigo.getText()));
+				} else { // alterando
 					PesqProdutosView.prodAlterar.setNome(txtDescricao.getText());
 					PesqProdutosView.prodAlterar.setPreco(new BigDecimal(txtPreco.getText().replaceAll(",", ".")));
 					prodDao.update(PesqProdutosView.prodAlterar);

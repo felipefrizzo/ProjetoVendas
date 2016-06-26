@@ -14,4 +14,6 @@ public @interface Column {
     String name() default "";
     int size() default -1;
     boolean pk() default false;
+    boolean fk() default false;
+    boolean skip() default false;
 }

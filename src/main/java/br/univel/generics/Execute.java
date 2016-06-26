@@ -4,6 +4,7 @@ import br.univel.annotation.Column;
 import br.univel.annotation.SerialUID;
 import br.univel.annotation.Table;
 import br.univel.database.SqlGenerator;
+import br.univel.model.cliente.Cliente;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -45,7 +46,7 @@ public class Execute extends SqlGenerator {
                 String nameColumn = "";
                 String typeColumn = null;
 
-                if (!field.isAnnotationPresent(SerialUID.class)) {
+                if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).skip()) {
                     if (field.isAnnotationPresent(Column.class)) {
                         Column annotationColumn = field.getAnnotation(Column.class);
 
@@ -76,6 +77,8 @@ public class Execute extends SqlGenerator {
                         typeColumn = "INT";
                     } else if (typeParemetros.equals(BigDecimal.class)) {
                         typeColumn = "DECIMAL";
+                    } else if (field.getAnnotation(Column.class).fk()) {
+                        typeColumn = "INT REFERENCES " + field.getAnnotation(Column.class).name();
                     }
 
                     if (i > 1) sb.append(",");
@@ -171,7 +174,8 @@ public class Execute extends SqlGenerator {
         for (int i = 0; i < attributes.length; i++) {
             Field field = attributes[i];
             String nameColumn;
-            if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).pk()) {
+            if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).pk() &&
+                    !field.getAnnotation(Column.class).skip()) {
                 if (field.isAnnotationPresent(Column.class)) {
                     Column column = field.getAnnotation(Column.class);
                     if (column.name().isEmpty()) {
@@ -195,7 +199,8 @@ public class Execute extends SqlGenerator {
 
         for (int i = 0; i < attributes.length; i++) {
             Field field = attributes[i];
-            if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).pk()) {
+            if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).pk() &&
+                    !field.getAnnotation(Column.class).skip()) {
                 if (i > 2) sb.append(", ");
 
                 sb.append("?");
@@ -214,7 +219,8 @@ public class Execute extends SqlGenerator {
                 Object type = field.getType();
 
                 field.setAccessible(true);
-                if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).pk()) {
+                if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).pk() &&
+                        !field.getAnnotation(Column.class).skip()) {
                     if (type.equals(int.class)) {
                         ps.setInt(i - 1, field.getInt(obj));
                     } else if (type.equals(String.class)) {
@@ -225,6 +231,10 @@ public class Execute extends SqlGenerator {
                         ps.setInt(i - 1, (Integer) m.invoke(value, null));
                     } else if (type.equals(BigDecimal.class)) {
                         ps.setBigDecimal(i - 1, (BigDecimal) field.get(obj));
+                    } else if (field.getAnnotation(Column.class).fk()) {
+                        Object value = field.get(obj);
+                        Method method = value.getClass().getMethod("getId");
+                        ps.setInt(i - 1, (Integer) method.invoke(value, null));
                     }
                 }
             }
@@ -309,7 +319,8 @@ public class Execute extends SqlGenerator {
         for (int i = 0; i < attributes.length; i++) {
             Field field = attributes[i];
             String nameColumn;
-            if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).pk()) {
+            if (!field.isAnnotationPresent(SerialUID.class) && !field.getAnnotation(Column.class).pk() &&
+                    !field.getAnnotation(Column.class).skip()) {
                 if (field.isAnnotationPresent(Column.class)) {
                     Column column = field.getAnnotation(Column.class);
                     if (column.name().isEmpty()) {
@@ -352,6 +363,10 @@ public class Execute extends SqlGenerator {
                         ps.setInt(i - 1, (Integer) m.invoke(value, null));
                     } else if (type.equals(BigDecimal.class)) {
                         ps.setBigDecimal(i - 1, (BigDecimal) field.get(obj));
+                    } else if (field.getAnnotation(Column.class).fk()) {
+                        Object value = field.get(obj);
+                        Method method = value.getClass().getMethod("getId");
+                        ps.setInt(i - 1, (Integer) method.invoke(value, null));
                     }
                 }
             }

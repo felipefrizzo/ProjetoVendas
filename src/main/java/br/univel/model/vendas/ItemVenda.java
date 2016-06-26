@@ -18,27 +18,31 @@ public class ItemVenda {
 
     @Column(name="id", pk=true)
     private int id;
-    @Column(name="id")
+    @Column(name="quantidade")
     private BigDecimal quantidade;
-    @Column(name="id")
+    @Column(name="preco")
     private BigDecimal preco;
-    @Column(name="id")
+    @Column(name="produto", fk = true)
     private Produto produto;
+    @Column(name="venda", fk = true)
+    private Venda venda;
 
     public ItemVenda() {
     }
 
-    public ItemVenda(BigDecimal quantidade, BigDecimal preco, Produto produto) {
+    public ItemVenda(BigDecimal quantidade, BigDecimal preco, Produto produto, Venda venda) {
         this.quantidade = quantidade;
         this.preco = preco;
         this.produto = produto;
+        this.venda = venda;
     }
 
-    public ItemVenda(int id, BigDecimal quantidade, BigDecimal preco, Produto produto) {
+    public ItemVenda(int id, BigDecimal quantidade, BigDecimal preco, Produto produto, Venda venda) {
         this.id = id;
         this.quantidade = quantidade;
         this.preco = preco;
         this.produto = produto;
+        this.venda = venda;
     }
 
     public int getId() {
@@ -71,5 +75,13 @@ public class ItemVenda {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
     }
 }

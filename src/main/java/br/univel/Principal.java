@@ -2,8 +2,6 @@ package br.univel;
 
 import br.univel.database.ConnectionDB;
 import br.univel.generics.Execute;
-import br.univel.model.cliente.Cliente;
-import br.univel.model.produto.Produto;
 import br.univel.views.PrincipalView;
 
 import java.sql.Connection;
@@ -19,7 +17,6 @@ public class Principal {
         pv.setSize(500,300);
         pv.setLocationRelativeTo(null);
         pv.setVisible(true);
-        
     }
 
     public void dropTable(Object obj) {
