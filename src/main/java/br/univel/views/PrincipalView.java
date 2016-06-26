@@ -10,7 +10,6 @@ import java.awt.Color;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 
-import br.univel.Principal;
 import br.univel.database.ConnectionDB;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.produto.Produto;
