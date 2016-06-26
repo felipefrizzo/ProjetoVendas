@@ -5,12 +5,15 @@ import br.univel.annotation.SerialUID;
 import br.univel.annotation.Table;
 import br.univel.model.cliente.Cliente;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by felipefrizzo on 6/25/16.
  */
 @Table("Venda")
+@XmlRootElement
 public class NewVenda {
     @SerialUID()
     private static final long serialVersionUID = 3567500841012871230L;
@@ -19,17 +22,17 @@ public class NewVenda {
     @Column(name = "Cliente", fk = true)
     private Cliente cliente;
     @Column(name = "ItemVenda", skip = true)
-    private ArrayList<ItemVenda> itemVendas;
+    private List<ItemVenda> itemVendas;
 
     public NewVenda() {
     }
 
-    public NewVenda(ArrayList<ItemVenda> itemVendas, Cliente cliente) {
+    public NewVenda(List<ItemVenda> itemVendas, Cliente cliente) {
         this.itemVendas = itemVendas;
         this.cliente = cliente;
     }
 
-    public NewVenda(int id, ArrayList<ItemVenda> itemVendas, Cliente cliente) {
+    public NewVenda(int id, List<ItemVenda> itemVendas, Cliente cliente) {
         this.id = id;
         this.itemVendas = itemVendas;
         this.cliente = cliente;
@@ -61,11 +64,11 @@ public class NewVenda {
         this.id = id;
     }
 
-    public ArrayList<ItemVenda> getItemVendas() {
+    public List<ItemVenda> getItemVendas() {
         return itemVendas;
     }
 
-    public void setItemVendas(ArrayList<ItemVenda> itemVendas) {
+    public void setItemVendas(List<ItemVenda> itemVendas) {
         this.itemVendas = itemVendas;
     }
 

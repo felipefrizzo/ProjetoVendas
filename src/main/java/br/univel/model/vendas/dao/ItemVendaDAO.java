@@ -6,7 +6,7 @@ import br.univel.generics.Execute;
 import br.univel.model.produto.Produto;
 import br.univel.model.produto.dao.ProdutoDAO;
 import br.univel.model.vendas.ItemVenda;
-import br.univel.model.vendas.Venda;
+import br.univel.model.vendas.NewVenda;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,8 +56,8 @@ public class ItemVendaDAO implements Dao<ItemVenda, Integer> {
 
             ProdutoDAO produtoDAO = new ProdutoDAO();
             Produto p = produtoDAO.search(rs.getInt("produto"));
-            VendaDAO vendaDAO = new VendaDAO();
-            Venda v = vendaDAO.search(rs.getInt("venda"));
+            NewVendaDAO vendaDAO = new NewVendaDAO();
+            NewVenda v = vendaDAO.search(rs.getInt("venda"));
 
             itemVenda = new ItemVenda(rs.getInt("id"), rs.getBigDecimal("quantidade"),
                     rs.getBigDecimal("preco"), p, v);
@@ -121,14 +121,14 @@ public class ItemVendaDAO implements Dao<ItemVenda, Integer> {
             ItemVenda itemVenda = new ItemVenda();
             list = new ArrayList<ItemVenda>();
             ps = ex.getSqlSelectAll(con, itemVenda);
-            rs = ps.executeQuery();
-
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            Produto p = produtoDAO.search(rs.getInt("produto"));
-            VendaDAO vendaDAO = new VendaDAO();
-            Venda v = vendaDAO.search(rs.getInt("venda"));
+            rs = ps.executeQuery();;
 
             while (rs.next()) {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                Produto p = produtoDAO.search(rs.getInt("produto"));
+                NewVendaDAO vendaDAO = new NewVendaDAO();
+                NewVenda v = vendaDAO.search(rs.getInt("venda"));
+
                 list.add(new ItemVenda(rs.getInt("id"), rs.getBigDecimal("quantidade"),
                         rs.getBigDecimal("preco"), p, v));
             }

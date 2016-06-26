@@ -5,12 +5,14 @@ import br.univel.annotation.SerialUID;
 import br.univel.annotation.Table;
 import br.univel.model.produto.Produto;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 
 /**
  * Created by felipefrizzo on 6/25/16.
  */
 @Table("ItemVenda")
+@XmlRootElement
 public class ItemVenda {
 	
 	@SerialUID()
@@ -25,19 +27,19 @@ public class ItemVenda {
     @Column(name="produto", fk = true)
     private Produto produto;
     @Column(name="venda", fk = true)
-    private Venda venda;
+    private NewVenda venda;
 
     public ItemVenda() {
     }
 
-    public ItemVenda(BigDecimal quantidade, BigDecimal preco, Produto produto, Venda venda) {
+    public ItemVenda(BigDecimal quantidade, BigDecimal preco, Produto produto, NewVenda venda) {
         this.quantidade = quantidade;
         this.preco = preco;
         this.produto = produto;
         this.venda = venda;
     }
 
-    public ItemVenda(int id, BigDecimal quantidade, BigDecimal preco, Produto produto, Venda venda) {
+    public ItemVenda(int id, BigDecimal quantidade, BigDecimal preco, Produto produto, NewVenda venda) {
         this.id = id;
         this.quantidade = quantidade;
         this.preco = preco;
@@ -77,11 +79,11 @@ public class ItemVenda {
         this.produto = produto;
     }
 
-    public Venda getVenda() {
+    public NewVenda getVenda() {
         return venda;
     }
 
-    public void setVenda(Venda venda) {
+    public void setVenda(NewVenda venda) {
         this.venda = venda;
     }
 }

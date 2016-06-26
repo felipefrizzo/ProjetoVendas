@@ -115,7 +115,7 @@ public class EIXmlTest {
 		vendas.add(venda2);
 		
 		vl = new VendasLista();
-		vl.setVendas(vendas);
+//		vl.setVendas(vendas);
 		
 		XMLprodutos = new EIXml<>();
 		XMLclientes = new EIXml<>();
@@ -152,14 +152,14 @@ public class EIXmlTest {
 		assertNotNull(XMLclientes.importarXml(cl, new File("clientes.xml")));
 	}
 	
-	@Test   
-	public void testGerarXmlVendas() {
-		assertEquals(true, XMlvendas.gerarXml(vl, new File("vendas.xml")));
-	}
-	
-	@Test
-	public void testImportarXmlVendas() {
-		assertNotNull(XMlvendas.importarXml(vl, new File("vendas.xml")));
-	}
+//	@Test
+//	public void testGerarXmlVendas() {
+//		assertEquals(true, XMlvendas.gerarXml(vl, new File("vendas.xml")));
+//	}
+//
+//	@Test
+//	public void testImportarXmlVendas() {
+//		assertNotNull(XMlvendas.importarXml(vl, new File("vendas.xml")));
+//	}
 
 }
