@@ -7,18 +7,19 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import br.univel.model.cliente.Cliente;
+import br.univel.model.vendas.NewVenda;
 import br.univel.model.vendas.Venda;
 
 public class ModeloVenda extends AbstractTableModel{
 
-	List<Venda> vendas = new ArrayList<Venda>();
+	List<NewVenda> vendas = new ArrayList<NewVenda>();
 	
-	public ModeloVenda(List<Venda> vendas){
+	public ModeloVenda(List<NewVenda> vendas){
 		this.vendas = vendas;
 	}
 	@Override
 	public int getColumnCount() {
-		return 4;
+		return 3;
 	}
 
 	@Override
@@ -33,8 +34,6 @@ public class ModeloVenda extends AbstractTableModel{
 			return "Código";
 		case 1:
 			return "Nome Cliente";
-		case 2:
-			return "Produtos";	
 		default:
 			return "Vlr Total";
 		}
@@ -42,18 +41,16 @@ public class ModeloVenda extends AbstractTableModel{
 	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Venda v = vendas.get(rowIndex);
+		NewVenda v = vendas.get(rowIndex);
 		
 		switch(columnIndex) {
 		case 0:
 			return v.getId();
 		case 1:
 			return v.getCliente().getNome();
-		case 2:
-			
-			return "Deu ruim 2";
+		
 		default:
-			return "Deu Ruim !";
+			return "Vlr Total";
 		}
 	}
 

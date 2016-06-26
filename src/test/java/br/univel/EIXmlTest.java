@@ -13,13 +13,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.postgresql.jdbc2.optional.SimpleDataSource;
 
+import br.univel.database.ConnectionDB;
 import br.univel.generics.EIXml;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.cliente.ClienteParser;
 import br.univel.model.cliente.ClientesLista;
+import br.univel.model.cliente.dao.ClienteDAO;
 import br.univel.model.produto.Produto;
 import br.univel.model.produto.ProdutoLista;
 import br.univel.model.produto.ProdutoParser;
+import br.univel.model.produto.dao.ProdutoDAO;
 import br.univel.model.vendas.Venda;
 import br.univel.model.vendas.VendasLista;
 import br.univel.modelo.readerURL.ReaderURL;
@@ -27,6 +30,8 @@ import br.univel.readerArquivo.ReaderArquivo;
 
 
 public class EIXmlTest {
+	
+	static ConnectionDB conn;
 	
 	static EIXml<ProdutoLista> XMLprodutos;
 	static EIXml<ClientesLista> XMLclientes;
@@ -49,20 +54,29 @@ public class EIXmlTest {
 	
 	@BeforeClass
 	public static void  antesCriarClasse() throws Exception{
-		ProdutoParser prodp = new ProdutoParser();
-		ReaderURL reader = new ReaderURL();
-		produtos = prodp.getProduto(reader.lerUrl());
+		
+		conn = new ConnectionDB();
+		conn.open();
+		
+//		ProdutoParser prodp = new ProdutoParser();
+//		ReaderURL reader = new ReaderURL();
+//		produtos = prodp.getProduto(reader.lerUrl());
+		ProdutoDAO prodDao = new ProdutoDAO();
+		produtos = prodDao.listAll();
 		
 		pl = new ProdutoLista();
 		pl.setProdutos(produtos);
 		
-		ClienteParser cp = new ClienteParser();
-		ReaderArquivo readerArq = new ReaderArquivo();
-		clientes = cp.getCliente(readerArq.lerArquivo(new File("clientes.csv")));
+//		ClienteParser cp = new ClienteParser();
+//		ReaderArquivo readerArq = new ReaderArquivo();
+//		clientes = cp.getCliente(readerArq.lerArquivo(new File("clientes.csv")));
+		ClienteDAO cliDao = new ClienteDAO();
+		clientes = cliDao.listAll();
 		
 		cl = new ClientesLista();
 		cl.setClientes(clientes);
 		
+//		clientes para venda
 		c1 = new Cliente();
 
 		c1.setId(1);
