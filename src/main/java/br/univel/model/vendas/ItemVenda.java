@@ -29,8 +29,6 @@ public class ItemVenda implements Serializable {
     private Produto produto;
     @Column(name="venda", fk = true)
     private NewVenda venda;
-    @Column(name = "valorTotal")
-    private 
 
     public ItemVenda() {
     }
