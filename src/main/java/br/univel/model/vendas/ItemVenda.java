@@ -48,6 +48,11 @@ public class ItemVenda implements Serializable {
         this.venda = venda;
     }
 
+    public double getValorTotal() {
+        double valor = (getQuantidade().doubleValue() * getPreco().doubleValue());
+        return valor;
+    }
+
     public int getId() {
         return id;
     }
