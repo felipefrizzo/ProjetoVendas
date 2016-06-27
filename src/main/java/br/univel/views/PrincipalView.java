@@ -12,10 +12,20 @@ import javax.swing.border.TitledBorder;
 
 import br.univel.Principal;
 import br.univel.database.ConnectionDB;
+import br.univel.jaspers.ClienteJRDataSource;
 import br.univel.model.cliente.Cliente;
+import br.univel.model.cliente.dao.ClienteDAO;
 import br.univel.model.produto.Produto;
 import br.univel.model.vendas.ItemVenda;
 import br.univel.model.vendas.NewVenda;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -34,6 +44,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PrincipalView extends JFrame{
 	ConnectionDB conn ;
@@ -162,23 +174,25 @@ public class PrincipalView extends JFrame{
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmRelatrios = new JMenuItem("Clientes");
+		mntmRelatrios.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				try {
+					imprimir();
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		});
 		mntmRelatrios.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-//				String arq = "pessoa_report.jrxml";
-//				
-//				DaoPessoa dao = new DaoPessoa();
-//				PessoaJRDataSource ds = new PessoaJRDataSource(dao.getPessoas());
-//				
-//				JasperPrint jp = JasperFillManager.fillReport(arq, null, ds);
-//
-//				JasperViewer jasperViewer = new JasperViewer(jp);
-//
-//				jasperViewer.setBounds(50, 50, 320, 240);
-//				jasperViewer.setLocationRelativeTo(null);
-//				jasperViewer.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//
-//				jasperViewer.setVisible(true);
+				try {
+					imprimir();
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
 			}
 		});
 		mnNewMenu.add(mntmRelatrios);
@@ -188,5 +202,22 @@ public class PrincipalView extends JFrame{
 		
 		JMenuItem mntmVendas = new JMenuItem("Vendas");
 		mnNewMenu.add(mntmVendas);
+	}
+
+	protected void imprimir() throws JRException {
+		String arq = "RelCliente.jrxml";
+		
+		ClienteDAO dao = new ClienteDAO();
+		ClienteJRDataSource ds = new ClienteJRDataSource(dao.listAll());
+		
+		JasperPrint jp = JasperFillManager.fillReport(arq, null, ds);
+
+		JasperViewer jasperViewer = new JasperViewer(jp);
+
+		jasperViewer.setBounds(50, 50, 320, 240);
+		jasperViewer.setLocationRelativeTo(null);
+		jasperViewer.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+		jasperViewer.setVisible(true);
 	}
 }
