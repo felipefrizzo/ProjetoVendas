@@ -29,6 +29,8 @@ public class ItemVenda implements Serializable {
     private Produto produto;
     @Column(name="venda", fk = true)
     private NewVenda venda;
+    @Column()
+    private BigDecimal valorTotal;
 
     public ItemVenda() {
     }
@@ -38,6 +40,7 @@ public class ItemVenda implements Serializable {
         this.preco = preco;
         this.produto = produto;
         this.venda = venda;
+        this.valorTotal = new BigDecimal(getValorTotal());
     }
 
     public ItemVenda(int id, BigDecimal quantidade, BigDecimal preco, Produto produto, NewVenda venda) {
@@ -46,6 +49,7 @@ public class ItemVenda implements Serializable {
         this.preco = preco;
         this.produto = produto;
         this.venda = venda;
+        this.valorTotal = new BigDecimal(getValorTotal());
     }
 
     public double getValorTotal() {
