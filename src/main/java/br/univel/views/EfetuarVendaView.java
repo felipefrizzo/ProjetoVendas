@@ -14,6 +14,7 @@ import br.univel.model.vendas.dao.VendaDAO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,22 +27,32 @@ import java.awt.event.MouseEvent;
 public class EfetuarVendaView extends JFrame{
 	private JTextField txtQtdProduto;
 	private JTextField txtDescricaoProduto;
-	private JTable table_Produtos;
 	private JTextField txtCodCliente;
 	private JTextField txtNomeCliente;
 	private JLabel lblNomeCliente;
 	private JComboBox ComboBoxCliente;
 	ClienteDAO clienteDAO = new ClienteDAO();
 	List<Cliente> clienteList = clienteDAO.listAll();
+	ItemVendaDAO itemVendaDAO = new ItemVendaDAO();
 	ProdutoDAO produtoDAO = new ProdutoDAO();
 	List<Produto> produtoList = produtoDAO.listAll();
-
+	List<ItemVenda> itensVenda ;
+	private double valorTotalVenda;
+	protected int idAtual;
+	NewVenda venda; 
+	
 	public EfetuarVendaView() {
+		idAtual = buscaUltimaIdVenda();
+		venda = new NewVenda();
+//		venda.setId(idAtual);
+		itensVenda = new ArrayList<ItemVenda>();
+		
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblNewLabel = new JLabel("Venda");
@@ -91,6 +102,7 @@ public class EfetuarVendaView extends JFrame{
 		panel_Cliente.add(checkboxUtilizarCliente, gbc_checkboxUtilizarCliente);
 
 		lblNomeCliente = new JLabel("Nome Cliente");
+		lblNomeCliente.setEnabled(false);
 		lblNomeCliente.setHorizontalAlignment(SwingConstants.LEFT);
 
 		GridBagConstraints gbc_lblNomeCliente = new GridBagConstraints();
@@ -104,7 +116,9 @@ public class EfetuarVendaView extends JFrame{
 			clienteComboBox.addElement(clienteList.get(i).getNome());
 		}
 		ComboBoxCliente = new JComboBox();
+		ComboBoxCliente.setEnabled(false);
 		ComboBoxCliente.setModel(clienteComboBox);
+		ComboBoxCliente.setSelectedIndex(-1);
 
 		GridBagConstraints gbc_ComboBoxCliente = new GridBagConstraints();
 		gbc_ComboBoxCliente.fill = GridBagConstraints.HORIZONTAL;
@@ -124,9 +138,9 @@ public class EfetuarVendaView extends JFrame{
 		getContentPane().add(panel_Produtos, gbc_panel_Produtos);
 		GridBagLayout gbl_panel_Produtos = new GridBagLayout();
 		gbl_panel_Produtos.columnWidths = new int[]{377, 72, 75, 0};
-		gbl_panel_Produtos.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_panel_Produtos.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gbl_panel_Produtos.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_Produtos.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_Produtos.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		panel_Produtos.setLayout(gbl_panel_Produtos);
 
 		JLabel lblNewLabel_1 = new JLabel("Produtos");
@@ -150,7 +164,8 @@ public class EfetuarVendaView extends JFrame{
 		}
 		JComboBox produtojComboBox = new JComboBox();
 		produtojComboBox.setModel(produtoComboBox);
-
+		produtojComboBox.setSelectedIndex(-1);
+		
 		GridBagConstraints gbc_txtDescricaoProduto = new GridBagConstraints();
 		gbc_txtDescricaoProduto.insets = new Insets(0, 0, 5, 5);
 		gbc_txtDescricaoProduto.fill = GridBagConstraints.HORIZONTAL;
@@ -170,7 +185,17 @@ public class EfetuarVendaView extends JFrame{
 		JButton btnAddProd = new JButton("add prod");
 		btnAddProd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(idAtual);
+				ItemVenda iv  = new ItemVenda();
+				Produto p = new ProdutoDAO().search(produtoList.get(produtojComboBox.getSelectedIndex()).getId());
+				iv.setProduto(p);
+				iv.setQuantidade(new BigDecimal(txtQtdProduto.getText()));
+				iv.setPreco(new BigDecimal(txtQtdProduto.getText()).multiply(p.getPreco()));
+				iv.setVenda(venda);
+				itensVenda.add(iv);
 				
+				produtojComboBox.setSelectedIndex(-1);
+				txtQtdProduto.setText("");
 			}
 		});
 		GridBagConstraints gbc_btnAddProd = new GridBagConstraints();
@@ -178,17 +203,6 @@ public class EfetuarVendaView extends JFrame{
 		gbc_btnAddProd.gridx = 2;
 		gbc_btnAddProd.gridy = 1;
 		panel_Produtos.add(btnAddProd, gbc_btnAddProd);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.gridwidth = 3;
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 0;
-		gbc_scrollPane.gridy = 2;
-		panel_Produtos.add(scrollPane, gbc_scrollPane);
-		
-		table_Produtos = new JTable();
-		scrollPane.setColumnHeaderView(table_Produtos);
 		
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(new ActionListener() {
@@ -202,44 +216,72 @@ public class EfetuarVendaView extends JFrame{
 		gbc_btnEfetuarVenda.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnEfetuarVenda.insets = new Insets(0, 0, 0, 5);
 		gbc_btnEfetuarVenda.gridx = 0;
-		gbc_btnEfetuarVenda.gridy = 3;
+		gbc_btnEfetuarVenda.gridy = 4;
 		getContentPane().add(btnEfetuarVenda, gbc_btnEfetuarVenda);
 		GridBagConstraints gbc_btnSair = new GridBagConstraints();
 		gbc_btnSair.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnSair.gridx = 1;
-		gbc_btnSair.gridy = 3;
+		gbc_btnSair.gridy = 4;
 		getContentPane().add(btnSair, gbc_btnSair);
 
+		
 		btnEfetuarVenda.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Produto p = new ProdutoDAO().search(produtoList.get(produtojComboBox.getSelectedIndex()).getId());
-				Cliente c = new ClienteDAO().search(clienteList.get(ComboBoxCliente.getSelectedIndex()).getId());
-
-				NewVendaDAO vendaDAO = new NewVendaDAO();
-				NewVenda venda = new NewVenda();
-				venda.setCliente(c);
-				vendaDAO.save(venda);
-				int id = 0;
-
-				List<NewVenda> nv = vendaDAO.listAll();
-				for (NewVenda n: nv) {
-					id = n.getId();
+				Cliente c = null;
+				if(checkboxUtilizarCliente.isSelected()){
+					c = new ClienteDAO().search(clienteList.get(ComboBoxCliente.getSelectedIndex()).getId());					
 				}
 
-				NewVenda newVendas = vendaDAO.search(id);
+				NewVendaDAO vendaDAO = new NewVendaDAO();
+				if(checkboxUtilizarCliente.isSelected()){
+					venda.setCliente(c);
+				}
+				venda.setItemVendas(itensVenda);
+				
+				System.out.println(venda.getId());
+				System.out.println(venda.getCliente().getNome());
+				System.out.println(venda.getValorTotal());
+				for(ItemVenda iv1 : itensVenda){
+					System.out.println(iv1.getProduto().getNome() + " " + iv1.getQuantidade() + " " + iv1.getProduto().getPreco() + " " + iv1.getValorTotal());
+				}
+				
+				vendaDAO.save(venda);
+				
+				for(ItemVenda iv1 : itensVenda){
+					itemVendaDAO.save(iv1);
+				}
+//				int id = 0;
+//
+//				List<NewVenda> nv = vendaDAO.listAll();
+//				for (NewVenda n: nv) {
+//					id = n.getId();
+//				}
 
-				ItemVendaDAO itemVendaDAO = new ItemVendaDAO();
-				ItemVenda itemVenda = new ItemVenda();
- 				itemVenda.setVenda(newVendas);
-				itemVenda.setProduto(p);
-				itemVenda.setQuantidade(new BigDecimal(txtQtdProduto.getText().replaceAll(",", ".")));
-//				itemVenda.setPreco(new BigDecimal(txtprecoProd.getText().replaceAll(",", ".")));
+//				NewVenda newVendas = vendaDAO.search(idAtual);
+//
+//				ItemVendaDAO itemVendaDAO = new ItemVendaDAO();
+//				ItemVenda itemVenda = new ItemVenda();
+// 				itemVenda.setVenda(newVendas);
+//				itemVenda.setProduto(p);
+//				itemVenda.setQuantidade(new BigDecimal(txtQtdProduto.getText().replaceAll(",", ".")));
+////				itemVenda.setPreco(new BigDecimal(txtprecoProd.getText().replaceAll(",", ".")));
 
-				itemVendaDAO.save(itemVenda);
 
 			}
 		});
+		
 	}
-
+	public int buscaUltimaIdVenda(){
+		int id = 0;
+		NewVendaDAO nvd = new NewVendaDAO();
+		List<NewVenda> nv = nvd.listAll();
+		for (NewVenda n: nv) {
+			id = n.getId();
+		}
+		id = id + 1;
+		return id;
+	}
 }
+
+

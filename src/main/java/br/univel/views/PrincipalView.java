@@ -54,8 +54,10 @@ public class PrincipalView extends JFrame{
 		conn = new ConnectionDB();
 		conn.open();
 //		Principal p = new Principal();
-//		p.createTable(new Produto());
-//		p.createTable(new Cliente());
+////		p.createTable(new Produto());
+////		p.createTable(new Cliente());
+////		p.dropTable(new ItemVenda());
+////		p.dropTable(new NewVenda());
 //		p.createTable(new NewVenda());
 //		p.createTable(new ItemVenda());
 		
@@ -115,7 +117,7 @@ public class PrincipalView extends JFrame{
 		JButton btnXmls = new JButton("Xmls");
 		btnXmls.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				XmlsView  xv = new XmlsView();
+				ImportarArquivoView  xv = new ImportarArquivoView();
 				xv.setSize(323,145);
 				xv.setLocationRelativeTo(null);
 				xv.setVisible(true);
@@ -128,19 +130,30 @@ public class PrincipalView extends JFrame{
 				dispose();
 			}
 		});
+		
+		JButton btnNewButton = new JButton("Importar Arquivos");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ImportarArquivoView  ia = new ImportarArquivoView();
+				ia.setSize(323,145);
+				ia.setLocationRelativeTo(null);
+				ia.setVisible(true);
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(lblProjetoVendas, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
 				.addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addGap(157)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnXmls, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-						.addComponent(btnBackup, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-						.addComponent(btnA, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-						.addComponent(btnClientes, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-						.addComponent(btnProdutos, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnNewButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+						.addComponent(btnXmls, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+						.addComponent(btnBackup, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+						.addComponent(btnA, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+						.addComponent(btnClientes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+						.addComponent(btnProdutos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
 					.addGap(51)
 					.addComponent(btnX)
 					.addContainerGap())
@@ -163,6 +176,8 @@ public class PrincipalView extends JFrame{
 					.addComponent(btnBackup)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnXmls)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNewButton)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);

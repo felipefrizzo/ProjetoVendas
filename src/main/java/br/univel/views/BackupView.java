@@ -20,8 +20,11 @@ import br.univel.model.produto.Produto;
 import br.univel.model.produto.ProdutoParser;
 import br.univel.model.produto.dao.ProdutoDAO;
 import br.univel.model.vendas.ItemVenda;
+import br.univel.model.vendas.NewVenda;
 import br.univel.model.vendas.Venda;
 import br.univel.model.vendas.dao.ItemVendaDAO;
+import br.univel.model.vendas.dao.NewVendaDAO;
+import br.univel.model.vendas.dao.VendaDAO;
 import br.univel.modelo.readerURL.ReaderURL;
 
 import javax.swing.JCheckBox;
@@ -64,7 +67,7 @@ public class BackupView extends JFrame{
 		JButton btnRestaurar = new JButton("Restaurar");
 		btnRestaurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				restaurarBackup();
 			}
 		});
 		
@@ -174,17 +177,70 @@ public class BackupView extends JFrame{
 		JOptionPane.showMessageDialog(null, msg);
 	}
 	
-	public void restaurar(){
+	public void restaurarBackup(){
+		implVenda =  new ImplSerializador<List<ItemVenda>>();
+		implProduto =  new ImplSerializador<List<Produto>>();
+		implCliente =  new ImplSerializador<List<Cliente>>();
+		
+		String msg = "";
+		
 		if(checkboxClientes.isSelected()){
-
+			ClienteDAO cliDao = new ClienteDAO();
+			msg = msg + "CLIENTES \n";
+			try {
+				clientes = implCliente.ler(new File("clientes.dat"));
+				for(Cliente c : clientes){
+					if(cliDao.search(c.getId()) == null){
+						cliDao.save(c);						
+					}else{
+						msg = msg + "\n Cliente com Id " + c.getId()+" já existe no BD.";
+					}
+				}
+				msg = msg + "\n" + "Clientes restaurado com sucesso !";
+			} catch (SerializadorException e) {
+				System.out.println("Erro restaurando clientes.");
+				e.printStackTrace();
+			}
 		}
 		
 		if(checkboxProdutos.isSelected()){
-			
+			ProdutoDAO prodDao = new ProdutoDAO();
+			msg = msg + "\n PRODUTOS";
+			try {
+				produtos = implProduto.ler(new File("produtos.dat"));
+				for(Produto p : produtos){
+					if(prodDao.search(p.getId()) == null){
+						prodDao.save(p);						
+					}else{
+						msg = msg + "\n Produto com Id " + p.getId()+" já existe no BD."; 
+					}
+				}
+				msg = msg + "\n" + "Produtos restaurado com sucesso !";
+			} catch (Exception e) {
+				System.out.println("Erro restaurando clientes.");
+				e.printStackTrace();
+			}
 		}
 		
 		if(checkboxVendas.isSelected()){
 			
+//			NewVendaDAO vendaDao = new NewVendaDAO();
+//			msg = msg + "\n PRODUTOS";
+//			try {
+//				produtos = implProduto.ler(new File("produtos.dat"));
+//				for(NewVenda v : vendas){
+//					if(vendaDao.search(v.getId()) == null){
+//						vendaDao.save(v);						
+//					}else{
+//						msg = msg + "\n Produto com Id " + v.getId()+" já existe no BD."; 
+//					}
+//				}
+//				msg = msg + "\n" + "Produtos restaurado com sucesso !";
+//			} catch (Exception e) {
+//				System.out.println("Erro restaurando clientes.");
+//				e.printStackTrace();
+//			}
 		}
+		JOptionPane.showMessageDialog(null, msg);
 	}
 }
