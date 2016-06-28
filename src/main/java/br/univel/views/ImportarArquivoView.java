@@ -38,14 +38,19 @@ public class ImportarArquivoView extends JFrame{
 		getContentPane().add(separator);
 		
 		checkBox_Clientes = new JCheckBox("Clientes");
-		checkBox_Clientes.setBounds(20, 73, 89, 23);
+		checkBox_Clientes.setBounds(20, 73, 104, 23);
 		getContentPane().add(checkBox_Clientes);
 		
 		checkBox_Produto = new JCheckBox("Produtos");
-		checkBox_Produto.setBounds(20, 50, 69, 23);
+		checkBox_Produto.setBounds(20, 50, 89, 23);
 		getContentPane().add(checkBox_Produto);
 		
 		JButton button = new JButton("Sair");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		button.setBounds(209, 80, 91, 23);
 		getContentPane().add(button);
 		

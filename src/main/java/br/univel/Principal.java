@@ -7,6 +7,8 @@ import br.univel.views.PrincipalView;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.swing.JFrame;
+
 public class Principal {
 	public Principal() {
     	
@@ -14,6 +16,9 @@ public class Principal {
     
     public static void main(String[] args) {
         PrincipalView pv = new PrincipalView();
+        
+        pv.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         pv.setSize(500,300);
         pv.setLocationRelativeTo(null);
         pv.setVisible(true);

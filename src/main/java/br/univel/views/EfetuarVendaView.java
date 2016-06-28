@@ -327,7 +327,7 @@ public class EfetuarVendaView extends JFrame{
 //				itemVenda.setQuantidade(new BigDecimal(txtQtdProduto.getText().replaceAll(",", ".")));
 ////				itemVenda.setPreco(new BigDecimal(txtprecoProd.getText().replaceAll(",", ".")));
 
-
+				dispose();
 			}
 		});
 		

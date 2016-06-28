@@ -18,7 +18,7 @@ public class ClienteJRDataSource implements JRDataSource {
 	
 	public ClienteJRDataSource(List<Cliente> lista) {
 		this.lista = lista;
-		this.iterator = iterator;
+		this.iterator = lista.iterator();
 	}
 
 //	private int id;

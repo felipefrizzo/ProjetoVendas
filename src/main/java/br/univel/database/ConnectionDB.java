@@ -33,7 +33,7 @@ public class ConnectionDB {
     public Connection open() {
         try {
 
-            File file = new File("config.properties");
+            File file = new File("config.properties.template");
             FileInputStream fileInput = new FileInputStream(file);
             Properties properties = new Properties();
             properties.load(fileInput);
