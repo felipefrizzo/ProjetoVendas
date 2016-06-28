@@ -25,8 +25,6 @@ public class NewVenda implements Serializable {
     private Cliente cliente;
     @Column(name = "ItemVenda", skip = true)
     private List<ItemVenda> itemVendas;
-    @Column(name = "valorTotal")
-    private BigDecimal valorTotal;
 
     public NewVenda() {
     }
@@ -34,20 +32,17 @@ public class NewVenda implements Serializable {
     public NewVenda(List<ItemVenda> itemVendas, Cliente cliente) {
         this.itemVendas = itemVendas;
         this.cliente = cliente;
-        this.valorTotal = new BigDecimal(getValorTotal());
     }
 
     public NewVenda(int id, List<ItemVenda> itemVendas, Cliente cliente) {
         this.id = id;
         this.itemVendas = itemVendas;
         this.cliente = cliente;
-        this.valorTotal = new BigDecimal(getValorTotal());
     }
 
     public NewVenda(int id, Cliente cliente) {
         this.id = id;
         this.cliente = cliente;
-        this.valorTotal = new BigDecimal(getValorTotal());
     }
 
     public NewVenda(Cliente cliente) {
