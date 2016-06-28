@@ -55,7 +55,7 @@ public class ModeloItemVenda extends AbstractTableModel{
 		case 3:
 			return iv.getProduto().getPreco();
 		default:
-			return "(iv.getQuantidade() * iv.getProduto().getPreco())";
+			return iv.getQuantidade().multiply(iv.getProduto().getPreco());
 		}
 	}
 

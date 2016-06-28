@@ -96,6 +96,7 @@ public class PesqClientesView extends JFrame{
 				cv.setSize(450,301);
 				cv.inserindo = true;
 				((ModeloCliente) tableClientes.getModel()).fireTableDataChanged();
+				atualiza();
 			}
 		});
 		
@@ -128,6 +129,7 @@ public class PesqClientesView extends JFrame{
 				cv.setVisible(true);
 				cv.setSize(450,301);
 				((ModeloCliente) tableClientes.getModel()).fireTableDataChanged();
+				atualiza();
 			}
 		});
 		
@@ -217,6 +219,12 @@ public class PesqClientesView extends JFrame{
 		Consultar();
 	}
 	
+	protected void atualiza() {
+		ModeloCliente mc = new ModeloCliente(listaClientes);
+		tableClientes.setModel(mc);
+		
+	}
+
 	public void Consultar(){
 		ModeloCliente model = new ModeloCliente(getListaClientes());
 		tableClientes.setModel(model);		
@@ -252,4 +260,5 @@ public class PesqClientesView extends JFrame{
 	public void setListaClientes(List<Cliente> listaClientes) {
 		this.listaClientes = listaClientes;
 	}
+	
 }

@@ -1,5 +1,6 @@
 package br.univel.views;
 
+import br.unive.tabelaModelos.ModeloItemVenda;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.cliente.dao.ClienteDAO;
 import br.univel.model.produto.Produto;
@@ -40,6 +41,9 @@ public class EfetuarVendaView extends JFrame{
 	private double valorTotalVenda;
 	protected int idAtual;
 	NewVenda venda; 
+	private JTable tableProutos;
+	private JTextField txtValorTotal;
+	private JTextField txtTroco;
 	
 	public EfetuarVendaView() {
 		idAtual = buscaUltimaIdVenda();
@@ -50,9 +54,9 @@ public class EfetuarVendaView extends JFrame{
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblNewLabel = new JLabel("Venda");
@@ -193,6 +197,9 @@ public class EfetuarVendaView extends JFrame{
 				iv.setPreco(new BigDecimal(txtQtdProduto.getText()).multiply(p.getPreco()));
 				iv.setVenda(venda);
 				itensVenda.add(iv);
+				valorTotalVenda = valorTotalVenda + iv.getPreco().doubleValue();
+				txtValorTotal.setText(Double.toString(valorTotalVenda));
+				atualiza();
 				
 				produtojComboBox.setSelectedIndex(-1);
 				txtQtdProduto.setText("");
@@ -204,6 +211,19 @@ public class EfetuarVendaView extends JFrame{
 		gbc_btnAddProd.gridy = 1;
 		panel_Produtos.add(btnAddProd, gbc_btnAddProd);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridheight = 2;
+		gbc_scrollPane.gridwidth = 3;
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 0;
+		gbc_scrollPane.gridy = 2;
+		panel_Produtos.add(scrollPane, gbc_scrollPane);
+		
+		tableProutos = new JTable();
+		scrollPane.setColumnHeaderView(tableProutos);
+		
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -211,17 +231,58 @@ public class EfetuarVendaView extends JFrame{
 			}
 		});
 		
+		JLabel lblValorTotal = new JLabel("Valor Total");
+		GridBagConstraints gbc_lblValorTotal = new GridBagConstraints();
+		gbc_lblValorTotal.insets = new Insets(0, 0, 5, 5);
+		gbc_lblValorTotal.gridx = 0;
+		gbc_lblValorTotal.gridy = 3;
+		getContentPane().add(lblValorTotal, gbc_lblValorTotal);
+		
+		JLabel lblTroco = new JLabel("Troco");
+		GridBagConstraints gbc_lblTroco = new GridBagConstraints();
+		gbc_lblTroco.insets = new Insets(0, 0, 5, 0);
+		gbc_lblTroco.gridx = 1;
+		gbc_lblTroco.gridy = 3;
+		getContentPane().add(lblTroco, gbc_lblTroco);
+		
+		txtValorTotal = new JTextField();
+		txtValorTotal.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.getKeyCode() == KeyEvent.VK_ENTER){
+					txtTroco.setText(Double.toString(Double.parseDouble(txtValorTotal.getText()) - valorTotalVenda));
+				}
+			}
+		});
+		GridBagConstraints gbc_txtValorTotal = new GridBagConstraints();
+		gbc_txtValorTotal.insets = new Insets(0, 0, 5, 5);
+		gbc_txtValorTotal.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtValorTotal.gridx = 0;
+		gbc_txtValorTotal.gridy = 4;
+		getContentPane().add(txtValorTotal, gbc_txtValorTotal);
+		txtValorTotal.setColumns(10);
+		
+		txtTroco = new JTextField();
+		GridBagConstraints gbc_txtTroco = new GridBagConstraints();
+		gbc_txtTroco.anchor = GridBagConstraints.NORTH;
+		gbc_txtTroco.insets = new Insets(0, 0, 5, 0);
+		gbc_txtTroco.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtTroco.gridx = 1;
+		gbc_txtTroco.gridy = 4;
+		getContentPane().add(txtTroco, gbc_txtTroco);
+		txtTroco.setColumns(10);
+		
 		JButton btnEfetuarVenda = new JButton("Efetuar Venda");
 		GridBagConstraints gbc_btnEfetuarVenda = new GridBagConstraints();
 		gbc_btnEfetuarVenda.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnEfetuarVenda.insets = new Insets(0, 0, 0, 5);
 		gbc_btnEfetuarVenda.gridx = 0;
-		gbc_btnEfetuarVenda.gridy = 4;
+		gbc_btnEfetuarVenda.gridy = 5;
 		getContentPane().add(btnEfetuarVenda, gbc_btnEfetuarVenda);
 		GridBagConstraints gbc_btnSair = new GridBagConstraints();
 		gbc_btnSair.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnSair.gridx = 1;
-		gbc_btnSair.gridy = 4;
+		gbc_btnSair.gridy = 5;
 		getContentPane().add(btnSair, gbc_btnSair);
 
 		
@@ -238,17 +299,16 @@ public class EfetuarVendaView extends JFrame{
 					venda.setCliente(c);
 				}
 				venda.setItemVendas(itensVenda);
-				
-				System.out.println(venda.getId());
-				System.out.println(venda.getCliente().getNome());
-				System.out.println(venda.getValorTotal());
-				for(ItemVenda iv1 : itensVenda){
-					System.out.println(iv1.getProduto().getNome() + " " + iv1.getQuantidade() + " " + iv1.getProduto().getPreco() + " " + iv1.getValorTotal());
-				}
-				
+				int id = 0;
 				vendaDAO.save(venda);
+				List<NewVenda> list = vendaDAO.listAll();
 				
+				for(NewVenda l: list) {
+					id = l.getId();
+				}
+				NewVenda newVenda = vendaDAO.search(id);
 				for(ItemVenda iv1 : itensVenda){
+					iv1.setVenda(newVenda);
 					itemVendaDAO.save(iv1);
 				}
 //				int id = 0;
@@ -271,6 +331,10 @@ public class EfetuarVendaView extends JFrame{
 			}
 		});
 		
+	}
+	protected void atualiza() {
+		ModeloItemVenda miv = new ModeloItemVenda(itensVenda);
+		tableProutos.setModel(miv);
 	}
 	public int buscaUltimaIdVenda(){
 		int id = 0;

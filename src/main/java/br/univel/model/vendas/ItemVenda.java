@@ -29,7 +29,7 @@ public class ItemVenda implements Serializable {
     private Produto produto;
     @Column(name="venda", fk = true)
     private NewVenda venda;
-    @Column()
+    @Column(skip = true)
     private BigDecimal valorTotal;
 
     public ItemVenda() {

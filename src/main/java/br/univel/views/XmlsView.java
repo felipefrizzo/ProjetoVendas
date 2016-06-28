@@ -54,7 +54,7 @@ public class XmlsView extends JFrame{
 		checkBoxClientes.setBounds(10, 67, 100, 23);
 
 		checkBoxVendas = new JCheckBox("Vendas");
-		checkBoxVendas.setBounds(10, 90, 100, 23);
+		checkBoxVendas.setBounds(112, 44, 83, 23);
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(0, 35, 203, 10);
