@@ -1,6 +1,7 @@
 package br.univel.jaspers;
 
 import br.univel.model.vendas.ItemVenda;
+import br.univel.model.vendas.NewVenda;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
@@ -12,12 +13,12 @@ import java.util.List;
  * Created by felipefrizzo on 6/29/16.
  */
 public class VendaJRDataSource implements JRDataSource{
-    private List<ItemVenda> lista;
+    private List<NewVenda> lista;
 
-    private ItemVenda selecionado;
-    private Iterator<ItemVenda> iterator;
+    private NewVenda selecionado;
+    private Iterator<NewVenda> iterator;
 
-    public VendaJRDataSource(List<ItemVenda> lista) {
+    public VendaJRDataSource(List<NewVenda> lista) {
         this.lista = lista;
         this.iterator = lista.iterator();
     }
@@ -36,14 +37,10 @@ public class VendaJRDataSource implements JRDataSource{
     public Object getFieldValue(JRField jrField) throws JRException {
         if ("id".equals(jrField.getName())) {
             return selecionado.getId();
-        } else if ("produto".equals(jrField.getName())) {
-            return selecionado.getProduto().getNome();
-        } else if ("preco".equals(jrField.getName())) {
-            return selecionado.getPreco();
-        } else if ("quantida".equals(jrField.getName())) {
-            return selecionado.getQuantidade();
-        } else if ("venda".equals(jrField.getName())) {
-            return selecionado.getVenda().getId();
+        } else if ("cliente".equals(jrField.getName())) {
+            return selecionado.getCliente().getNome();
+        } else if ("vlttotal".equals(jrField.getName())){
+        	return selecionado.getValorTotal();
         }
         return "Undefined!";
     }

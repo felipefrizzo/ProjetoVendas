@@ -1,7 +1,9 @@
 package br.univel.jaspers;
 
 import br.univel.model.vendas.ItemVenda;
+import br.univel.model.vendas.NewVenda;
 import br.univel.model.vendas.dao.ItemVendaDAO;
+import br.univel.model.vendas.dao.NewVendaDAO;
 import net.sf.jasperreports.engine.JRDataSource;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class VendaDsFactory {
     }
 
     public static JRDataSource criar(){
-        ItemVendaDAO dao = new ItemVendaDAO();
-        List<ItemVenda> lista = dao.listAll();
+        NewVendaDAO dao = new NewVendaDAO();
+        List<NewVenda> lista = dao.listAll();
         VendaJRDataSource ds = new VendaJRDataSource(lista);
         return ds;
     }

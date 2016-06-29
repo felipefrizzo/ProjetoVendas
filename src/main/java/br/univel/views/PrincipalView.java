@@ -13,12 +13,16 @@ import javax.swing.border.TitledBorder;
 import br.univel.Principal;
 import br.univel.database.ConnectionDB;
 import br.univel.jaspers.ClienteJRDataSource;
+import br.univel.jaspers.ProdutoJRDataSource;
+import br.univel.jaspers.VendaJRDataSource;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.cliente.dao.ClienteDAO;
 import br.univel.model.produto.Produto;
+import br.univel.model.produto.dao.ProdutoDAO;
 import br.univel.model.vendas.ItemVenda;
 import br.univel.model.vendas.NewVenda;
-
+import br.univel.model.vendas.dao.NewVendaDAO;
+import br.univel.model.vendas.dao.VendaDAO;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -147,11 +151,30 @@ public class PrincipalView extends JFrame{
 		btnRelCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					imprimir();
+					imprimirClientes();
 				} catch (JRException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}
+		});
+		
+		JButton btnRelProdutos = new JButton("Rel Produtos");
+		btnRelProdutos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					imprimirProdutos();
+				} catch (JRException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		JButton btnRelVendas = new JButton("Rel Vendas");
+		btnRelVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				imprimirVendas();
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -160,16 +183,20 @@ public class PrincipalView extends JFrame{
 				.addComponent(lblProjetoVendas, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
 				.addComponent(separator, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(3)
-					.addComponent(btnRelCliente)
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addComponent(btnRelCliente)
+							.addComponent(btnRelProdutos))
+						.addComponent(btnRelVendas))
 					.addGap(65)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnNewButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+						.addComponent(btnNewButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
 						.addComponent(btnXmls, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
 						.addComponent(btnBackup, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-						.addComponent(btnA, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-						.addComponent(btnClientes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-						.addComponent(btnProdutos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+						.addComponent(btnA, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+						.addComponent(btnClientes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+						.addComponent(btnProdutos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
 					.addGap(51)
 					.addComponent(btnX)
 					.addContainerGap())
@@ -199,7 +226,11 @@ public class PrincipalView extends JFrame{
 							.addComponent(btnNewButton))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(4)
-							.addComponent(btnRelCliente)))
+							.addComponent(btnRelCliente)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnRelProdutos)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnRelVendas)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
@@ -215,7 +246,7 @@ public class PrincipalView extends JFrame{
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				try {
-					imprimir();
+					imprimirClientes();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -225,7 +256,7 @@ public class PrincipalView extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					imprimir();
+					imprimirClientes();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -241,11 +272,51 @@ public class PrincipalView extends JFrame{
 		mnNewMenu.add(mntmVendas);
 	}
 
-	protected void imprimir() throws JRException {
+	protected void imprimirVendas() {
+		String arq = "RelVendas.jasper";
+		
+		NewVendaDAO dao = new NewVendaDAO();
+		VendaJRDataSource ds = new VendaJRDataSource(dao.listAll());
+		
+		JasperPrint jp;
+		try {
+			jp = JasperFillManager.fillReport(arq, null, ds);
+			JasperViewer jasperViewer = new JasperViewer(jp);
+			jasperViewer.setBounds(50, 50, 320, 240);
+			jasperViewer.setLocationRelativeTo(null);
+			jasperViewer.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			
+			jasperViewer.setVisible(true);
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+	}
+
+	protected void imprimirClientes() throws JRException {
 		String arq = "RelClientes.jasper";
 		
 		ClienteDAO dao = new ClienteDAO();
 		ClienteJRDataSource ds = new ClienteJRDataSource(dao.listAll());
+		
+		JasperPrint jp = JasperFillManager.fillReport(arq, null, ds);
+
+		JasperViewer jasperViewer = new JasperViewer(jp);
+
+		jasperViewer.setBounds(50, 50, 320, 240);
+		jasperViewer.setLocationRelativeTo(null);
+		jasperViewer.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+		jasperViewer.setVisible(true);
+	}
+	
+	protected void imprimirProdutos() throws JRException {
+		String arq = "RelProdutos.jasper";
+		
+		ProdutoDAO dao = new ProdutoDAO();
+		ProdutoJRDataSource ds = new ProdutoJRDataSource(dao.listAll());
 		
 		JasperPrint jp = JasperFillManager.fillReport(arq, null, ds);
 
