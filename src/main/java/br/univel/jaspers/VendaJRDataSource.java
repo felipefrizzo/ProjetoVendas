@@ -35,15 +35,9 @@ public class VendaJRDataSource implements JRDataSource{
     @Override
     public Object getFieldValue(JRField jrField) throws JRException {
         if ("id".equals(jrField.getName())) {
-            return selecionado.getId();
-        } else if ("produto".equals(jrField.getName())) {
-            return selecionado.getProduto().getNome();
-        } else if ("preco".equals(jrField.getName())) {
-            return selecionado.getPreco();
-        } else if ("quantida".equals(jrField.getName())) {
-            return selecionado.getQuantidade();
-        } else if ("venda".equals(jrField.getName())) {
-            return selecionado.getVenda().getCliente().getNome();
+            return selecionado.getVenda().getId();
+        } else if ("valorTotal".equals(jrField.getName())) {
+            return selecionado.getValorTotal();
         }
         return "Undefined!";
     }

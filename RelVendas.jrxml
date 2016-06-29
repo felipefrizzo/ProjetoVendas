@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2016-06-29T12:15:29 -->
+<!-- 2016-06-29T14:37:58 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelVendas" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL"/>
@@ -15,19 +15,13 @@
 		</conditionalStyle>
 	</style>
 	<queryString>
-		<![CDATA[select itemvenda.venda as id,
-       cliente.nome as nomecli,
-       sum(itemvenda.preco) as vltTotal
-from   venda
-  inner join itemvenda
-    on itemvenda.venda = venda.id
-  inner join cliente
-    on cliente.id = venda.cliente
-group by itemvenda.venda, cliente.nome]]>
+		<![CDATA[select itemvenda.venda as Id,
+       sum(itemvenda.preco) as valorTotal
+from   itemvenda
+group by itemvenda.venda]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
-	<field name="nomecli" class="java.lang.String"/>
-	<field name="vlttotal" class="java.math.BigDecimal"/>
+	<field name="vlrtotal" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -44,7 +38,14 @@ group by itemvenda.venda, cliente.nome]]>
 					<textElement>
 						<font isBold="false"/>
 					</textElement>
-					<text><![CDATA[Vendas]]></text>
+					<text><![CDATA[Cherry Title]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" x="157" y="66" width="249" height="29" uuid="8978eac3-c578-41c9-837e-48d2b0184642"/>
+					<textElement>
+						<font size="22" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Cherry SubTitle]]></text>
 				</staticText>
 			</frame>
 			<frame>
@@ -65,25 +66,18 @@ group by itemvenda.venda, cliente.nome]]>
 	<columnHeader>
 		<band height="26" splitType="Stretch">
 			<staticText>
-				<reportElement style="Column header" x="0" y="7" width="185" height="18" forecolor="#000000" uuid="3f5d610f-c574-44db-bad1-64eb20cd8f6a"/>
+				<reportElement style="Column header" x="0" y="7" width="277" height="18" forecolor="#000000" uuid="8c344fdb-8295-4614-9bed-4fe57450a10b"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[id]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="185" y="7" width="185" height="18" forecolor="#000000" uuid="57fdf69b-c0fb-48e7-b71a-2ac7f0095e6a"/>
+				<reportElement style="Column header" x="277" y="7" width="277" height="18" forecolor="#000000" uuid="7bf477d8-8e1d-4acc-8e91-052b6b850b0f"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
-				<text><![CDATA[nomecli]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="370" y="7" width="185" height="18" forecolor="#000000" uuid="375b23c0-16b7-4f62-b095-618909f3905b"/>
-				<textElement>
-					<font isBold="false"/>
-				</textElement>
-				<text><![CDATA[vlttotal]]></text>
+				<text><![CDATA[vlrtotal]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -92,25 +86,18 @@ group by itemvenda.venda, cliente.nome]]>
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259"/>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" positionType="Float" x="0" y="0" width="185" height="18" uuid="3c91782c-8bf6-4cd1-b00b-cb06b8a6c874"/>
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="277" height="18" uuid="357ab060-2e7e-4818-9c97-94c73c518d87"/>
 					<textElement>
 						<font size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" positionType="Float" x="185" y="0" width="185" height="18" uuid="3f137206-3215-4323-a0be-8266f755fbee"/>
+					<reportElement style="Detail" positionType="Float" x="277" y="0" width="277" height="18" uuid="059eb474-0c54-4513-9dc5-ba4c0e9d29d6"/>
 					<textElement>
 						<font size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{nomecli}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" positionType="Float" x="370" y="0" width="185" height="18" uuid="985a2e9f-d83d-44c8-a482-53b19e129f5d"/>
-					<textElement>
-						<font size="14"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{vlttotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{vlrtotal}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
