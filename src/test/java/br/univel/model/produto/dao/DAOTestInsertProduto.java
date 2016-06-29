@@ -1,9 +1,8 @@
-package br.univel.model.cliente.dao;
+package br.univel.model.produto.dao;
 
-import br.univel.database.ConnectionDB;
 import br.univel.database.ConnectionDB_dev;
 import br.univel.generics.Execute;
-import br.univel.model.cliente.Cliente;
+import br.univel.model.produto.Produto;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,10 +15,10 @@ import java.sql.SQLException;
 /**
  * Created by felipefrizzo on 6/19/16.
  */
-public class DAOTestUpdate {
+public class DAOTestInsertProduto {
     private Connection connection = null;
     private Execute execute;
-    private Cliente cliente;
+    private Produto produto;
     private PreparedStatement preparedStatement = null;
 
     @Before
@@ -27,39 +26,33 @@ public class DAOTestUpdate {
         connection = new ConnectionDB_dev().getInstance().open();
 
         execute = new Execute();
-        cliente = new Cliente();
-        execute.getCreateTable(connection, cliente);
-        try {
-            cliente.setNome("Felipe Frizzo");
-            preparedStatement = execute.getSqlInsert(connection, cliente);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        produto = new Produto();
+        execute.getCreateTable(connection, produto);
         preparedStatement = null;
     }
 
     @Test
-    public void test_update() {
-        int update = 0;
+    public void test_insert() {
+        int insert = 0;
         try {
-            cliente.setCidade("Cascavel");
-            preparedStatement = execute.getSqlUpdateById(connection, cliente, 1);
-            update = preparedStatement.executeUpdate();
+            produto.setNome("COCA COLA 4l");
+            preparedStatement = execute.getSqlInsert(connection, produto);
+            insert = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        Assert.assertEquals(1, update);
+        Assert.assertEquals(1, insert);
     }
 
     @After
     public void close() {
         try {
-            execute.getDropTable(connection, cliente);
+            execute.getDropTable(connection, produto);
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 }

@@ -21,6 +21,7 @@ import br.univel.model.produto.Produto;
 import br.univel.model.produto.dao.ProdutoDAO;
 import br.univel.model.vendas.ItemVenda;
 import br.univel.model.vendas.NewVenda;
+import br.univel.model.vendas.dao.ItemVendaDAO;
 import br.univel.model.vendas.dao.NewVendaDAO;
 import br.univel.model.vendas.dao.VendaDAO;
 import net.sf.jasperreports.engine.JRException;
@@ -275,7 +276,7 @@ public class PrincipalView extends JFrame{
 	protected void imprimirVendas() {
 		String arq = "RelVendas.jasper";
 		
-		NewVendaDAO dao = new NewVendaDAO();
+		ItemVendaDAO dao = new ItemVendaDAO();
 		VendaJRDataSource ds = new VendaJRDataSource(dao.listAll());
 		
 		JasperPrint jp;
