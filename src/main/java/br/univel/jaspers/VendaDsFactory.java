@@ -16,8 +16,8 @@ public class VendaDsFactory {
     }
 
     public static JRDataSource criar(){
-        NewVendaDAO dao = new NewVendaDAO();
-        List<NewVenda> lista = dao.listAll();
+        ItemVendaDAO dao = new ItemVendaDAO();
+        List<ItemVenda> lista = dao.listAll();
         VendaJRDataSource ds = new VendaJRDataSource(lista);
         return ds;
     }
