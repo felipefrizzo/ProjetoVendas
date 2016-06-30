@@ -47,10 +47,11 @@ public class ProdutoDAO implements Dao<Produto, Integer> {
         try {
             ps = ex.getSqlSelectById(con, produto, integer);
             rs = ps.executeQuery();
-            rs.next();
-
-            produto = new Produto(rs.getInt("id"), rs.getString("nome"), rs.getBigDecimal("preco"));
-        } catch (SQLException e) {
+            
+            while(rs.next()){
+            	produto = new Produto(rs.getInt("id"), rs.getString("nome"), rs.getBigDecimal("preco"));            	
+            }
+        } catch (SQLException e){
             e.printStackTrace();
         } finally {
             try {

@@ -3,6 +3,7 @@ package br.univel.model.vendas.dao;
 import br.univel.database.ConnectionDB;
 import br.univel.generics.Dao;
 import br.univel.generics.Execute;
+import br.univel.model.vendas.NewVenda;
 import br.univel.model.vendas.Venda;
 
 import java.sql.Connection;
@@ -15,15 +16,15 @@ import java.util.List;
 /**
  * Created by felipefrizzo on 6/18/16.
  */
-public class VendaDAO implements Dao<Venda, Integer> {
+public class VendaDAO implements Dao<NewVenda, Integer> {
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private Connection con = ConnectionDB.getInstance().open();
     private Execute ex = new Execute();
-    private List<Venda> list = null;
+    private List<NewVenda> list = null;
 
     @Override
-    public void save(Venda venda) {
+    public void save(NewVenda venda) {
         try {
             ps = ex.getSqlInsert(con, venda);
             ps.executeUpdate();
@@ -40,8 +41,8 @@ public class VendaDAO implements Dao<Venda, Integer> {
     }
 
     @Override
-    public Venda search(Integer integer) {
-        Venda venda = new Venda();
+    public NewVenda search(Integer integer) {
+        NewVenda venda = new NewVenda();
         try {
             ps = ex.getSqlSelectById(con, venda, integer);
             rs = ps.executeQuery();
@@ -63,7 +64,7 @@ public class VendaDAO implements Dao<Venda, Integer> {
     }
 
     @Override
-    public void update(Venda venda) {
+    public void update(NewVenda venda) {
         try {
             ps = ex.getSqlUpdateById(con, venda, venda.getId());
             ps.executeUpdate();
@@ -82,7 +83,7 @@ public class VendaDAO implements Dao<Venda, Integer> {
     @Override
     public void delete(Integer integer) {
         try {
-            ps = ex.getSqlDeleteById(con, new Venda(), integer);
+            ps = ex.getSqlDeleteById(con, new NewVenda(), integer);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -97,12 +98,12 @@ public class VendaDAO implements Dao<Venda, Integer> {
     }
 
     @Override
-    public List<Venda> listAll() {
+    public List<NewVenda> listAll() {
         list = null;
 
         try {
-            Venda venda = new Venda();
-            list = new ArrayList<Venda>();
+            NewVenda venda = new NewVenda();
+            list = new ArrayList<NewVenda>();
             ps = ex.getSqlSelectAll(con, venda);
             rs = ps.executeQuery();
 

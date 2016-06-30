@@ -51,10 +51,11 @@ public class NewVendaDAO implements Dao<NewVenda, Integer> {
         try {
             ps = ex.getSqlSelectById(con, newVenda, integer);
             rs = ps.executeQuery();
-            rs.next();
+            while (rs.next()) {
             ClienteDAO dao = new ClienteDAO();
             Cliente c = dao.search(rs.getInt("cliente"));
             newVenda = new NewVenda(rs.getInt("id"), c);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

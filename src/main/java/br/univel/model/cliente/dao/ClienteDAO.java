@@ -47,12 +47,14 @@ public class ClienteDAO implements Dao<Cliente, Integer> {
         try {
             ps = ex.getSqlSelectById(con, cliente, integer);
             rs = ps.executeQuery();
-            rs.next();
+            
+            while (rs.next()) {
 
             cliente = new Cliente(rs.getInt("id"), rs.getString("nome"),
                     rs.getString("endereco"), rs.getInt("numero"), rs.getString("Complemento"),
                     rs.getString("bairro"), rs.getString("cidade"), rs.getString("estado"),
                     rs.getString("cep"), rs.getString("telefone"), rs.getString("celular"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

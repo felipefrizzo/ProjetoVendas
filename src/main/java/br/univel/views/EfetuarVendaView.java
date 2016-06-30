@@ -189,7 +189,6 @@ public class EfetuarVendaView extends JFrame{
 		JButton btnAddProd = new JButton("add prod");
 		btnAddProd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(idAtual);
 				ItemVenda iv  = new ItemVenda();
 				Produto p = new ProdutoDAO().search(produtoList.get(produtojComboBox.getSelectedIndex()).getId());
 				iv.setProduto(p);

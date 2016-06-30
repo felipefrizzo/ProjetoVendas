@@ -7,10 +7,12 @@ import br.univel.model.cliente.dao.ClienteDAO;
 import br.univel.model.produto.Produto;
 import br.univel.model.produto.ProdutoLista;
 import br.univel.model.produto.dao.ProdutoDAO;
-import br.univel.model.vendas.Venda;
+import br.univel.model.vendas.ItemVenda;
+import br.univel.model.vendas.NewVenda;
 import br.univel.model.vendas.VendasLista;
 import br.univel.model.vendas.dao.ItemVendaDAO;
 import br.univel.model.vendas.dao.NewVendaDAO;
+import br.univel.model.vendas.dao.VendaDAO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +32,7 @@ public class XmlsView extends JFrame{
 	static EIXml<ClientesLista> XMLclientes;
 	static EIXml<VendasLista> XMlvendas;
 
-	static List<Venda> vendas;
+	static List<NewVenda> vendas;
 	static List<Produto> produtos;
 	static List<Cliente> clientes;
 	static ArrayList<Produto> produtosVenda;
@@ -42,8 +44,8 @@ public class XmlsView extends JFrame{
 	static Cliente c1;
 	static Cliente c2;
 
-	static Venda v1;
-	static Venda v2;
+	static NewVenda v1;
+	static NewVenda v2;
 
 	public XmlsView() {
 
@@ -75,6 +77,7 @@ public class XmlsView extends JFrame{
 		JButton btnImportar = new JButton("Importar");
 		btnImportar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				importarXml();
 			}
 		});
 		btnImportar.setBounds(213, 35, 91, 23);
@@ -148,6 +151,63 @@ public class XmlsView extends JFrame{
 	}
 
 	public void importarXml(){
-
+		XMLclientes = new EIXml<>();
+		XMLprodutos = new EIXml<>();
+		XMlvendas = new EIXml<>();
+		
+		String msg = "";
+		
+		pl = new ProdutoLista();
+		cl = new ClientesLista();
+		vl = new VendasLista();
+		
+		produtos = new ArrayList<Produto>();
+		clientes = new ArrayList<Cliente>();
+		vendas = new ArrayList<NewVenda>();
+		
+		if(checkBoxProdutos.isSelected()){
+			pl = XMLprodutos.importarXml(pl, new File("produtos.xml"));
+			produtos = pl.getProdutos();
+			ProdutoDAO pdao = new ProdutoDAO();
+			for(Produto p : produtos){
+				if((pdao.search(p.getId()).getId()) > 0){					
+					pdao.save(p);
+				}else{
+					msg += "Produto " + p.getId() + " já existe no BD.\n";
+				}
+			}
+		}
+		
+		if(checkBoxClientes.isSelected()){
+			cl = XMLclientes.importarXml(cl, new File("clientes.xml"));
+			clientes = cl.getClientes();
+			ClienteDAO cdao = new ClienteDAO();
+			for(Cliente c : clientes){
+				if(cdao.search(c.getId()).getId() > 0){
+					cdao.save(c);
+				}else{
+					msg += "Cliente " + c.getId() + " já existe no BD.\n";
+				}
+			}
+		}
+		if(checkBoxVendas.isSelected()){
+			vl = XMlvendas.importarXml(vl, new File("vendas.xml"));
+			vendas = vl.getVendas();
+			VendaDAO vd = new VendaDAO();
+			ItemVendaDAO ivd = new ItemVendaDAO();
+			for(NewVenda nv : vendas){
+				if(vd.search(nv.getId()).getId() > 0){
+					vd.save(nv);
+					for(ItemVenda iv : nv.getItemVendas()){
+						if(ivd.search(iv.getId()).getId() > 0){
+							ivd.save(iv);
+						}
+					}
+				}else{
+					msg += "Venda " + nv.getId() + " já existe no BD.\n"; 
+				}
+			}
+		}
+		JOptionPane.showMessageDialog(null, msg);
 	}
 }

@@ -52,7 +52,7 @@ public class ItemVendaDAO implements Dao<ItemVenda, Integer> {
         try {
             ps = ex.getSqlSelectById(con, itemVenda, integer);
             rs = ps.executeQuery();
-            rs.next();
+            while (rs.next()) {
 
             ProdutoDAO produtoDAO = new ProdutoDAO();
             Produto p = produtoDAO.search(rs.getInt("produto"));
@@ -61,6 +61,7 @@ public class ItemVendaDAO implements Dao<ItemVenda, Integer> {
 
             itemVenda = new ItemVenda(rs.getInt("id"), rs.getBigDecimal("quantidade"),
                     rs.getBigDecimal("preco"), p, v);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

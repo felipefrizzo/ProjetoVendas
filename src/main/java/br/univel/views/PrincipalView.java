@@ -1,6 +1,7 @@
 package br.univel.views;
 
 import javax.swing.JFrame;
+import javax.imageio.stream.FileImageInputStream;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
@@ -44,6 +45,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.util.HashMap;
 
@@ -61,7 +64,7 @@ public class PrincipalView extends JFrame{
 	public PrincipalView() {
 		conn = new ConnectionDB();
 		conn.open();
-//		Principal p = new Principal();
+		Principal p = new Principal();
 //		p.createTable(new Produto());
 //		p.createTable(new Cliente());
 //		p.dropTable(new ItemVenda());
@@ -277,12 +280,13 @@ public class PrincipalView extends JFrame{
 	protected void imprimirVendas() {
 		String arq = "RelVendas.jasper";
 		
-		ItemVendaDAO dao = new ItemVendaDAO();
-		VendaJRDataSource ds = new VendaJRDataSource(dao.listAll());
+//		ItemVendaDAO dao = new ItemVendaDAO();
+//		VendaJRDataSource ds = new VendaJRDataSource(dao.listAll());
 		
 		JasperPrint jp;
 		try {
-			jp = JasperFillManager.fillReport(arq, null, ds);
+//			jp = JasperFillManager.fillReport(new FileInputStream(new File(arq)), null, conn);
+			jp = JasperFillManager.fillReport(arq, null, conn.open());
 			JasperViewer jasperViewer = new JasperViewer(jp);
 			jasperViewer.setBounds(50, 50, 320, 240);
 			jasperViewer.setLocationRelativeTo(null);
@@ -300,10 +304,10 @@ public class PrincipalView extends JFrame{
 	protected void imprimirClientes() throws JRException {
 		String arq = "RelClientes.jasper";
 		
-		ClienteDAO dao = new ClienteDAO();
-		ClienteJRDataSource ds = new ClienteJRDataSource(dao.listAll());
+//		ClienteDAO dao = new ClienteDAO();
+//		ClienteJRDataSource ds = new ClienteJRDataSource(dao.listAll());
 		
-		JasperPrint jp = JasperFillManager.fillReport(arq, null, ds);
+		JasperPrint jp = JasperFillManager.fillReport(arq, null, conn.open());
 
 		JasperViewer jasperViewer = new JasperViewer(jp);
 
@@ -317,10 +321,10 @@ public class PrincipalView extends JFrame{
 	protected void imprimirProdutos() throws JRException {
 		String arq = "RelProdutos.jasper";
 		
-		ProdutoDAO dao = new ProdutoDAO();
-		ProdutoJRDataSource ds = new ProdutoJRDataSource(dao.listAll());
+//		ProdutoDAO dao = new ProdutoDAO();
+//		ProdutoJRDataSource ds = new ProdutoJRDataSource(dao.listAll());
 		
-		JasperPrint jp = JasperFillManager.fillReport(arq, null, ds);
+		JasperPrint jp = JasperFillManager.fillReport(arq, null, conn.open());
 
 		JasperViewer jasperViewer = new JasperViewer(jp);
 
