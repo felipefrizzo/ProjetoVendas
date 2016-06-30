@@ -1,4 +1,4 @@
-package br.unive.tabelaModelos;
+package br.univel.tabelaModelos;
 
 import java.util.ArrayList;
 import java.util.List;

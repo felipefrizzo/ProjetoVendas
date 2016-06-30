@@ -10,22 +10,14 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
-import javax.swing.table.DefaultTableModel;
 
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import br.unive.tabelaModelos.ModelProduto;
-import br.unive.tabelaModelos.ModeloCliente;
+import br.univel.tabelaModelos.ModeloCliente;
 import br.univel.model.cliente.Cliente;
-import br.univel.model.cliente.ClienteParser;
 import br.univel.model.cliente.dao.ClienteDAO;
-import br.univel.model.produto.Produto;
-import br.univel.model.produto.ProdutoParser;
-import br.univel.modelo.readerURL.ReaderURL;
-import br.univel.readerArquivo.ReaderArquivo;
 
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -35,12 +27,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.RowFilter;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 public class PesqClientesView extends JFrame{
 	public static Cliente cliAlterar;

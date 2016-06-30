@@ -1,16 +1,14 @@
 package br.univel.views;
 
-import br.unive.tabelaModelos.ModeloItemVenda;
+import br.univel.tabelaModelos.ModeloItemVenda;
 import br.univel.model.cliente.Cliente;
 import br.univel.model.cliente.dao.ClienteDAO;
 import br.univel.model.produto.Produto;
 import br.univel.model.produto.dao.ProdutoDAO;
 import br.univel.model.vendas.ItemVenda;
 import br.univel.model.vendas.NewVenda;
-import br.univel.model.vendas.Venda;
 import br.univel.model.vendas.dao.ItemVendaDAO;
 import br.univel.model.vendas.dao.NewVendaDAO;
-import br.univel.model.vendas.dao.VendaDAO;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

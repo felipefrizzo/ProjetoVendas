@@ -15,19 +15,14 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import br.unive.tabelaModelos.ModelProduto;
-import br.unive.tabelaModelos.ModeloCliente;
-import br.univel.model.cliente.Cliente;
+import br.univel.tabelaModelos.ModelProduto;
 import br.univel.model.produto.Produto;
-import br.univel.model.produto.ProdutoParser;
 import br.univel.model.produto.dao.ProdutoDAO;
-import br.univel.modelo.readerURL.ReaderURL;
 
 import javax.swing.JSeparator;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
