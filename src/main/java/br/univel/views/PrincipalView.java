@@ -64,7 +64,7 @@ public class PrincipalView extends JFrame{
 	public PrincipalView() {
 		conn = new ConnectionDB();
 		conn.open();
-		Principal p = new Principal();
+//		Principal p = new Principal();
 //		p.createTable(new Produto());
 //		p.createTable(new Cliente());
 //		p.dropTable(new ItemVenda());
