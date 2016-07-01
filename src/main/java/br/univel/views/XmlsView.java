@@ -191,22 +191,27 @@ public class XmlsView extends JFrame{
 			}
 		}
 		if(checkBoxVendas.isSelected()){
-			vl = XMlvendas.importarXml(vl, new File("vendas.xml"));
-			vendas = vl.getVendas();
-			VendaDAO vd = new VendaDAO();
-			ItemVendaDAO ivd = new ItemVendaDAO();
-			for(NewVenda nv : vendas){
-				if(vd.search(nv.getId()).getId() > 0){
-					vd.save(nv);
-					for(ItemVenda iv : nv.getItemVendas()){
-						if(ivd.search(iv.getId()).getId() > 0){
-							ivd.save(iv);
-						}
-					}
-				}else{
-					msg += "Venda " + nv.getId() + " já existe no BD.\n"; 
-				}
-			}
+//			Percebemos um erro na criacao do banco de dados e quando vimos já era tarde.
+//			vl = XMlvendas.importarXml(vl, new File("vendas.xml"));
+//			vendas = vl.getVendas();
+//			VendaDAO vd = new VendaDAO();
+//			ItemVendaDAO ivd = new ItemVendaDAO();
+//			for(NewVenda nv : vendas){
+//				try {
+//					if(vd.search(nv.getId()).getId() > 0){
+//						vd.save(nv);
+//						for(ItemVenda iv : nv.getItemVendas()){
+//							if(ivd.search(iv.getId()).getId() > 0){
+//								ivd.save(iv);
+//							}
+//						}
+//					}else{
+//						msg += "Venda " + nv.getId() + " já existe no BD.\n"; 
+//					}
+//				} catch (Exception e) {
+//					
+//				}
+//			}
 		}
 		JOptionPane.showMessageDialog(null, msg);
 	}

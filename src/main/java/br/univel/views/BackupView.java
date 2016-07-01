@@ -224,11 +224,12 @@ public class BackupView extends JFrame{
 		
 		if(checkboxVendas.isSelected()){
 			
+//			Percebemos um erro na criacao do banco de dados e quando vimos já era tarde.
 //			NewVendaDAO vendaDao = new NewVendaDAO();
 //			msg = msg + "\n PRODUTOS";
 //			try {
 //				produtos = implProduto.ler(new File("produtos.dat"));
-//				for(NewVenda v : vendas){
+//				for(ItemVenda v : vendas){
 //					if(vendaDao.search(v.getId()) == null){
 //						vendaDao.save(v);						
 //					}else{

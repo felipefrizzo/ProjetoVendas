@@ -131,7 +131,7 @@ public class PrincipalView extends JFrame{
 				XmlsView  xv = new XmlsView();
 				xv.setSize(323,145);
 				xv.setLocationRelativeTo(null);
-				xv.setVisible(true);
+				xv.setVisible(true); 
 			}
 		});
 		
@@ -143,6 +143,7 @@ public class PrincipalView extends JFrame{
 		});
 		
 		JButton btnNewButton = new JButton("Importar Arquivos");
+		btnNewButton.setEnabled(false);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ImportarArquivoView  ia = new ImportarArquivoView();
